@@ -12,4 +12,6 @@ public abstract class Actor extends GameObject {
     public void move(Direction dir) {
         position = dir.move(position);
     }
+
+    public abstract void die();
 }
