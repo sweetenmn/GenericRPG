@@ -12,6 +12,14 @@ public class Monster extends Mob {
     private int luck;
     private String name;
 
+    public Monster(int maxHealth, int attack, int luck, String name) {
+        this.maxHealth = maxHealth;
+        this.currentHealth = maxHealth;
+        this.attack = attack;
+        this.luck = luck;
+        this.name = name;
+    }
+
     @Override
     boolean attack(Actor actor) {
         Dice dice = new Dice(20);
@@ -35,6 +43,11 @@ public class Monster extends Mob {
 
     @Override
     public void die() {
+
+    }
+
+    @Override
+    public void draw() {
 
     }
 }

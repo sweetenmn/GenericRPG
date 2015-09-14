@@ -8,4 +8,5 @@ import java.util.ArrayList;
 public abstract class GameObject {
     protected Position position;
     protected ArrayList<GameObject> contents;
+    public abstract void draw();
 }

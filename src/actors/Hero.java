@@ -51,4 +51,9 @@ public class Hero extends Actor {
     public void die() {
 
     }
+
+    @Override
+    public void draw() {
+
+    }
 }

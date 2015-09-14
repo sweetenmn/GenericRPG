@@ -17,4 +17,9 @@ public class Box extends GameObject {
     public ArrayList<GameObject> open() {
         return contents;
     }
+
+    @Override
+    public void draw() {
+
+    }
 }
