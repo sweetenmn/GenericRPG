@@ -25,6 +25,7 @@ public class Game {
             m.stepTowards(hero, currentLevel);
         }
         }
+    //public void heroAtk()
     public void changeLevel(Level level) {
         this.currentLevel = level;
         this.hero = level.getHero();

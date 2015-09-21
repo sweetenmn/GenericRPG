@@ -15,6 +15,6 @@ public class Dice {
     }
 
     public int roll() {
-        return (int) rand.nextDouble() * sides;
+        return (int) (rand.nextDouble() * sides);
     }
 }

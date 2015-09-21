@@ -30,6 +30,7 @@ public class Monster extends Mob {
     boolean attack(Actor actor) {
         Dice dice = new Dice(20);
         int roll = dice.roll() + luck;
+        System.out.println(roll);
         if (roll < 10) {
             actor.takeDamage(0);
             return false;

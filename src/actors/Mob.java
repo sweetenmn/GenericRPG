@@ -18,5 +18,8 @@ public abstract class Mob extends Actor {
         if (level.inBounds(closest.getAdj(position)) && level.isClear(closest.getAdj(position))) {
             this.move(closest);
         }
+        if (position.getDistanceTo(goal) < 2) {
+            this.attack(actor);
+;        }
     }
 }
