@@ -1,6 +1,6 @@
 package actors;
 
-import game.Direction;
+import javafx.scene.image.Image;
 import util.Dice;
 
 /**
@@ -19,16 +19,17 @@ public class Hero extends Actor {
         this.attack = prof.getAttack();
         this.luck = prof.getLuck();
         this.name = prof.name().toLowerCase();
+        this.sprite = prof.getAvatar();
     }
 
     @Override
     public boolean attack(Actor actor) {
         Dice dice = new Dice(20);
         int roll = dice.roll() + luck;
-        if (roll < 10){
+        if (roll < 10) {
             actor.takeDamage(0);
             return false;
-        } else if (roll < 20){
+        } else if (roll < 20) {
             actor.takeDamage(attack);
             return true;
         } else {
@@ -48,12 +49,13 @@ public class Hero extends Actor {
     }
 
     @Override
+    public Image getSprite() {
+        return sprite;
+    }
+
+    @Override
     public void die() {
 
     }
 
-    @Override
-    public void draw() {
-
-    }
 }

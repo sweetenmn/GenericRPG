@@ -1,8 +1,9 @@
 package terrain;
 
 import game.GameObject;
+import game.graphics.Camera;
+import javafx.scene.canvas.Canvas;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +20,7 @@ public class Box extends GameObject {
     }
 
     @Override
-    public void draw() {
+    public void draw(Canvas canvas, Camera camera) {
 
     }
 }

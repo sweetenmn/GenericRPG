@@ -8,12 +8,13 @@ import java.util.Random;
 public class Dice {
     int sides;
     Random rand;
+
     public Dice(int sides) {
         this.sides = sides;
         rand = new Random();
     }
 
     public int roll() {
-        return (int)rand.nextDouble() * sides;
+        return (int) rand.nextDouble() * sides;
     }
 }

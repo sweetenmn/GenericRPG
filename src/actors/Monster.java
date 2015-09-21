@@ -1,5 +1,8 @@
 package actors;
 
+import game.graphics.Camera;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.image.Image;
 import util.Dice;
 
 /**
@@ -24,10 +27,10 @@ public class Monster extends Mob {
     boolean attack(Actor actor) {
         Dice dice = new Dice(20);
         int roll = dice.roll() + luck;
-        if (roll < 10){
+        if (roll < 10) {
             actor.takeDamage(0);
             return false;
-        } else if (roll < 20){
+        } else if (roll < 20) {
             actor.takeDamage(attack);
             return true;
         } else {
@@ -42,12 +45,17 @@ public class Monster extends Mob {
     }
 
     @Override
+    public Image getSprite() {
+        return null;
+    }
+
+    @Override
     public void die() {
 
     }
 
     @Override
-    public void draw() {
+    public void draw(Canvas canvas, Camera camera) {
 
     }
 }
