@@ -1,5 +1,6 @@
 package actors;
 
+import game.Position;
 import javafx.scene.image.Image;
 import util.Dice;
 
@@ -57,5 +58,6 @@ public class Hero extends Actor {
     public void die() {
 
     }
+
 
 }

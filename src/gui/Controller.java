@@ -1,6 +1,10 @@
 package gui;
 
 
+import actors.Hero;
+import actors.Profession;
+import game.Direction;
+import game.Game;
 import game.Level;
 import game.Position;
 import game.graphics.Camera;
@@ -10,10 +14,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+
+import javax.swing.*;
 
 public class Controller {
     private long FRAMES_PER_SEC = 60L;
@@ -27,19 +34,18 @@ public class Controller {
     @FXML
     ImageView portrait;
     GraphicsContext gc;
-    Level currentLevel = new Level(0, 30, 15);
     Camera camera = new Camera(new Position(0, 0));
     Position cameraDragStartPos;
     double startX;
     double startY;
-
+    Game game;
     private AnimationTimer timer = new AnimationTimer() {
         long last = 0;
 
         @Override
         public void handle(long now) {
             if (now - last > NANO_INTERVAL) {
-                currentLevel.draw(canvas, camera);
+                game.render(canvas, camera);
             }
             last = now;
         }
@@ -50,7 +56,6 @@ public class Controller {
     public void initialize() {
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                 ev -> {
-
                     camera.setPosition((int)(cameraDragStartPos.getX() + startX - ev.getX()), cameraDragStartPos.getY() + (int)(startY - ev.getY()));
                 });
 
@@ -59,8 +64,23 @@ public class Controller {
                     cameraDragStartPos = camera.getPosition();
                     startX = ev.getX();
                     startY = ev.getY();
+
                 });
-        gc = canvas.getGraphicsContext2D();
+        pane.addEventHandler(KeyEvent.KEY_TYPED,
+                ev -> {
+                    String character = ev.getCharacter().toLowerCase();
+                    System.out.println(character);
+                    if (character.equals("w")) {
+                        up();
+                    } else if (character.equals("a")) {
+                        left();
+                    } else if (character.equals("s")) {
+                        down();
+                    } else if (character.equals("d")) {
+                        right();
+                    }
+                });
+        Level currentLevel = new Level(0, 30, 15);
         currentLevel.addExit(5, 5);
         currentLevel.addWall(0, 0);
         currentLevel.addWall(0, 1);
@@ -75,6 +95,11 @@ public class Controller {
         for (int i = 0; i < 15; i++) {
             currentLevel.addWall(7,i);
         }
+        game = new Game();
+        game.changeLevel(currentLevel);
+        gc = canvas.getGraphicsContext2D();
+
+
         timer.start();
     }
 
@@ -104,22 +129,22 @@ public class Controller {
 
     @FXML
     public void up() {
-
+        game.moveHero(Direction.UP);
     }
 
     @FXML
     public void down() {
-
+        game.moveHero(Direction.DOWN);
     }
 
     @FXML
     public void left() {
-
+        game.moveHero(Direction.LEFT);
     }
 
     @FXML
     public void right() {
-
+        game.moveHero(Direction.RIGHT);
     }
 
 }

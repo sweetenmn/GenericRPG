@@ -14,10 +14,11 @@ import terrain.Wall;
 /**
  * Created by josephbenton on 9/13/15.
  */
-public class Level extends GameObject {
+public class Level extends Drawable {
     int Depth;
     int height;
     int width;
+    Hero hero;
     boolean[][] wallMap;
 
     public Level(int depth, int width, int height) {
@@ -49,13 +50,13 @@ public class Level extends GameObject {
     }
 
     public void addHero(int x, int y) {
-        Hero hero = new Hero(Profession.ROGUE);
+        hero = new Hero(Profession.ROGUE);
         hero.setPosition(x, y);
         contents.add(hero);
     }
 
     public boolean isClear(Position p) {
-        return wallMap[p.getX()][p.getY()];
+        return !wallMap[p.getX()][p.getY()];
     }
 
     @Override
@@ -64,7 +65,7 @@ public class Level extends GameObject {
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, 1000, 1000);
         drawGrid(canvas,camera);
-        for (GameObject obj : contents) {
+        for (Drawable obj : contents) {
             obj.draw(canvas, camera);
         }
     }
@@ -79,5 +80,16 @@ public class Level extends GameObject {
 
             gc.strokeLine(0, j - offsetY, canvas.getWidth(), j - offsetY);
         }
+    }
+
+    public Hero getHero() {
+
+        return hero;
+    }
+
+    public boolean inBounds(Position p) {
+        boolean inBoundsX = (p.getX() < width && p.getX() >= 0);
+        boolean inBoundsY = (p.getY() < height && p.getY() >= 0);
+        return inBoundsX && inBoundsY;
     }
 }

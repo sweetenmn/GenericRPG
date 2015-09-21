@@ -10,13 +10,13 @@ import java.util.ArrayList;
 /**
  * Created by josephbenton on 9/13/15.
  */
-public abstract class GameObject {
+public abstract class Drawable {
     protected Image sprite;
     protected Position position;
-    protected ArrayList<GameObject> contents;
+    protected ArrayList<Drawable> contents;
 
-    public GameObject() {
-        this.contents = new ArrayList<GameObject>();
+    public Drawable() {
+        this.contents = new ArrayList<Drawable>();
     }
 
     public void draw(Canvas canvas, Camera camera) {
@@ -33,5 +33,9 @@ public abstract class GameObject {
 
     public void setPosition(int x, int y) {
         position = new Position(x, y);
+    }
+
+    public void setPosition(Position p) {
+        position = p ;
     }
 }
