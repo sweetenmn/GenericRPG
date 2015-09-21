@@ -22,6 +22,7 @@ public class Hero extends Actor {
         this.luck = prof.getLuck();
         this.name = prof.name().toLowerCase();
         this.sprite = prof.getAvatar();
+        this.alive = true;
     }
 
     @Override
@@ -49,6 +50,9 @@ public class Hero extends Actor {
         }
 
     }
+    public double getHealthPercent() {
+        return (double)currentHealth / (double)maxHealth;
+    }
 
     @Override
     public Image getSprite() {
@@ -58,6 +62,7 @@ public class Hero extends Actor {
     @Override
     public void die() {
         this.sprite = new Image("assets/skull.png");
+        alive = false;
     }
 
 

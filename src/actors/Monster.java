@@ -14,7 +14,6 @@ public class Monster extends Mob {
     private int attack;
     private int luck;
     private String name;
-    private boolean alive;
 
     public Monster(int maxHealth, int attack, int luck, String name) {
         this.maxHealth = maxHealth;
@@ -63,7 +62,5 @@ public class Monster extends Mob {
         alive = false;
     }
 
-    public boolean isAlive() {
-        return alive;
-    }
+
 }
