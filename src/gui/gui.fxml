@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="gui.Controller">
+    <center>
+        <Canvas fx:id="canvas" height="322.0" nodeOrientation="INHERIT" width="535.0" BorderPane.alignment="TOP_LEFT">
+            <cursor>
+                <Cursor fx:constant="CROSSHAIR"/>
+            </cursor>
+        </Canvas>
+    </center>
+    <right>
+        <VBox prefHeight="329.0" prefWidth="65.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER"/>
+    </right>
+    <bottom>
+        <HBox alignment="CENTER" prefWidth="200.0" style="-fx-background-color: GRAY;" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="button" mnemonicParsing="false" onAction="#button1" prefHeight="61.0" prefWidth="67.0"
+                        text="Attack"/>
+                <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="66.0" text="Wait"/>
+                <VBox alignment="CENTER">
+                    <children>
+                        <ImageView fx:id="portrait" fitHeight="42.0" fitWidth="53.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <image>
+                                <Image url="@../assets/warrior.png"/>
+                            </image>
+                        </ImageView>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior"/>
+                        <ProgressBar prefWidth="200.0" progress="1.0"/>
+                    </children>
+                </VBox>
+                <Button mnemonicParsing="false" prefHeight="63.0" prefWidth="62.0" text="Inspect"/>
+                <Button mnemonicParsing="false" prefHeight="61.0" prefWidth="65.0" text="Menu"/>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>
