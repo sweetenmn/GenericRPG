@@ -80,7 +80,7 @@ public class Controller {
                         right();
                     }
                 });
-        Level currentLevel = new Level(0, 30, 15);
+        Level currentLevel = new Level(0, 30, 15, new Hero(Profession.ROGUE, 2, 2));
         currentLevel.addExit(5, 5);
         currentLevel.addWall(0, 0);
         currentLevel.addWall(0, 1);
@@ -91,40 +91,31 @@ public class Controller {
         currentLevel.addWall(4, 0);
         currentLevel.addWall(4, 3);
         currentLevel.addWall(4, 2);
-        currentLevel.addHero(2, 3);
-        for (int i = 0; i < 15; i++) {
-            currentLevel.addWall(7,i);
-        }
+        currentLevel.addMonster(6,7);
         game = new Game();
         game.changeLevel(currentLevel);
         gc = canvas.getGraphicsContext2D();
-
-
         timer.start();
     }
 
     @FXML
     public void button1() {
         System.out.println("button 1 pressed");
-        gc.setFill(Color.BLACK);
     }
 
     @FXML
     public void button2() {
         System.out.println("button 2 pressed");
-        gc.setFill(Color.BLACK);
     }
 
     @FXML
     public void button3() {
         System.out.println("button 3 pressed");
-        gc.setFill(Color.BLACK);
     }
 
     @FXML
     public void button4() {
         System.out.println("button 4 pressed");
-        gc.setFill(Color.BLACK);
     }
 
     @FXML

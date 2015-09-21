@@ -14,7 +14,8 @@ public class Hero extends Actor {
     private int luck;
     private String name;
 
-    public Hero(Profession prof) {
+    public Hero(Profession prof, int x, int y) {
+        this.setPosition(x, y);
         this.maxHealth = prof.getHealth();
         this.currentHealth = maxHealth;
         this.attack = prof.getAttack();
@@ -56,7 +57,7 @@ public class Hero extends Actor {
 
     @Override
     public void die() {
-
+        this.sprite = new Image("assets/skull.png");
     }
 
 

@@ -23,4 +23,8 @@ public class Position {
     public int getDistanceTo(Position p) {
         return Math.abs(this.x - p.x) + Math.abs(this.y - p.y);
     }
+
+    public boolean equals(Position other) {
+        return this.getDistanceTo(other) == 0;
+    }
 }

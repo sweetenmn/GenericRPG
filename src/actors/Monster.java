@@ -14,6 +14,7 @@ public class Monster extends Mob {
     private int attack;
     private int luck;
     private String name;
+    private boolean alive;
 
     public Monster(int maxHealth, int attack, int luck, String name) {
         this.maxHealth = maxHealth;
@@ -21,6 +22,8 @@ public class Monster extends Mob {
         this.attack = attack;
         this.luck = luck;
         this.name = name;
+        this.sprite = new Image("assets/demon.png");
+        this.alive = true;
     }
 
     @Override
@@ -41,7 +44,11 @@ public class Monster extends Mob {
 
     @Override
     void takeDamage(int damage) {
-
+        currentHealth -= damage;
+        System.out.println(name + " just took " + damage + " damage!");
+        if (currentHealth <= 0) {
+            this.die();
+        }
     }
 
     @Override
@@ -51,11 +58,11 @@ public class Monster extends Mob {
 
     @Override
     public void die() {
-
+        this.sprite = new Image("assets/skull.png");
+        alive = false;
     }
 
-    @Override
-    public void draw(Canvas canvas, Camera camera) {
-
+    public boolean isAlive() {
+        return alive;
     }
 }

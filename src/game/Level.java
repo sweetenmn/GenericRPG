@@ -1,7 +1,9 @@
 package game;
 
+import actors.Actor;
 import actors.Hero;
-import actors.Profession;
+import actors.Mob;
+import actors.Monster;
 import game.graphics.Camera;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,22 +12,27 @@ import terrain.Exit;
 import terrain.Floor;
 import terrain.Wall;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by josephbenton on 9/13/15.
  */
 public class Level extends Drawable {
-    int Depth;
+    int depth;
     int height;
     int width;
     Hero hero;
+    ArrayList<Mob> monsters;
     boolean[][] wallMap;
 
-    public Level(int depth, int width, int height) {
+    public Level(int depth, int width, int height, Hero hero) {
         super();
-        Depth = depth;
+        this.hero = hero;
+        this.depth = depth;
         this.height = height;
         this.width = width;
+        this.monsters = new ArrayList<>();
         wallMap = new boolean[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -37,6 +44,17 @@ public class Level extends Drawable {
         Position p = new Position(x, y);
         contents.add(new Floor(p));
     }
+    public void addMonster(int x, int y) {
+        Monster monster = new Monster(15, 3, 5, "Boogaloo");
+        monster.setPosition(x, y);
+        contents.add(monster);
+        monsters.add(monster);
+
+    }
+
+    public ArrayList<Mob> getMonsters() {
+        return monsters;
+    }
 
     public void addWall(int x, int y) {
         Position p = new Position(x, y);
@@ -47,12 +65,6 @@ public class Level extends Drawable {
     public void addExit(int x, int y) {
         Position p = new Position(x, y);
         contents.add(new Exit(p));
-    }
-
-    public void addHero(int x, int y) {
-        hero = new Hero(Profession.ROGUE);
-        hero.setPosition(x, y);
-        contents.add(hero);
     }
 
     public boolean isClear(Position p) {
@@ -68,6 +80,7 @@ public class Level extends Drawable {
         for (Drawable obj : contents) {
             obj.draw(canvas, camera);
         }
+        hero.draw(canvas, camera);
     }
 
     private void drawGrid(Canvas canvas, Camera camera) {
@@ -77,7 +90,6 @@ public class Level extends Drawable {
             int offsetX = camera.getPosition().getX() % 32;
             int offsetY = camera.getPosition().getY() % 32;
             gc.strokeLine(j - offsetX, 0, j - offsetX, canvas.getHeight());
-
             gc.strokeLine(0, j - offsetY, canvas.getWidth(), j - offsetY);
         }
     }
