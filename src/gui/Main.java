@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         BorderPane root = FXMLLoader.load(getClass().getResource("gui.fxml"));
-        primaryStage.setTitle("Roguelike");
+        primaryStage.setTitle("GenericRPG");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }

@@ -19,6 +19,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
+import java.io.File;
+
 
 public class Controller {
     private long FRAMES_PER_SEC = 60L;
@@ -82,8 +84,7 @@ public class Controller {
                         right();
                     }
                 });
-        Level currentLevel = new Level(0, 30, 15, new Hero(Profession.ROGUE, 2, 2));
-        buildLevel(currentLevel);
+        Level currentLevel = new Level(new Hero(Profession.ROGUE, 2, 2), "src/assets/Levels/L1.txt");
         game = new Game();
         game.changeLevel(currentLevel);
         gc = canvas.getGraphicsContext2D();

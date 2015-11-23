@@ -10,17 +10,17 @@ import game.Position;
 public abstract class Mob extends Actor {
 
     public void stepTowards(Actor actor, Level level) {
-        Direction closest = Direction.DOWN;
-        Position goal = actor.getPosition();
-        if (this.isAlive()) {
-            if (position.getDistanceTo(goal) < 2) {
-                this.attack(actor);
-            } else if (position.getDistanceTo(goal) < 4) {
-                for (Direction dir : Direction.values()) {
-                    closest = (dir.getAdj(this.position).getDistanceTo(goal) < closest.getAdj(this.position).getDistanceTo(goal)) ? dir : closest;
-                }
-                this.move(closest, level);
-            }
-        }
+//        Direction closest = Direction.DOWN;
+//        Position goal = actor.getPosition();
+//        if (this.isAlive()) {
+//            if (position.getDistanceTo(goal) < 2) {
+//                this.attack(actor);
+//            } else if (position.getDistanceTo(goal) < 4) {
+//                for (Direction dir : Direction.values()) {
+//                    closest = (dir.getAdj(this.position).getDistanceTo(goal) < closest.getAdj(this.position).getDistanceTo(goal)) ? dir : closest;
+//                }
+//                this.move(closest, level);
+//            }
+//        }
     }
 }

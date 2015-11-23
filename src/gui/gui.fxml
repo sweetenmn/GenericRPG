@@ -28,7 +28,6 @@
         <HBox alignment="CENTER" prefWidth="200.0" style="-fx-background-color: GRAY;" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="button" mnemonicParsing="false" onAction="#button1" prefHeight="61.0" prefWidth="67.0" text="Attack" />
-                <Button mnemonicParsing="false" onAction="#button2" prefHeight="60.0" prefWidth="66.0" text="Wait" />
                 <VBox alignment="CENTER">
                     <children>
                         <ImageView fx:id="portrait" fitHeight="42.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
@@ -40,8 +39,7 @@
                         <ProgressBar fx:id="healthBar" prefWidth="200.0" progress="1.0" />
                     </children>
                 </VBox>
-                <Button mnemonicParsing="false" onAction="#button3" prefHeight="63.0" prefWidth="62.0" text="Inspect" />
-                <Button mnemonicParsing="false" onAction="#button4" prefHeight="61.0" prefWidth="65.0" text="Menu" />
+                <Button mnemonicParsing="false" onAction="#button3" prefHeight="63.0" prefWidth="67.0" text="Inspect" />
             </children>
         </HBox>
     </bottom>

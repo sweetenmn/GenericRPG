@@ -7,29 +7,31 @@ import actors.Monster;
 import game.graphics.Camera;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import terrain.Exit;
 import terrain.Floor;
 import terrain.Wall;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 /**
  * Created by josephbenton on 9/13/15.
  */
 public class Level extends Drawable {
-    int depth;
     int height;
     int width;
     Hero hero;
     ArrayList<Mob> monsters;
     boolean[][] wallMap;
 
-    public Level(int depth, int width, int height, Hero hero) {
+    public Level( int width, int height, Hero hero) {
         super();
         this.hero = hero;
-        this.depth = depth;
         this.height = height;
         this.width = width;
         this.monsters = new ArrayList<>();
@@ -40,6 +42,38 @@ public class Level extends Drawable {
             }
         }
     }
+
+    public Level(Hero hero, String map) {
+        Scanner scan = null;
+        monsters = new ArrayList<>();
+        try {
+            scan = new Scanner(new File(map));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        this.hero = hero;
+        width = scan.nextInt();
+        height = scan.nextInt();
+        wallMap = new boolean[width][height];
+        scan.nextLine();
+        for (int i = 0; i < height; i++) {
+            String line = scan.nextLine();
+            for (int j = 0; j < width; j++) {
+                addFloor(j, i);
+                if (line.charAt(j) == 'H') {
+                    hero.setPosition(j, i);
+                } else if (line.charAt(j) == 'M') {
+                    addMonster(j, i);
+                } else if (line.charAt(j) == 'E') {
+                    addExit(j, i);
+                } else if (line.charAt(j) == '#') {
+                    wallMap[j][i] = true;
+                    addWall(j, i);
+                }
+            }
+        }
+    }
+
     public void addFloor(int x, int y) {
         Position p = new Position(x, y);
         contents.add(new Floor(p));
