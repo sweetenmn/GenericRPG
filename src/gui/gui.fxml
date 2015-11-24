@@ -55,8 +55,8 @@
                                 <children>
                                     <ImageView fx:id="portrait" fitHeight="42.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" />
                                     <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                    <ProgressBar fx:id="healthBar" prefHeight="0.0" prefWidth="200.0" progress="0.27" />
-                              <ProgressBar fx:id="healthBar1" prefHeight="0.0" prefWidth="200.0" progress="1.0">
+                                    <ProgressBar fx:id="expBar" prefHeight="0.0" prefWidth="200.0" progress="0.08" />
+                              <ProgressBar fx:id="healthBar" prefHeight="0.0" prefWidth="200.0" progress="1.0">
                                  <effect>
                                     <ColorAdjust hue="-0.47" />
                                  </effect>

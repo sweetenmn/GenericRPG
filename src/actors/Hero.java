@@ -2,7 +2,6 @@ package actors;
 
 import game.Direction;
 import game.Level;
-import game.Position;
 import javafx.scene.image.Image;
 import util.Dice;
 
@@ -57,6 +56,10 @@ public class Hero extends Actor {
     }
     public double getHealthPercent() {
         return (double)currentHealth / (double)maxHealth;
+    }
+    
+    public double getExpPercent() {
+    	return (double)experience / (double)expToNextLevel;
     }
     
     public void addExperience(int monsterExp){
@@ -119,6 +122,13 @@ public class Hero extends Actor {
 	public void setAttacker(Actor actor) {
 		this.attacker = actor;
 		
+	}
+	
+	public void setName(String input){
+		this.name = input;
+	}
+	public String getName(){
+		return this.name;
 	}
 
 

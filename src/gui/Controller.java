@@ -56,6 +56,8 @@ public class Controller {
     Rectangle warriorSelect;
     @FXML
     ProgressBar healthBar;
+    @FXML
+    ProgressBar expBar;
     
     Profession profSelected;
 
@@ -73,6 +75,8 @@ public class Controller {
         public void handle(long now) {
             if (now - last > NANO_INTERVAL) {
                 healthBar.setProgress(game.getHeroHealthPercent());
+                expBar.setProgress(game.getHeroExpPercent());
+                name.setText(game.getHeroName() + " | Level " + game.getHeroLevel());
                 game.render(canvas, camera);
                 game.checkStates(canvas);
             }
@@ -123,6 +127,7 @@ public class Controller {
     public void characterSelection(){
     	startPane.setVisible(true);
     }
+    
     @FXML
     public void startGame(){
     	if (profSelected != null){
@@ -168,9 +173,9 @@ public class Controller {
 		adventurePane.setVisible(true);
 		inventory.setVisible(true);
 		portrait.setImage(new Image("/assets/mage_portrait.png"));
-		name.setText(nameInput.getText());
+		game.setHeroName(nameInput.getText());
     }
-    
+
     @FXML
     public void attack() {
         game.heroAtk();

@@ -1,7 +1,5 @@
 package actors;
 
-import game.graphics.Camera;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import util.Dice;
 
@@ -22,10 +20,7 @@ public class Monster extends Mob {
         this.sprite = new Image("assets/demon.png");
         this.alive = true;
         this.expValue =  expValue;
-        
     }
-    
-
 
     @Override
     boolean attack(Actor actor) {
@@ -70,7 +65,6 @@ public class Monster extends Mob {
 	@Override
 	public void setAttacker(Actor actor) {
 		this.attacker = (Hero) actor;
-		
 	}
 
 }

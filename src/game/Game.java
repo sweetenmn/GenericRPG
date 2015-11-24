@@ -54,6 +54,22 @@ public class Game {
     public double getHeroHealthPercent() {
         return hero.getHealthPercent();
     }
+    
+    public double getHeroExpPercent() {
+    	return hero.getExpPercent();
+    }
+    
+    public int getHeroLevel() {
+    	return hero.getLevel();
+    }
+    
+    public String getHeroName(){
+    	return hero.getName();
+    }
+    
+    public void setHeroName(String input){
+    	hero.setName(input);
+    }
 
     public void checkStates(Canvas canvas) {
         if (!hero.isAlive()) {
