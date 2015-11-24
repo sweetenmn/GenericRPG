@@ -5,6 +5,7 @@ import actors.Hero;
 import actors.Profession;
 import game.Direction;
 import game.Game;
+import game.GameState;
 import game.Level;
 import game.Position;
 import game.graphics.Camera;
@@ -20,6 +21,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 import java.io.File;
+
+import menu.StartScreen;
 
 
 public class Controller {
@@ -41,15 +44,30 @@ public class Controller {
     double startX;
     double startY;
     Game game;
+    GameState state = GameState.START;
+    StartScreen startScreen;
     private AnimationTimer timer = new AnimationTimer() {
         long last = 0;
 
         @Override
+       
         public void handle(long now) {
             if (now - last > NANO_INTERVAL) {
-                healthBar.setProgress(game.getHeroHealthPercent());
-                game.render(canvas, camera);
-                game.checkStates(timer, canvas);
+            	switch(state){
+				case ADVENTURE:
+					healthBar.setProgress(game.getHeroHealthPercent());
+					game.render(canvas, camera);
+					game.checkStates(timer, canvas);
+					break;
+				case COMBAT:
+					break;
+				case START:
+					startScreen.render(canvas, camera);
+					break;
+				default:
+					break;
+            	
+            	}
             }
             last = now;
         }
@@ -71,6 +89,11 @@ public class Controller {
                     startY = ev.getY();
 
                 });
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
+        		ev ->{
+        			handleClickAt(ev.getX(), ev.getY());
+        			
+        		});
         pane.addEventHandler(KeyEvent.KEY_TYPED,
                 ev -> {
                     String character = ev.getCharacter().toLowerCase();
@@ -87,9 +110,34 @@ public class Controller {
         Level currentLevel = new Level(new Hero(Profession.ROGUE, 2, 2), "src/assets/Levels/L1.txt");
         game = new Game();
         game.changeLevel(currentLevel);
+        startScreen = new StartScreen(0,0);
         gc = canvas.getGraphicsContext2D();
         timer.start();
     }
+    
+    private void handleClickAt(double x, double y){
+    	if (state == GameState.START){
+    		checkNewClicked(x, y);
+    		checkLoadClicked(x, y);
+    		
+    	}
+    }
+    
+    private void checkNewClicked(double x, double y){
+    	if (x > 180 && x < 354 && y >175 && y < 200){
+    		state = GameState.ADVENTURE;
+    		System.out.println("new game");
+    	}
+    }
+    private void checkLoadClicked(double x, double y){
+    	if (x > 170 && x < 365 && y > 214 && y < 236){
+    		System.out.println("load game");
+    	}
+    }
+    
+
+    
+    
 
     private void buildLevel(Level currentLevel) {
         currentLevel.addExit(5, 5);
