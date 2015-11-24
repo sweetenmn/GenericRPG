@@ -12,13 +12,16 @@ import game.graphics.Camera;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 import java.io.File;
 
@@ -37,7 +40,10 @@ public class Controller {
     @FXML
     ImageView portrait;
     @FXML
+    Text name;
+    @FXML
     ProgressBar healthBar;
+
     GraphicsContext gc;
     Camera camera = new Camera(new Position(0, 0));
     Position cameraDragStartPos;
@@ -94,20 +100,22 @@ public class Controller {
         			handleClickAt(ev.getX(), ev.getY());
         			
         		});
-        pane.addEventHandler(KeyEvent.KEY_TYPED,
+        pane.addEventHandler(KeyEvent.KEY_PRESSED,
                 ev -> {
-                    String character = ev.getCharacter().toLowerCase();
-                    if (character.equals("w")) {
+                	KeyCode code = ev.getCode();
+                    if (code == KeyCode.W || code == KeyCode.UP) {
                         up();
-                    } else if (character.equals("a")) {
+                    } else if (code == KeyCode.A|| code == KeyCode.LEFT)  {
                         left();
-                    } else if (character.equals("s")) {
+                    } else if (code == KeyCode.S || code == KeyCode.DOWN) {
                         down();
-                    } else if (character.equals("d")) {
+                    } else if (code == KeyCode.D || code == KeyCode.RIGHT) {
                         right();
+                    } else if (code == KeyCode.SHIFT){
+                    	game.heroAtk();
                     }
                 });
-        Level currentLevel = new Level(new Hero(Profession.ROGUE, 2, 2), "src/assets/Levels/L1.txt");
+        Level currentLevel = new Level(new Hero(Profession.WIZARD, 2, 2), "src/assets/Levels/L1.txt");
         game = new Game();
         game.changeLevel(currentLevel);
         startScreen = new StartScreen(0,0);
@@ -126,6 +134,7 @@ public class Controller {
     private void checkNewClicked(double x, double y){
     	if (x > 180 && x < 354 && y >175 && y < 200){
     		state = GameState.ADVENTURE;
+    		portrait.setImage(new Image("/assets/mage_portrait.png"));
     		System.out.println("new game");
     	}
     }

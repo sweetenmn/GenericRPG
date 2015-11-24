@@ -41,5 +41,4 @@ public class MenuObject extends Drawable {
         gc.drawImage(sprite, x, y, sprite.getWidth(), sprite.getHeight());
 	}
 	
-
 }

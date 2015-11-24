@@ -20,7 +20,7 @@ public class Game {
 
     public void moveHero(Direction dir) {
         if (hero.isAlive()) {
-            hero.move(dir, currentLevel);
+            hero.moveAnimated(dir, currentLevel);
             step();
         }
     }

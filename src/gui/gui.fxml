@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.canvas.*?>
@@ -30,13 +31,12 @@
                 <Button fx:id="button" mnemonicParsing="false" onAction="#button1" prefHeight="61.0" prefWidth="67.0" text="Attack" />
                 <VBox alignment="CENTER">
                     <children>
-                        <ImageView fx:id="portrait" fitHeight="42.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@../assets/warrior.png" />
-                            </image>
-                        </ImageView>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior" />
-                        <ProgressBar fx:id="healthBar" prefWidth="200.0" progress="1.0" />
+                        <ImageView fx:id="portrait" fitHeight="42.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" />
+                        <ProgressBar fx:id="healthBar" prefWidth="200.0" progress="1.0">
+                     <effect>
+                        <ColorAdjust hue="-0.47" />
+                     </effect></ProgressBar>
                     </children>
                 </VBox>
                 <Button mnemonicParsing="false" onAction="#button3" prefHeight="63.0" prefWidth="67.0" text="Inspect" />
