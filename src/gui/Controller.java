@@ -1,6 +1,8 @@
 package gui;
 
 
+import java.util.ArrayList;
+
 import actors.Hero;
 import actors.Profession;
 import game.*;
@@ -12,15 +14,16 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-
-import menu.StartScreen;
-
 
 public class Controller {
     private long FRAMES_PER_SEC = 60L;
@@ -30,13 +33,31 @@ public class Controller {
     @FXML
     Canvas canvas;
     @FXML
-    Button button;
+    Pane startPane;
+    @FXML
+    Pane adventurePane;
+    @FXML
+    GridPane inventory;
+    @FXML
+    Button attackButton;
+    @FXML
+    Button inspectButton;
+    @FXML
+    Button startButton;
+    @FXML
+    TextField nameInput;
     @FXML
     ImageView portrait;
     @FXML
     Text name;
     @FXML
+    Rectangle mageSelect;
+    @FXML
+    Rectangle warriorSelect;
+    @FXML
     ProgressBar healthBar;
+    
+    Profession profSelected;
 
     GraphicsContext gc;
     Camera camera = new Camera(new Position(0, 0));
@@ -62,25 +83,57 @@ public class Controller {
 
     @FXML
     public void initialize() {
-        healthBar.setProgress(1.0);
-        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
-                ev -> {
-                    camera.setPosition((int)(cameraDragStartPos.getX() + startX - ev.getX()), cameraDragStartPos.getY() + (int)(startY - ev.getY()));
-                });
-
-        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED,
-                ev -> {
-                    cameraDragStartPos = camera.getPosition();
-                    startX = ev.getX();
-                    startY = ev.getY();
-
-                });
+        startHandlingClicks();     
+        Level currentLevel = new Level(new Hero(Profession.WIZARD, 2, 2), "src/assets/Levels/L1.txt");
+        game = new Game();
+        game.changeLevel(currentLevel);
+        game.setState(GameState.START);
+        gc = canvas.getGraphicsContext2D();
+        timer.start();
+    }
+    
+   
+    
+    private void startHandlingClicks(){
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
         		ev ->{
-        			handleClickAt(ev.getX(), ev.getY());
-        			
-        		});
-        pane.addEventHandler(KeyEvent.KEY_PRESSED,
+        			handleClickAt(ev.getX(), ev.getY());     			
+        		}); 	
+    }
+    
+    
+    private void handleClickAt(double x, double y){
+    	if (game.getState() == GameState.START){
+    		checkNewClicked(x, y);
+    		checkLoadClicked(x, y);	
+    	}
+    }
+    
+    private void checkNewClicked(double x, double y){
+    	if (x > 180 && x < 354 && y >175 && y < 200){
+    		characterSelection();
+    	}
+    }
+    private void checkLoadClicked(double x, double y){
+    	if (x > 170 && x < 365 && y > 214 && y < 236){
+    		System.out.println("load game");
+    	}
+    }
+    
+    public void characterSelection(){
+    	startPane.setVisible(true);
+    }
+    @FXML
+    public void startGame(){
+    	if (profSelected != null){
+    		viewWalking();
+    		startHandlingWalk();
+    		startHandlingDrag();
+    		game.setState(GameState.WALKING);
+    	}
+    }
+    private void startHandlingWalk(){
+    	pane.addEventHandler(KeyEvent.KEY_PRESSED,
                 ev -> {
                 	KeyCode code = ev.getCode();
                     if (code == KeyCode.W || code == KeyCode.UP) {
@@ -95,54 +148,41 @@ public class Controller {
                     	game.heroAtk();
                     }
                 });
-        Level currentLevel = new Level(new Hero(Profession.WIZARD, 2, 2), "src/assets/Levels/L1.txt");
-        game = new Game();
-        game.changeLevel(currentLevel);
-        game.setState(GameState.START);
-        gc = canvas.getGraphicsContext2D();
-        timer.start();
     }
     
-    private void handleClickAt(double x, double y){
-    	if (game.getState() == GameState.START){
-    		checkNewClicked(x, y);
-    		checkLoadClicked(x, y);
-    		
-    	}
+    private void startHandlingDrag(){
+        canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
+                ev -> {
+                    camera.setPosition((int)(cameraDragStartPos.getX() + startX - ev.getX()), cameraDragStartPos.getY() + (int)(startY - ev.getY()));
+                });
+        canvas.addEventHandler(MouseEvent.MOUSE_PRESSED,
+                ev -> {
+                    cameraDragStartPos = camera.getPosition();
+                    startX = ev.getX();
+                    startY = ev.getY();
+                });
     }
     
-    private void checkNewClicked(double x, double y){
-    	if (x > 180 && x < 354 && y >175 && y < 200){
-    		game.setState(GameState.WALKING);
-    		portrait.setImage(new Image("/assets/mage_portrait.png"));
-    		System.out.println("new game");
-    	}
-    }
-    private void checkLoadClicked(double x, double y){
-    	if (x > 170 && x < 365 && y > 214 && y < 236){
-    		System.out.println("load game");
-    	}
+    private void viewWalking(){
+    	startPane.setVisible(false);
+		adventurePane.setVisible(true);
+		inventory.setVisible(true);
+		portrait.setImage(new Image("/assets/mage_portrait.png"));
+		name.setText(nameInput.getText());
     }
     
-
-    
-    
-
-
     @FXML
-    public void button1() {
+    public void attack() {
         game.heroAtk();
-
     }
 
     @FXML
-    public void button2() {
+    public void pass() {
         game.step();
-
     }
 
     @FXML
-    public void button3() {
+    public void inspect() {
 
     }
 
@@ -155,26 +195,54 @@ public class Controller {
     public void up() {
         if (game.getState().equals(GameState.WALKING)) {
             game.moveHero(Direction.UP);
-        }
-    }
+        	}
+    	}
 
     @FXML
     public void down() {
         if (game.getState().equals(GameState.WALKING)) {
             game.moveHero(Direction.DOWN);
-        }    }
+            }    
+    }
 
     @FXML
     public void left() {
         if (game.getState().equals(GameState.WALKING)) {
             game.moveHero(Direction.LEFT);
-        }    }
+        	}    
+    }
 
     @FXML
     public void right() {
-        if (
-                game.getState().equals(GameState.WALKING)) {
+        if (game.getState().equals(GameState.WALKING)) {
             game.moveHero(Direction.RIGHT);
-        }    }
+            }
+    }
+    @FXML
+    public void selectMage(){
+    	unselectOthers(mageSelect);
+    	profSelected = Profession.WIZARD;
+    }
+    
+    @FXML
+    public void selectWarrior(){
+    	unselectOthers(warriorSelect);
+    }
+    
+    private ArrayList<Rectangle> selectBoxes(){
+    	ArrayList<Rectangle> boxes = new ArrayList<Rectangle>();
+    	boxes.add(mageSelect);
+    	boxes.add(warriorSelect);
+    	return boxes;
+    }
+    
+    private void unselectOthers(Rectangle selected){
+    	selected.setVisible(true);
+    	for (Rectangle box: selectBoxes()){
+    		if (!box.equals(selected)){
+    			box.setVisible(false);
+    		}
+    	}
+    }
 
 }

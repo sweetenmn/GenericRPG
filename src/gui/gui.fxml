@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.effect.*?>
 <?import java.lang.*?>
 <?import javafx.scene.*?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="605.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
     <center>
         <Canvas fx:id="canvas" height="322.0" nodeOrientation="INHERIT" width="535.0" BorderPane.alignment="TOP_LEFT">
             <cursor>
@@ -23,24 +24,101 @@
         </Canvas>
     </center>
     <right>
-        <VBox prefHeight="329.0" prefWidth="65.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER" />
+        <VBox prefHeight="324.0" prefWidth="79.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
+         <children>
+            <GridPane fx:id="inventory" gridLinesVisible="true" prefHeight="327.0" prefWidth="79.0" visible="false">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children></VBox>
     </right>
     <bottom>
-        <HBox alignment="CENTER" prefWidth="200.0" style="-fx-background-color: GRAY;" BorderPane.alignment="CENTER">
-            <children>
-                <Button fx:id="button" mnemonicParsing="false" onAction="#button1" prefHeight="61.0" prefWidth="67.0" text="Attack" />
-                <VBox alignment="CENTER">
-                    <children>
-                        <ImageView fx:id="portrait" fitHeight="42.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" />
-                        <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" />
-                        <ProgressBar fx:id="healthBar" prefWidth="200.0" progress="1.0">
-                     <effect>
-                        <ColorAdjust hue="-0.47" />
-                     </effect></ProgressBar>
-                    </children>
-                </VBox>
-                <Button mnemonicParsing="false" onAction="#button3" prefHeight="63.0" prefWidth="67.0" text="Inspect" />
-            </children>
-        </HBox>
+      <Pane style="-fx-background-color: GRAY;">
+         <children>
+            <Pane fx:id="adventurePane" visible="false">
+               <children>
+                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="605.0" style="-fx-background-color: GRAY;" BorderPane.alignment="CENTER">
+                        <children>
+                            <Button fx:id="attackButton" mnemonicParsing="false" onAction="#attack" prefHeight="61.0" prefWidth="67.0" text="Attack" />
+                            <VBox alignment="CENTER">
+                                <children>
+                                    <ImageView fx:id="portrait" fitHeight="42.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                    <ProgressBar fx:id="healthBar" prefHeight="0.0" prefWidth="200.0" progress="0.27" />
+                              <ProgressBar fx:id="healthBar1" prefHeight="0.0" prefWidth="200.0" progress="1.0">
+                                 <effect>
+                                    <ColorAdjust hue="-0.47" />
+                                 </effect>
+                              </ProgressBar>
+                                </children>
+                            </VBox>
+                            <Button fx:id="inspectButton" mnemonicParsing="false" onAction="#inspect" prefHeight="63.0" prefWidth="67.0" text="Inspect" />
+                        </children>
+                    </HBox>
+               </children>
+            </Pane>
+            <Pane fx:id="startPane" style="-fx-background-color: GRAY;" visible="false">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="605.0">
+                     <children>
+                        <Pane prefHeight="100.0" prefWidth="300.0">
+                           <children>
+                              <Label layoutX="90.0" layoutY="5.0" prefHeight="19.0" prefWidth="120.0" text="Choose Hero's class:">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <ImageView fitHeight="63.0" fitWidth="49.0" layoutX="20.0" layoutY="22.0" onMouseClicked="#selectMage" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/mage_portrait.png" />
+                                 </image>
+                              </ImageView>
+                              <ImageView fitHeight="55.0" fitWidth="48.0" layoutX="72.0" layoutY="28.0" onMouseClicked="#selectWarrior" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/warrior.png" />
+                                 </image>
+                              </ImageView>
+                              <Text layoutX="29.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mage" />
+                              <Text layoutX="73.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior" />
+                              <Rectangle fx:id="mageSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="79.0" layoutX="20.0" layoutY="17.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
+                              <Rectangle fx:id="warriorSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="79.0" layoutX="69.0" layoutY="19.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="100.0" prefWidth="306.0">
+                           <children>
+                              <Label layoutX="99.0" layoutY="5.0" text="Enter Hero's name:">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="nameInput" layoutX="80.0" layoutY="25.0">
+                                 <effect>
+                                    <ColorAdjust brightness="-0.23" contrast="-0.3" />
+                                 </effect>
+                              </TextField>
+                              <Button fx:id="startButton" layoutX="128.0" layoutY="64.0" mnemonicParsing="false" onAction="#startGame" text="START">
+                                 <effect>
+                                    <ColorAdjust brightness="-0.35" contrast="0.07" />
+                                 </effect>
+                              </Button>
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
+         </children>
+      </Pane>
     </bottom>
 </BorderPane>
