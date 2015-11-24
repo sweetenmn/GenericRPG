@@ -2,7 +2,6 @@ package gui;
 
 
 import actors.Hero;
-import actors.Monster;
 import actors.Profession;
 import game.*;
 import game.graphics.Camera;
@@ -19,8 +18,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
-
-import java.io.File;
 
 import menu.StartScreen;
 
@@ -47,8 +44,6 @@ public class Controller {
     double startX;
     double startY;
     Game game;
-    GameState state = GameState.START;
-    StartScreen startScreen;
     private AnimationTimer timer = new AnimationTimer() {
         long last = 0;
 
@@ -58,7 +53,7 @@ public class Controller {
             if (now - last > NANO_INTERVAL) {
                 healthBar.setProgress(game.getHeroHealthPercent());
                 game.render(canvas, camera);
-                game.checkStates(timer, canvas);
+                game.checkStates(canvas);
             }
             last = now;
         }
@@ -103,14 +98,13 @@ public class Controller {
         Level currentLevel = new Level(new Hero(Profession.WIZARD, 2, 2), "src/assets/Levels/L1.txt");
         game = new Game();
         game.changeLevel(currentLevel);
-        game.setState(GameState.WALKING);
-        startScreen = new StartScreen(0,0);
+        game.setState(GameState.START);
         gc = canvas.getGraphicsContext2D();
         timer.start();
     }
     
     private void handleClickAt(double x, double y){
-    	if (state == GameState.START){
+    	if (game.getState() == GameState.START){
     		checkNewClicked(x, y);
     		checkLoadClicked(x, y);
     		
@@ -119,7 +113,7 @@ public class Controller {
     
     private void checkNewClicked(double x, double y){
     	if (x > 180 && x < 354 && y >175 && y < 200){
-    		state = GameState.ADVENTURE;
+    		game.setState(GameState.WALKING);
     		portrait.setImage(new Image("/assets/mage_portrait.png"));
     		System.out.println("new game");
     	}

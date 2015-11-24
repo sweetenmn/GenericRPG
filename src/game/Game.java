@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import menu.StartScreen;
 
 import java.util.ArrayList;
 
@@ -70,6 +71,9 @@ public class Game {
             currentLevel.draw(canvas, camera);
         } else if (state.equals(GameState.COMBAT)) {
             combat.draw(canvas, camera);
+        } else if (state.equals(GameState.START)) {
+            StartScreen startScreen = new StartScreen(0,0);
+            startScreen.draw(canvas, camera);
         }
     }
 
