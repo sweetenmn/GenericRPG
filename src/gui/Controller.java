@@ -2,11 +2,9 @@ package gui;
 
 
 import actors.Hero;
+import actors.Monster;
 import actors.Profession;
-import game.Direction;
-import game.Game;
-import game.Level;
-import game.Position;
+import game.*;
 import game.graphics.Camera;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -49,7 +47,7 @@ public class Controller {
             if (now - last > NANO_INTERVAL) {
                 healthBar.setProgress(game.getHeroHealthPercent());
                 game.render(canvas, camera);
-                game.checkStates(timer, canvas);
+                game.checkStates(canvas);
             }
             last = now;
         }
@@ -71,53 +69,28 @@ public class Controller {
                     startY = ev.getY();
 
                 });
-        pane.addEventHandler(KeyEvent.KEY_TYPED,
+        pane.addEventHandler(KeyEvent.KEY_RELEASED,
                 ev -> {
-                    String character = ev.getCharacter().toLowerCase();
-                    if (character.equals("w")) {
+                    String code = ev.getCode().getName();
+                    System.out.println(code);
+                    if (code.equals("W") || code.equals("Up")) {
                         up();
-                    } else if (character.equals("a")) {
+                    } else if (code.equals("A") || code.equals("Left")) {
                         left();
-                    } else if (character.equals("s")) {
+                    } else if (code.equals("S") || code.equals("Down")) {
                         down();
-                    } else if (character.equals("d")) {
+                    } else if (code.equals("D") || code.equals("Right")) {
                         right();
                     }
                 });
         Level currentLevel = new Level(new Hero(Profession.ROGUE, 2, 2), "src/assets/Levels/L1.txt");
         game = new Game();
         game.changeLevel(currentLevel);
+        game.setState(GameState.WALKING);
         gc = canvas.getGraphicsContext2D();
         timer.start();
     }
 
-    private void buildLevel(Level currentLevel) {
-        currentLevel.addExit(5, 5);
-        currentLevel.addWall(0, 0);
-        currentLevel.addWall(0, 1);
-        currentLevel.addWall(0, 2);
-        currentLevel.addWall(0, 3);
-        currentLevel.addWall(0, 4);
-        currentLevel.addWall(0, 5);
-        currentLevel.addWall(1, 5);
-        currentLevel.addWall(3, 5);
-        currentLevel.addWall(4, 5);
-        currentLevel.addWall(4, 4);
-        currentLevel.addWall(4, 3);
-        currentLevel.addWall(4, 2);
-        currentLevel.addWall(4, 1);
-        currentLevel.addWall(4, 0);
-        currentLevel.addWall(1, 6);
-        currentLevel.addWall(1, 7);
-        currentLevel.addWall(1, 8);
-        currentLevel.addWall(1, 9);
-        currentLevel.addWall(3, 6);
-        currentLevel.addWall(3, 7);
-        currentLevel.addWall(2, 9);
-        currentLevel.addMonster(6,7);
-        currentLevel.addMonster(10,10);
-        currentLevel.addMonster(5,5);
-    }
 
     @FXML
     public void button1() {
@@ -143,22 +116,28 @@ public class Controller {
 
     @FXML
     public void up() {
-        game.moveHero(Direction.UP);
+        if (game.getState().equals(GameState.WALKING)) {
+            game.moveHero(Direction.UP);
+        }
     }
 
     @FXML
     public void down() {
-        game.moveHero(Direction.DOWN);
-    }
+        if (game.getState().equals(GameState.WALKING)) {
+            game.moveHero(Direction.DOWN);
+        }    }
 
     @FXML
     public void left() {
-        game.moveHero(Direction.LEFT);
-    }
+        if (game.getState().equals(GameState.WALKING)) {
+            game.moveHero(Direction.LEFT);
+        }    }
 
     @FXML
     public void right() {
-        game.moveHero(Direction.RIGHT);
-    }
+        if (
+                game.getState().equals(GameState.WALKING)) {
+            game.moveHero(Direction.RIGHT);
+        }    }
 
 }
