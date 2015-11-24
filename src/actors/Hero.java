@@ -8,10 +8,9 @@ import util.Dice;
  * Created by josephbenton on 9/13/15.
  */
 public class Hero extends Actor {
-    private int maxHealth;
-    private int currentHealth;
-    private int attack;
-    private int luck;
+    private int maxHealth, currentHealth, attack, luck, level;
+    int experience, expToNextLevel;
+    private Actor attacker;
     private String name;
 
     public Hero(Profession prof, int x, int y) {
@@ -23,10 +22,14 @@ public class Hero extends Actor {
         this.name = prof.name().toLowerCase();
         this.sprite = prof.getAvatar();
         this.alive = true;
+        this.experience = 0;
+        this.level = 1;
+        this.expToNextLevel = 100;
     }
 
     @Override
     public boolean attack(Actor actor) {
+    	actor.setAttacker(this);
         Dice dice = new Dice(20);
         int roll = dice.roll() + luck;
         if (roll < 10) {
@@ -53,6 +56,28 @@ public class Hero extends Actor {
     public double getHealthPercent() {
         return (double)currentHealth / (double)maxHealth;
     }
+    
+    public void addExperience(int monsterExp){
+    	experience += monsterExp;
+    	System.out.println("Gained exp: " + monsterExp);
+    	this.levelIf();
+    }
+    
+    private void levelIf(){
+    	if (expToNextLevel - experience <= 0){
+    		level += 1;
+    		experience = expToNextLevel - experience;
+    		expToNextLevel += 25;
+    		System.out.println("next level: " + this.expToNextLevel);
+    		System.out.println(String.valueOf(experience));
+    		System.out.println(String.valueOf(experience));
+    		System.out.println("hero level: " + this.level);
+    	}
+    }
+    
+    public int getLevel(){
+    	return level;
+    }
 
     @Override
     public Image getSprite() {
@@ -64,6 +89,12 @@ public class Hero extends Actor {
         this.sprite = new Image("assets/skull.png");
         alive = false;
     }
+
+	@Override
+	public void setAttacker(Actor actor) {
+		this.attacker = actor;
+		
+	}
 
 
 }

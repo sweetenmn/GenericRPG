@@ -8,6 +8,8 @@ import game.Position;
  * Created by josephbenton on 9/13/15.
  */
 public abstract class Mob extends Actor {
+	
+	
 
     public void stepTowards(Actor actor, Level level) {
 //        Direction closest = Direction.DOWN;

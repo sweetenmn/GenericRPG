@@ -27,4 +27,6 @@ public abstract class Actor extends Drawable {
     public abstract Image getSprite();
 
     public abstract void die();
+    
+    public abstract void setAttacker(Actor actor);
 }

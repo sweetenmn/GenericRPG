@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
+    <center>
+        <Canvas fx:id="canvas" height="322.0" nodeOrientation="INHERIT" width="510.0" BorderPane.alignment="TOP_LEFT">
+            <cursor>
+                <Cursor fx:constant="CROSSHAIR" />
+            </cursor>
+        </Canvas>
+    </center>
+    <right>
+        <VBox prefHeight="324.0" prefWidth="95.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER" />
+    </right>
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="76.0" prefWidth="614.0" style="-fx-background-color: GRAY;" BorderPane.alignment="CENTER">
+            <children>
+                <Button fx:id="button" mnemonicParsing="false" onAction="#button1" prefHeight="61.0" prefWidth="149.0" text="New Game">
+               <effect>
+                  <Reflection>
+                     <input>
+                        <InnerShadow />
+                     </input>
+                  </Reflection>
+               </effect></Button>
+                <VBox alignment="CENTER" />
+                <Button mnemonicParsing="false" onAction="#button2" prefHeight="60.0" prefWidth="145.0" text="Load Game">
+               <effect>
+                  <InnerShadow />
+               </effect></Button>
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>
