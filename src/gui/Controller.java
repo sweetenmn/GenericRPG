@@ -9,15 +9,20 @@ import game.graphics.Camera;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.input.KeyCode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.Text;
 
 import java.io.File;
+
+import menu.StartScreen;
 
 
 public class Controller {
@@ -32,22 +37,28 @@ public class Controller {
     @FXML
     ImageView portrait;
     @FXML
+    Text name;
+    @FXML
     ProgressBar healthBar;
+
     GraphicsContext gc;
     Camera camera = new Camera(new Position(0, 0));
     Position cameraDragStartPos;
     double startX;
     double startY;
     Game game;
+    GameState state = GameState.START;
+    StartScreen startScreen;
     private AnimationTimer timer = new AnimationTimer() {
         long last = 0;
 
         @Override
+       
         public void handle(long now) {
             if (now - last > NANO_INTERVAL) {
                 healthBar.setProgress(game.getHeroHealthPercent());
                 game.render(canvas, camera);
-                game.checkStates(canvas);
+                game.checkStates(timer, canvas);
             }
             last = now;
         }
@@ -69,27 +80,59 @@ public class Controller {
                     startY = ev.getY();
 
                 });
-        pane.addEventHandler(KeyEvent.KEY_RELEASED,
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
+        		ev ->{
+        			handleClickAt(ev.getX(), ev.getY());
+        			
+        		});
+        pane.addEventHandler(KeyEvent.KEY_PRESSED,
                 ev -> {
-                    String code = ev.getCode().getName();
-                    System.out.println(code);
-                    if (code.equals("W") || code.equals("Up")) {
+                	KeyCode code = ev.getCode();
+                    if (code == KeyCode.W || code == KeyCode.UP) {
                         up();
-                    } else if (code.equals("A") || code.equals("Left")) {
+                    } else if (code == KeyCode.A|| code == KeyCode.LEFT)  {
                         left();
-                    } else if (code.equals("S") || code.equals("Down")) {
+                    } else if (code == KeyCode.S || code == KeyCode.DOWN) {
                         down();
-                    } else if (code.equals("D") || code.equals("Right")) {
+                    } else if (code == KeyCode.D || code == KeyCode.RIGHT) {
                         right();
+                    } else if (code == KeyCode.SHIFT){
+                    	game.heroAtk();
                     }
                 });
-        Level currentLevel = new Level(new Hero(Profession.ROGUE, 2, 2), "src/assets/Levels/L1.txt");
+        Level currentLevel = new Level(new Hero(Profession.WIZARD, 2, 2), "src/assets/Levels/L1.txt");
         game = new Game();
         game.changeLevel(currentLevel);
         game.setState(GameState.WALKING);
+        startScreen = new StartScreen(0,0);
         gc = canvas.getGraphicsContext2D();
         timer.start();
     }
+    
+    private void handleClickAt(double x, double y){
+    	if (state == GameState.START){
+    		checkNewClicked(x, y);
+    		checkLoadClicked(x, y);
+    		
+    	}
+    }
+    
+    private void checkNewClicked(double x, double y){
+    	if (x > 180 && x < 354 && y >175 && y < 200){
+    		state = GameState.ADVENTURE;
+    		portrait.setImage(new Image("/assets/mage_portrait.png"));
+    		System.out.println("new game");
+    	}
+    }
+    private void checkLoadClicked(double x, double y){
+    	if (x > 170 && x < 365 && y > 214 && y < 236){
+    		System.out.println("load game");
+    	}
+    }
+    
+
+    
+    
 
 
     @FXML

@@ -1,5 +1,7 @@
 package actors;
 
+import game.Direction;
+import game.Level;
 import game.Position;
 import javafx.scene.image.Image;
 import util.Dice;
@@ -66,11 +68,9 @@ public class Hero extends Actor {
     private void levelIf(){
     	if (expToNextLevel - experience <= 0){
     		level += 1;
-    		experience = expToNextLevel - experience;
+    		experience = Math.abs(expToNextLevel - experience);
     		expToNextLevel += 25;
-    		System.out.println("next level: " + this.expToNextLevel);
-    		System.out.println(String.valueOf(experience));
-    		System.out.println(String.valueOf(experience));
+    		System.out.println("exp to next level: " + this.expToNextLevel);
     		System.out.println("hero level: " + this.level);
     	}
     }
@@ -82,6 +82,31 @@ public class Hero extends Actor {
     @Override
     public Image getSprite() {
         return sprite;
+    }
+    
+    public void setSprite(Image image){
+    	sprite = image;
+    }
+    
+    public void moveAnimated(Direction dir, Level currentLevel){
+    	move(dir, currentLevel);
+    	switch(dir){
+		case DOWN:
+			sprite = new Image("assets/mage_down.png");
+			break;
+		case LEFT:
+			sprite = new Image("assets/mage_left.png");
+			break;
+		case RIGHT:
+			sprite = new Image("assets/mage_right.png");
+			break;
+		case UP:
+			sprite = new Image("assets/mage_up.png");
+			break;
+		default:
+			break;
+    	
+    	}
     }
 
     @Override

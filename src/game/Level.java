@@ -29,7 +29,7 @@ public class Level extends Drawable {
     ArrayList<Mob> monsters;
     boolean[][] wallMap;
 
-    public Level( int width, int height, Hero hero) {
+    public Level(int width, int height, Hero hero) {
         super();
         this.hero = hero;
         this.height = height;

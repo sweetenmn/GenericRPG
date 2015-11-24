@@ -24,6 +24,7 @@ public abstract class Drawable {
         double x = position.getX() * 32 - camera.getPosition().getX();
         double y = position.getY() * 32 - camera.getPosition().getY();
         gc.drawImage(sprite, x, y, 32, 32);
+       
     }
 
     public Position getPosition() {
