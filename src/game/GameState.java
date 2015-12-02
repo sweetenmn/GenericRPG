@@ -6,7 +6,8 @@ package game;
 public enum GameState {
     START,
     LOADING,
-    CHARACTER_SELECT,
+    CHARACTER_CREATE,
+    CHARACTER_LOAD,
     COMBAT,
     WALKING,
     END;
