@@ -13,20 +13,45 @@ public class Hero extends Actor {
     int experience, expToNextLevel;
     private Actor attacker;
     private String name;
+    private Profession prof;
+    private static final int EXP_BUFF = 25;
+    private static final int HEALTH_BUFF = 3;
+    private static final int STAT_BUFF = 1;
+    private static final int INIT_EXP_REQUIRED = 100;
 
     public Hero(Profession prof, int x, int y) {
         this.setPosition(x, y);
-        this.maxHealth = prof.getHealth();
-        this.currentHealth = maxHealth;
-        this.attack = prof.getAttack();
-        this.luck = prof.getLuck();
-        this.name = prof.name().toLowerCase();
+        this.prof = prof;
         this.sprite = prof.getAvatar();
         this.alive = true;
         this.experience = 0;
         this.level = 1;
-        this.expToNextLevel = 100;
+        adjustStats();
+        this.currentHealth = maxHealth;
     }
+    
+    
+    private void adjustStats(){
+    	this.expToNextLevel = offsetByLevel(INIT_EXP_REQUIRED, EXP_BUFF);
+    	this.maxHealth = offsetByLevel(prof.getHealth(), HEALTH_BUFF);
+    	this.attack = offsetByLevel(prof.getAttack(), STAT_BUFF);
+    	this.luck = offsetByLevel(prof.getLuck(), STAT_BUFF);
+    	
+    }
+    
+    private int offsetByLevel(int initial, int factorOf){
+    	int levelOffset = this.level - 1;
+    	return initial + (levelOffset * factorOf);
+    }
+    
+    public void loadHealth(int health){
+    	this.currentHealth = health;
+    }
+    
+    public void loadExp(int exp){
+    	this.experience = exp;
+    }
+    
 
     @Override
     public boolean attack(Actor actor) {

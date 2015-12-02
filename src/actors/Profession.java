@@ -12,7 +12,7 @@ public enum Profession {
             return new Image("assets/warrior.png");
         }
     },
-    WIZARD(15, 6, 10, 10) {
+    MAGE(15, 6, 10, 10) {
         @Override
         public Image getAvatar() {
             return new Image("assets/mage_sprite.png");

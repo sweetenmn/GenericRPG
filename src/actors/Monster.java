@@ -7,12 +7,11 @@ import util.Dice;
  * Created by Joseph on 9/13/2015.
  */
 public class Monster extends Mob {
-    private int maxHealth, currentHealth, attack, luck, expValue;
+    private int currentHealth, attack, luck, expValue;
     private String name;
     private Hero attacker;
 
     public Monster(int maxHealth, int attack, int luck, int expValue, String name) {
-        this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         this.attack = attack;
         this.luck = luck;

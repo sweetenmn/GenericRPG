@@ -52,29 +52,56 @@ public class Game {
     }
 
     public double getHeroHealthPercent() {
-        return hero.getHealthPercent();
+    	if (heroExists()){
+    		return hero.getHealthPercent();
+    	} else {
+    		return 0;
+    	}
     }
     
     public double getHeroExpPercent() {
-    	return hero.getExpPercent();
+    	if (heroExists()){
+    		return hero.getExpPercent();
+    	} else {
+    		return 0;
+    	}
     }
     
     public int getHeroLevel() {
-    	return hero.getLevel();
+    	if (heroExists()){
+    		return hero.getLevel();
+    	} else {
+    		return 0;
+    		
+    	}
     }
     
     public String getHeroName(){
-    	return hero.getName();
+    	if (heroExists()){
+    		return hero.getName();
+    	} else {
+    		return "";
+    	}
     }
     
-    public void setHeroName(String input){
-    	hero.setName(input);
+    public void setHeroName(String name){
+    	hero.setName(name);
+
+    }
+    
+    public void loadHero(int health, int exp){
+    	hero.loadHealth(health);
+    	hero.loadExp(exp);
     }
 
-    public void checkStates(Canvas canvas) {
-        if (!hero.isAlive()) {
+    public void checkForDeath(Canvas canvas) {
+        if (heroExists() && !hero.isAlive()) {
             gameEnd(canvas);
         }
+    }
+    
+    private boolean heroExists(){
+    	return state != GameState.START;
     }
 
     private void gameEnd(Canvas canvas) {

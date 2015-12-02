@@ -33,17 +33,11 @@ public class Controller {
     @FXML
     Canvas canvas;
     @FXML
-    Pane startPane;
-    @FXML
-    Pane adventurePane;
+    Pane startPane, adventurePane;
     @FXML
     GridPane inventory;
     @FXML
-    Button attackButton;
-    @FXML
-    Button inspectButton;
-    @FXML
-    Button startButton;
+    Button attackButton, inspectButton, startButton;
     @FXML
     TextField nameInput;
     @FXML
@@ -51,34 +45,28 @@ public class Controller {
     @FXML
     Text name;
     @FXML
-    Rectangle mageSelect;
+    Rectangle mageSelect, warriorSelect;
     @FXML
-    Rectangle warriorSelect;
-    @FXML
-    ProgressBar healthBar;
-    @FXML
-    ProgressBar expBar;
+    ProgressBar healthBar, expBar;
     
     Profession profSelected;
 
     GraphicsContext gc;
     Camera camera = new Camera(new Position(0, 0));
     Position cameraDragStartPos;
-    double startX;
-    double startY;
+    double startX, startY;
     Game game;
     private AnimationTimer timer = new AnimationTimer() {
         long last = 0;
 
         @Override
-       
         public void handle(long now) {
             if (now - last > NANO_INTERVAL) {
                 healthBar.setProgress(game.getHeroHealthPercent());
                 expBar.setProgress(game.getHeroExpPercent());
                 name.setText(game.getHeroName() + " | Level " + game.getHeroLevel());
                 game.render(canvas, camera);
-                game.checkStates(canvas);
+                game.checkForDeath(canvas);
             }
             last = now;
         }
@@ -88,9 +76,7 @@ public class Controller {
     @FXML
     public void initialize() {
         startHandlingClicks();     
-        Level currentLevel = new Level(new Hero(Profession.WIZARD, 2, 2), "src/assets/Levels/L1.txt");
         game = new Game();
-        game.changeLevel(currentLevel);
         game.setState(GameState.START);
         gc = canvas.getGraphicsContext2D();
         timer.start();
@@ -115,27 +101,43 @@ public class Controller {
     
     private void checkNewClicked(double x, double y){
     	if (x > 180 && x < 354 && y >175 && y < 200){
-    		characterSelection();
+    		characterCreation();
     	}
     }
     private void checkLoadClicked(double x, double y){
     	if (x > 170 && x < 365 && y > 214 && y < 236){
     		System.out.println("load game");
+    		loadCharacter();
     	}
     }
     
-    public void characterSelection(){
+    private void characterCreation(){
     	startPane.setVisible(true);
+    	game.setState(GameState.CHARACTER_CREATE);
+    }
+    
+    private void loadCharacter(){
+    	//loadPane.setVisible(true);
+    	//game.setState(GameState.CHARACTER_LOAD);
     }
     
     @FXML
     public void startGame(){
-    	if (profSelected != null){
+    	if (gameReady()){
+    		Hero hero = new Hero(Profession.MAGE, 2, 2);
+            Level currentLevel = new Level(hero, "src/assets/Levels/L1.txt");
+            game.changeLevel(currentLevel);
+            //here-- call method to either load or create new char based on state
+            game.setHeroName(nameInput.getText());
+    		game.setState(GameState.WALKING);
     		viewWalking();
     		startHandlingWalk();
     		startHandlingDrag();
-    		game.setState(GameState.WALKING);
     	}
+    }
+    
+    private boolean gameReady(){
+    	return profSelected != null && !nameInput.getText().equals("");
     }
     private void startHandlingWalk(){
     	pane.addEventHandler(KeyEvent.KEY_PRESSED,
@@ -158,7 +160,8 @@ public class Controller {
     private void startHandlingDrag(){
         canvas.addEventHandler(MouseEvent.MOUSE_DRAGGED,
                 ev -> {
-                    camera.setPosition((int)(cameraDragStartPos.getX() + startX - ev.getX()), cameraDragStartPos.getY() + (int)(startY - ev.getY()));
+                    camera.setPosition((int)(cameraDragStartPos.getX() + startX - ev.getX()),
+                    		cameraDragStartPos.getY() + (int)(startY - ev.getY()));
                 });
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED,
                 ev -> {
@@ -173,7 +176,6 @@ public class Controller {
 		adventurePane.setVisible(true);
 		inventory.setVisible(true);
 		portrait.setImage(new Image("/assets/mage_portrait.png"));
-		game.setHeroName(nameInput.getText());
     }
 
     @FXML
@@ -226,7 +228,7 @@ public class Controller {
     @FXML
     public void selectMage(){
     	unselectOthers(mageSelect);
-    	profSelected = Profession.WIZARD;
+    	profSelected = Profession.MAGE;
     }
     
     @FXML
