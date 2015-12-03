@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+
 public class HeroTest {
 	//passes without this.sprite = prof.getAvatar();
 	@Test
