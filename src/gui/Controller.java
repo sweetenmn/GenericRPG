@@ -26,8 +26,8 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class Controller {
-    private long FRAMES_PER_SEC = 60L;
-    private long NANO_INTERVAL = 1000000000L / FRAMES_PER_SEC;
+    private long FRAMES_PER_SEC = 20L;
+    private long NANO_INTERVAL = 100000000L / FRAMES_PER_SEC;
     @FXML
     BorderPane pane;
     @FXML
@@ -79,7 +79,8 @@ public class Controller {
     	game.setState(GameState.START);
         startHandlingClicks();     
         gc = canvas.getGraphicsContext2D();
-        timer.start();
+        game.render(canvas, camera);
+        
     }
     
    
@@ -130,9 +131,11 @@ public class Controller {
             //here-- call method to either load or create new char based on state
             game.setHeroName(nameInput.getText());
     		game.setState(GameState.WALKING);
+    		timer.start();
     		viewWalking();
     		startHandlingWalk();
     		startHandlingDrag();
+    		
     	}
     }
     

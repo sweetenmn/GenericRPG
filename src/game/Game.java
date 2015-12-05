@@ -52,36 +52,19 @@ public class Game {
     }
 
     public double getHeroHealthPercent() {
-    	if (heroExists()){
-    		return hero.getHealthPercent();
-    	} else {
-    		return 0;
-    	}
+    	return hero.getHealthPercent();
     }
     
     public double getHeroExpPercent() {
-    	if (heroExists()){
-    		return hero.getExpPercent();
-    	} else {
-    		return 0;
-    	}
+    	return hero.getExpPercent();
     }
     
     public int getHeroLevel() {
-    	if (heroExists()){
-    		return hero.getLevel();
-    	} else {
-    		return 0;
-    		
-    	}
+    	return hero.getLevel();
     }
     
     public String getHeroName(){
-    	if (heroExists()){
-    		return hero.getName();
-    	} else {
-    		return "";
-    	}
+    	return hero.getName();
     }
     
     public void setHeroName(String name){
@@ -95,22 +78,11 @@ public class Game {
     }
 
     public void checkForDeath(Canvas canvas) {
-        if (heroExists() && !hero.isAlive()) {
+        if (!hero.isAlive()) {
             gameEnd(canvas);
         }
     }
     
-    private boolean heroExists(){
-    	switch(state){
-		case CHARACTER_CREATE: case CHARACTER_LOAD: case LOADING: case START:
-			return false;
-		case COMBAT: case END: case WALKING:
-			return true;
-    	
-    	
-    	}
-		return false;
-    }
 
     private void gameEnd(Canvas canvas) {
         state = GameState.END;
