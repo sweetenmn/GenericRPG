@@ -101,7 +101,15 @@ public class Game {
     }
     
     private boolean heroExists(){
-    	return state != GameState.START;
+    	switch(state){
+		case CHARACTER_CREATE: case CHARACTER_LOAD: case LOADING: case START:
+			return false;
+		case COMBAT: case END: case WALKING:
+			return true;
+    	
+    	
+    	}
+		return false;
     }
 
     private void gameEnd(Canvas canvas) {

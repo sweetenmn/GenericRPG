@@ -75,9 +75,9 @@ public class Controller {
 
     @FXML
     public void initialize() {
+    	game = new Game();
+    	game.setState(GameState.START);
         startHandlingClicks();     
-        game = new Game();
-        game.setState(GameState.START);
         gc = canvas.getGraphicsContext2D();
         timer.start();
     }

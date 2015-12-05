@@ -16,7 +16,7 @@ public class Monster extends Mob {
         this.attack = attack;
         this.luck = luck;
         this.name = name;
-        this.sprite = new Image("assets/demon.png");
+        this.sprite = new Image("assets/demon_sprite.png");
         this.alive = true;
         this.expValue =  expValue;
     }
