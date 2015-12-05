@@ -50,6 +50,10 @@ public class Game {
         combat = new Combat(hero, monster);
         setState(GameState.COMBAT);
     }
+    
+    public Hero getHero(){
+    	return hero;
+    }
 
     public double getHeroHealthPercent() {
     	return hero.getHealthPercent();

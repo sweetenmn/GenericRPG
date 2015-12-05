@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.effect.*?>
 <?import java.lang.*?>
@@ -16,13 +17,6 @@
 <?import javafx.scene.text.Text?>
 
 <BorderPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="605.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.Controller">
-    <center>
-        <Canvas fx:id="canvas" height="322.0" nodeOrientation="INHERIT" width="535.0" BorderPane.alignment="TOP_LEFT">
-            <cursor>
-                <Cursor fx:constant="CROSSHAIR" />
-            </cursor>
-        </Canvas>
-    </center>
     <right>
         <VBox prefHeight="324.0" prefWidth="79.0" style="-fx-background-color: Gray;" BorderPane.alignment="CENTER">
          <children>
@@ -48,24 +42,57 @@
          <children>
             <Pane fx:id="adventurePane" visible="false">
                <children>
-                    <HBox alignment="CENTER" prefHeight="100.0" prefWidth="605.0" style="-fx-background-color: GRAY;" BorderPane.alignment="CENTER">
-                        <children>
-                            <Button fx:id="attackButton" mnemonicParsing="false" onAction="#attack" prefHeight="61.0" prefWidth="67.0" text="Attack" />
-                            <VBox alignment="CENTER">
-                                <children>
-                                    <ImageView fx:id="portrait" fitHeight="42.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" />
-                                    <ProgressBar fx:id="expBar" prefHeight="0.0" prefWidth="200.0" progress="0.08" />
-                              <ProgressBar fx:id="healthBar" prefHeight="0.0" prefWidth="200.0" progress="1.0">
+                  <Pane>
+                     <children>
+                          <HBox alignment="CENTER" prefHeight="100.0" prefWidth="605.0" style="-fx-background-color: GRAY;" BorderPane.alignment="CENTER">
+                              <children>
+                              <VBox alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="100.0" prefWidth="50.0">
+                                 <children>
+                                    <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveHero" text="Save">
+                                       <effect>
+                                          <ColorAdjust brightness="-0.26" />
+                                       </effect>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              <Separator opacity="0.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="75.0" />
+                                  <Button fx:id="attackButton" mnemonicParsing="false" onAction="#attack" prefHeight="61.0" prefWidth="67.0" text="Attack">
                                  <effect>
-                                    <ColorAdjust hue="-0.47" />
+                                    <ColorAdjust brightness="-0.26" />
                                  </effect>
-                              </ProgressBar>
-                                </children>
-                            </VBox>
-                            <Button fx:id="inspectButton" mnemonicParsing="false" onAction="#inspect" prefHeight="63.0" prefWidth="67.0" text="Inspect" />
-                        </children>
-                    </HBox>
+                              </Button>
+                                  <VBox alignment="CENTER">
+                                      <children>
+                                          <ImageView fx:id="portrait" fitHeight="42.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true" />
+                                          <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" />
+                                          <ProgressBar fx:id="expBar" prefHeight="0.0" prefWidth="200.0" progress="0.08" />
+                                    <ProgressBar fx:id="healthBar" prefHeight="0.0" prefWidth="200.0" progress="1.0">
+                                       <effect>
+                                          <ColorAdjust hue="-0.47" />
+                                       </effect>
+                                    </ProgressBar>
+                                      </children>
+                                  </VBox>
+                                  <Button fx:id="inspectButton" mnemonicParsing="false" onAction="#inspect" prefHeight="63.0" prefWidth="67.0" text="Inspect">
+                                 <effect>
+                                    <ColorAdjust brightness="-0.26" hue="-0.28" />
+                                 </effect>
+                              </Button>
+                              <Separator opacity="0.0" orientation="VERTICAL" prefHeight="100.0" prefWidth="75.0" />
+                              <VBox alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="100.0" prefWidth="50.0">
+                                 <children>
+                                    <Separator opacity="0.0" prefWidth="200.0" />
+                                    <Button fx:id="exitButton" mnemonicParsing="false" text="Exit">
+                                       <effect>
+                                          <ColorAdjust brightness="-0.26" />
+                                       </effect>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              </children>
+                          </HBox>
+                     </children>
+                  </Pane>
                </children>
             </Pane>
             <Pane fx:id="startPane" style="-fx-background-color: GRAY;" visible="false">
@@ -118,7 +145,49 @@
                   </HBox>
                </children>
             </Pane>
+            <Pane fx:id="loadPane" layoutX="10.0" layoutY="10.0" visible="false">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="593.0" style="-fx-background-color: GRAY;" BorderPane.alignment="CENTER">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="100.0" prefWidth="224.0">
+                           <children>
+                              <Label text="Select your Hero:" textAlignment="CENTER">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                              <Separator opacity="0.0" prefHeight="5.0" prefWidth="200.0" />
+                              <ChoiceBox fx:id="characterChoice" prefHeight="25.0" prefWidth="167.0" />
+                              <Separator opacity="0.0" prefHeight="10.0" prefWidth="200.0" />
+                              <Button fx:id="startButton1" mnemonicParsing="false" onAction="#startGame" text="START">
+                                 <effect>
+                                    <ColorAdjust brightness="-0.35" contrast="0.07" />
+                                 </effect>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <Pane prefHeight="100.0" prefWidth="237.0">
+                           <children>
+                              <VBox alignment="TOP_CENTER" layoutX="-3.0" layoutY="-1.0" prefHeight="101.0" prefWidth="240.0">
+                                 <children>
+                                    <ImageView fitHeight="72.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </Pane>
+                     </children>
+                  </HBox>
+               </children>
+            </Pane>
          </children>
       </Pane>
     </bottom>
+   <left>
+        <Canvas fx:id="canvas" height="291.0" nodeOrientation="INHERIT" width="535.0" BorderPane.alignment="CENTER">
+            <cursor>
+                <Cursor fx:constant="CROSSHAIR" />
+            </cursor>
+        </Canvas>
+   </left>
 </BorderPane>

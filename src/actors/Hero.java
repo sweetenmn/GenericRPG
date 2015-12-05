@@ -19,8 +19,7 @@ public class Hero extends Actor {
     private static final int STAT_BUFF = 1;
     private static final int INIT_EXP_REQUIRED = 100;
 
-    public Hero(Profession prof, int x, int y) {
-        this.setPosition(x, y);
+    public Hero(Profession prof) {
         this.prof = prof;
         this.sprite = prof.getAvatar();
         this.alive = true;
@@ -30,8 +29,7 @@ public class Hero extends Actor {
         this.currentHealth = maxHealth;
     }
     
-    public Hero(Profession prof, int x, int y, int level){
-        this.setPosition(x, y);
+    public Hero(Profession prof, int level){
         this.prof = prof;
         this.sprite = prof.getAvatar();
         this.alive = true;

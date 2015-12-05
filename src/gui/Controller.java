@@ -14,6 +14,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -34,11 +35,15 @@ public class Controller {
     @FXML
     Canvas canvas;
     @FXML
-    Pane startPane, adventurePane;
+    Pane startPane, adventurePane, loadPane;
     @FXML
     GridPane inventory;
     @FXML
     Button attackButton, inspectButton, startButton;
+    @FXML
+    Button saveButton;
+    @FXML
+    Button exitButton;
     @FXML
     TextField nameInput;
     @FXML
@@ -49,6 +54,8 @@ public class Controller {
     Rectangle mageSelect, warriorSelect;
     @FXML
     ProgressBar healthBar, expBar;
+    @FXML
+    ChoiceBox<String> characterChoice;
     
     Profession profSelected;
 
@@ -96,7 +103,9 @@ public class Controller {
     
     
     private void handleClickAt(double x, double y){
-    	if (game.getState() == GameState.START){
+    	if (game.getState() == GameState.START |
+    			game.getState() == GameState.CHARACTER_CREATE |
+    			game.getState() == GameState.CHARACTER_LOAD){
     		checkNewClicked(x, y);
     		checkLoadClicked(x, y);	
     	}
@@ -109,20 +118,23 @@ public class Controller {
     }
     private void checkLoadClicked(double x, double y){
     	if (x > 170 && x < 365 && y > 214 && y < 236){
-    		System.out.println("load game");
     		loadCharacter();
     	}
     }
     
     private void characterCreation(){
     	startPane.setVisible(true);
+    	loadPane.setVisible(false);
     	game.setState(GameState.CHARACTER_CREATE);
     }
     
     private void loadCharacter(){
-    	//loadPane.setVisible(true);
-    	//game.setState(GameState.CHARACTER_LOAD);
+    	startPane.setVisible(false);
+    	loadPane.setVisible(true);
+    	setChoice();
+    	game.setState(GameState.CHARACTER_LOAD);
     }
+   
     
     @FXML
     public void startGame(){
@@ -143,25 +155,30 @@ public class Controller {
     private void newGame(){
     	if (gameReady()){
     		//is the location in the const even used??
-    		Hero hero = new Hero(Profession.MAGE, 2, 2);
+    		Hero hero = new Hero(Profession.MAGE);
     		hero.setName(nameInput.getText());
     		showLevel(hero);
     	}    	
     }
     
     private void loadGame(){
-		Hero hero = characters.getHero("name");
+    	String name = characterChoice.getSelectionModel().getSelectedItem();
+		Hero hero = characters.getHero(name);
 		showLevel(hero);
     }
     
+    private void setChoice(){
+    	characterChoice.setItems(characters.getSavedNames());
+    }
+    
     private void showLevel(Hero hero){
+    	game.setState(GameState.WALKING);
 		Level currentLevel = new Level(hero, "src/assets/Levels/L1.txt");
 		game.changeLevel(currentLevel);
-		game.setState(GameState.WALKING);
-		timer.start();
 		viewWalking();
 		startHandlingWalk();
 		startHandlingDrag();    	
+		timer.start();
     }
     
     
@@ -202,10 +219,17 @@ public class Controller {
     }
     
     private void viewWalking(){
+    	System.out.println("here");
     	startPane.setVisible(false);
+    	loadPane.setVisible(false);
 		adventurePane.setVisible(true);
 		inventory.setVisible(true);
 		portrait.setImage(new Image("/assets/mage_portrait.png"));
+    }
+    
+    @FXML
+    public void saveHero(){
+    	characters.saveHero(game.getHero());
     }
 
     @FXML
