@@ -13,10 +13,13 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -50,6 +53,8 @@ public class Controller {
     ImageView portrait;
     @FXML
     Text name;
+    @FXML
+    Text savedText;
     @FXML
     Rectangle mageSelect, warriorSelect;
     @FXML
@@ -154,10 +159,14 @@ public class Controller {
     
     private void newGame(){
     	if (gameReady()){
-    		//is the location in the const even used??
     		Hero hero = new Hero(Profession.MAGE);
     		hero.setName(nameInput.getText());
+    		unselectAll();
+    		nameInput.clear();
     		showLevel(hero);
+    		saveHero();
+    		setChoice();
+    		savedText.setVisible(false);
     	}    	
     }
     
@@ -180,15 +189,49 @@ public class Controller {
 		startHandlingDrag();    	
 		timer.start();
     }
-    
-    
+
     
     private boolean gameReady(){
-    	return profSelected != null && !nameInput.getText().equals("");
+    	boolean ready = profSelected != null;
+    	if (!nameInput.getText().matches("^[a-zA-Z]+$")){
+    		ready = false;
+    		illegalName();
+    		
+    	} else if (characters.heroExists(nameInput.getText())){
+    		ready = ready & confirm(ConfirmType.OVERWRITE);
+    	}
+    	
+    	return ready;
     }
+    
+    private void illegalName(){
+    	Alert badName = new Alert(AlertType.INFORMATION);
+    	badName.setContentText("That is not an "
+    		+ "appropriate name for a hero!");
+    	badName.show();
+    }
+    
+    private boolean confirm(ConfirmType type){
+    	
+    	Alert alert = new Alert(AlertType.CONFIRMATION);
+    	switch(type){
+		case EXIT:
+			createQuitAlert(alert);
+			break;
+		case OVERWRITE:
+			createOverwriteAlert(alert);
+			break;
+    	
+    	}
+
+    	alert.showAndWait();
+    	return alert.getResult() == ButtonType.OK;
+    }
+    
     private void startHandlingWalk(){
     	pane.addEventHandler(KeyEvent.KEY_PRESSED,
                 ev -> {
+                	clearSavedMessage();
                 	KeyCode code = ev.getCode();
                     if (code == KeyCode.W || code == KeyCode.UP) {
                         up();
@@ -219,7 +262,6 @@ public class Controller {
     }
     
     private void viewWalking(){
-    	System.out.println("here");
     	startPane.setVisible(false);
     	loadPane.setVisible(false);
 		adventurePane.setVisible(true);
@@ -230,6 +272,7 @@ public class Controller {
     @FXML
     public void saveHero(){
     	characters.saveHero(game.getHero());
+    	savedText.setVisible(true);
     }
 
     @FXML
@@ -244,11 +287,6 @@ public class Controller {
 
     @FXML
     public void inspect() {
-
-    }
-
-    @FXML
-    public void button4() {
 
     }
 
@@ -304,6 +342,46 @@ public class Controller {
     			box.setVisible(false);
     		}
     	}
+    }
+    
+    private void unselectAll(){
+    	for (Rectangle box: selectBoxes()){
+    		box.setVisible(false);
+    	}
+    }
+    
+    private void clearSavedMessage(){
+    	if (savedText.isVisible()){
+    		savedText.setVisible(false);
+    	}
+    }
+    
+    private void createOverwriteAlert(Alert alert){
+    	alert.setTitle("Overwrite Hero Confirmation");
+    	alert.setHeaderText("Hero already exists!");
+    	alert.setContentText("The hero " + nameInput.getText() 
+    			+ " already exists.\n"
+    			+ "Their progress will be overwritten.\n" 
+    			+ "Do you wish to continue?");
+    }
+    
+    private void createQuitAlert(Alert alert){
+    	alert.setTitle("Exit Confirmation");
+    	alert.setContentText("Exit to main screen without saving?\n"
+    			+ "Unsaved progress will be lost.");
+    }
+    
+    
+    @FXML
+    public void exitToStart(){
+    	if (confirm(ConfirmType.EXIT)){
+    		timer.stop();
+    		game.setState(GameState.START);
+    		adventurePane.setVisible(false);
+    		inventory.setVisible(false);
+    		game.render(canvas, camera);
+    	}
+    	
     }
 
 }

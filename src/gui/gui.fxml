@@ -48,6 +48,7 @@
                               <children>
                               <VBox alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="100.0" prefWidth="50.0">
                                  <children>
+                                    <Text fx:id="savedText" strokeType="OUTSIDE" strokeWidth="0.0" text="Saved" visible="false" />
                                     <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveHero" text="Save">
                                        <effect>
                                           <ColorAdjust brightness="-0.26" />
@@ -82,7 +83,7 @@
                               <VBox alignment="BOTTOM_CENTER" fillWidth="false" prefHeight="100.0" prefWidth="50.0">
                                  <children>
                                     <Separator opacity="0.0" prefWidth="200.0" />
-                                    <Button fx:id="exitButton" mnemonicParsing="false" text="Exit">
+                                    <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitToStart" text="Exit">
                                        <effect>
                                           <ColorAdjust brightness="-0.26" />
                                        </effect>

@@ -33,6 +33,7 @@ public class CharacterBank {
 					}
 			} else {
 				writeHero(hero);
+				updateBank();
 			}
 		} catch (IOException e) {
 			
@@ -109,7 +110,6 @@ public class CharacterBank {
 			BufferedReader bufferedReader = new BufferedReader(reader);
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
-				System.out.println(line);
 				parts = line.split(DELIMITER);
 				String name = parts[1];
 				System.out.println(name);
