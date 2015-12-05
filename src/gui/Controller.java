@@ -3,6 +3,7 @@ package gui;
 
 import java.util.ArrayList;
 
+import persistence.CharacterBank;
 import actors.Hero;
 import actors.Profession;
 import game.*;
@@ -54,6 +55,7 @@ public class Controller {
     GraphicsContext gc;
     Camera camera = new Camera(new Position(0, 0));
     Position cameraDragStartPos;
+    CharacterBank characters = new CharacterBank();
     double startX, startY;
     Game game;
     private AnimationTimer timer = new AnimationTimer() {
@@ -124,20 +126,45 @@ public class Controller {
     
     @FXML
     public void startGame(){
-    	if (gameReady()){
-    		Hero hero = new Hero(Profession.MAGE, 2, 2);
-            Level currentLevel = new Level(hero, "src/assets/Levels/L1.txt");
-            game.changeLevel(currentLevel);
-            //here-- call method to either load or create new char based on state
-            game.setHeroName(nameInput.getText());
-    		game.setState(GameState.WALKING);
-    		timer.start();
-    		viewWalking();
-    		startHandlingWalk();
-    		startHandlingDrag();
-    		
+    	switch(game.getState()){
+		case CHARACTER_CREATE:
+			newGame();
+			break;
+		case CHARACTER_LOAD:
+			loadGame();
+
+			break;
+		case COMBAT: case END: case LOADING: case START: case WALKING:
+			break;
+    	
     	}
     }
+    
+    private void newGame(){
+    	if (gameReady()){
+    		//is the location in the const even used??
+    		Hero hero = new Hero(Profession.MAGE, 2, 2);
+    		hero.setName(nameInput.getText());
+    		showLevel(hero);
+    	}    	
+    }
+    
+    private void loadGame(){
+		Hero hero = characters.getHero("name");
+		showLevel(hero);
+    }
+    
+    private void showLevel(Hero hero){
+		Level currentLevel = new Level(hero, "src/assets/Levels/L1.txt");
+		game.changeLevel(currentLevel);
+		game.setState(GameState.WALKING);
+		timer.start();
+		viewWalking();
+		startHandlingWalk();
+		startHandlingDrag();    	
+    }
+    
+    
     
     private boolean gameReady(){
     	return profSelected != null && !nameInput.getText().equals("");

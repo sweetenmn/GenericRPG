@@ -30,6 +30,15 @@ public class Hero extends Actor {
         this.currentHealth = maxHealth;
     }
     
+    public Hero(Profession prof, int x, int y, int level){
+        this.setPosition(x, y);
+        this.prof = prof;
+        this.sprite = prof.getAvatar();
+        this.alive = true;
+        this.level = level;
+        adjustStats();
+    }
+    
     
     private void adjustStats(){
     	this.expToNextLevel = offsetByLevel(INIT_EXP_REQUIRED, EXP_BUFF);
@@ -146,7 +155,6 @@ public class Hero extends Actor {
 	@Override
 	public void setAttacker(Actor actor) {
 		this.attacker = actor;
-		
 	}
 	
 	public void setName(String input){
@@ -154,6 +162,17 @@ public class Hero extends Actor {
 	}
 	public String getName(){
 		return this.name;
+	}
+	
+	public int getActualHealth(){
+		return this.currentHealth;
+	}
+	public int getActualExp(){
+		return this.experience;
+	}
+	
+	public Profession getProfession(){
+		return this.prof;
 	}
 
 
