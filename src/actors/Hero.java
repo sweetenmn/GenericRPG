@@ -88,9 +88,6 @@ public class Hero extends Actor {
         }
 
     }
-    //public double getHealthPercent() {
-      //  return (double)currentHealth / (double)maxHealth;
-    //}
     
     public double getExpPercent() {
     	return (double)experience / (double)expToNextLevel;
