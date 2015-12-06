@@ -120,4 +120,8 @@ public class Game {
     public void attack() {
         combat.heroAttack();
     }
+
+    public Combat getCombat() {
+        return combat;
+    }
 }

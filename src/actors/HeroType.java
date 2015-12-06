@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 
 public enum HeroType {
     ROGUE(25, 5, 5, 7) {
-        @Override
+
         public Image getAvatar() {
             return new Image("assets/rogue_down.png");
         }

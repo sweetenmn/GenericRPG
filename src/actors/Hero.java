@@ -123,7 +123,7 @@ public class Hero extends Actor{
 	public String getName(){return this.name;}
 	public int getActualHealth(){return currentHealth;}
 	public int getActualExp(){return this.experience;}
-	public Profession getProfession(){return this.prof;}
+	public HeroType getProfession(){return this.prof;}
 	public double getExpPercent(){return (double)experience / (double)expToNextLevel;}
 	@Override
     public Image getSprite(){return sprite;}
