@@ -8,7 +8,8 @@ import util.Dice;
 /**
  * Created by josephbenton on 9/13/15.
  */
-public class Hero extends Actor {
+
+public class Hero extends Actor{
     private int attack, luck, level;
     int experience, expToNextLevel;
     private Actor attacker;
@@ -19,7 +20,7 @@ public class Hero extends Actor {
     private static final int STAT_BUFF = 1;
     private static final int INIT_EXP_REQUIRED = 100;
 
-    public Hero(Profession prof, String name) {
+    public Hero(Profession prof, String name){
         this.prof = prof;
         this.sprite = prof.getSpriteDirection(Direction.DOWN);
         this.alive = true;
@@ -39,13 +40,11 @@ public class Hero extends Actor {
         adjustStats();
     }
     
-    
     private void adjustStats(){
     	this.expToNextLevel = offsetByLevel(INIT_EXP_REQUIRED, EXP_BUFF);
     	this.maxHealth = offsetByLevel(prof.getMaxHealth(), HEALTH_BUFF);
     	this.attack = offsetByLevel(prof.getAttack(), STAT_BUFF);
     	this.luck = offsetByLevel(prof.getLuck(), STAT_BUFF);
-    	
     }
     
     private int offsetByLevel(int initial, int factorOf){
@@ -53,49 +52,39 @@ public class Hero extends Actor {
     	return initial + (levelOffset * factorOf);
     }
     
-    public void loadHealth(int health){
-    	this.currentHealth = health;
-    }
-    
-    public void loadExp(int exp){
-    	this.experience = exp;
-    }
-    
+    public void loadHealth(int health){this.currentHealth = health;}
+    public void loadExp(int exp){this.experience = exp;}
 
     @Override
-    public boolean attack(Actor actor) {
+    public boolean attack(Actor actor){
     	actor.setAttacker(this);
         Dice dice = new Dice(20);
         int roll = dice.roll() + luck;
-        if (roll < 10) {
+        if (roll < 10){
             actor.takeDamage(0);
             return false;
-        } else if (roll < 20) {
+        } else if (roll < 20){
             actor.takeDamage(attack);
             return true;
-        } else {
+        } else{
             actor.takeDamage(attack * 2);
             return true;
         }
     }
 
     @Override
-    public void takeDamage(int damage) {
+    public void takeDamage(int damage){
         System.out.println(this.name + " took " + damage + " damage!");
         currentHealth -= damage;
         if (currentHealth <= 0) {
             this.die();
         }
-
     }
-    //public double getHealthPercent() {
+    
+    //public double getHealthPercent(){
       //  return (double)currentHealth / (double)maxHealth;
     //}
-    
-    public double getExpPercent() {
-    	return (double)experience / (double)expToNextLevel;
-    }
-    
+        
     public void addExperience(int monsterExp){
     	experience += monsterExp;
     	System.out.println("Gained exp: " + monsterExp);
@@ -112,52 +101,28 @@ public class Hero extends Actor {
     	}
     }
     
-    public int getLevel(){
-    	return level;
-    }
-
-    @Override
-    public Image getSprite() {
-        return sprite;
-    }
-    
-    public void setSprite(Image image){
-    	sprite = image;
-    }
-    
     public void moveAnimated(Direction dir, Level currentLevel){
     	move(dir, currentLevel);
     	setSprite(prof.getSpriteDirection(dir));
-    	
     }
 
     @Override
-    public void die() {
+    public void die(){
         this.sprite = new Image("assets/skull.png");
         alive = false;
     }
 
 	@Override
-	public void setAttacker(Actor actor) {
-		this.attacker = actor;
-	}
+	public void setAttacker(Actor actor){this.attacker = actor;}
+	public void setName(String input){this.name = input;}
 	
-	public void setName(String input){
-		this.name = input;
-	}
-	public String getName(){
-		return this.name;
-	}
-	
-	public int getActualHealth(){
-		return currentHealth;
-	}
-	public int getActualExp(){
-		return this.experience;
-	}
-	public Profession getProfession(){
-		return this.prof;
-	}
-
-
+	public void setSprite(Image image){sprite = image;}
+	public int getLevel(){return level;}
+	public String getName(){return this.name;}
+	public int getActualHealth(){return currentHealth;}
+	public int getActualExp(){return this.experience;}
+	public Profession getProfession(){return this.prof;}
+	public double getExpPercent(){return (double)experience / (double)expToNextLevel;}
+	@Override
+    public Image getSprite(){return sprite;}
 }

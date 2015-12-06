@@ -1,14 +1,12 @@
 package actors;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
-
-public class HeroTest {
+public class HeroTest{
 	//passes without this.sprite = prof.getAvatar();
 	@Test
-	public void basicTest() {
+	public void basicTest(){
 		Hero hero = new Hero(Profession.KNIGHT, "Me");
 		assertEquals(1, hero.getLevel());
 		hero.addExperience(10);
@@ -19,5 +17,4 @@ public class HeroTest {
 		assertEquals(10, hero.experience);
 		System.out.println(hero.getExpPercent());
 		}
-
 }

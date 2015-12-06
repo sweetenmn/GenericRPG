@@ -12,13 +12,13 @@ import javafx.scene.paint.Color;
 public class Combat extends Drawable{
     Actor hero;
     Actor monster;
-    public Combat(Actor hero, Actor monster) {
+    public Combat(Actor hero, Actor monster){
         this.hero = hero;
         this.monster = monster;
     }
 
     @Override
-    public void draw(Canvas canvas, Camera camera) {
+    public void draw(Canvas canvas, Camera camera){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, 1000, 1000);

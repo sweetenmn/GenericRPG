@@ -3,7 +3,7 @@ package game;
 /**
  * Created by josephbenton on 11/23/15.
  */
-public enum GameState {
+public enum GameState{
     START,
     LOADING,
     CHARACTER_CREATE,

@@ -29,17 +29,10 @@ public class StartScreen extends Drawable {
 		this.draw(canvas, camera);
 	}
 	
-	
 	@Override
 	public void draw(Canvas canvas, Camera camera){
 		for (Drawable obj : contents) {
 			obj.draw(canvas, camera);
 		}
 	}
-
-
-	
-	
-	
-	
 }

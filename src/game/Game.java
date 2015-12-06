@@ -21,16 +21,16 @@ public class Game {
     GameState state;
     Combat combat;
 
-    public void moveHero(Direction dir) {
-        if (hero.isAlive()) {
+    public void moveHero(Direction dir){
+        if(hero.isAlive()){
             hero.moveAnimated(dir, currentLevel);
         }
     }
-    public boolean heroAtk() {
+    public boolean heroAtk(){
     	boolean combat = false;
-        if (hero.isAlive()) {
-            for (Monster m : mobs) {
-                if (m.getPosition().getDistanceTo(hero.getPosition()) < 2) {
+        if(hero.isAlive()){
+            for (Monster m : mobs){
+                if(m.getPosition().getDistanceTo(hero.getPosition()) < 2) {
                     startCombat(m);
                     combat = true;
                 }
@@ -38,82 +38,58 @@ public class Game {
         }
         return combat;
     }
-    public void changeLevel(Level level) {
+    public void changeLevel(Level level){
         this.currentLevel = level;
         this.hero = level.getHero();
         this.mobs = level.getMonsters();
     }
 
-    public void startCombat(Actor monster) {
+    public void startCombat(Actor monster){
         combat = new Combat(hero, monster);
         setState(GameState.COMBAT);
     }
     
-    public Hero getHero(){
-    	return hero;
-    }
+    public Hero getHero(){return hero;}
 
-    public double getHeroHealthPercent() {
-    	return hero.getHealthPercent();
-    }
-    
-    public double getHeroExpPercent() {
-    	return hero.getExpPercent();
-    }
-    
-    public int getHeroLevel() {
-    	return hero.getLevel();
-    }
-    
-    public String getHeroName(){
-    	return hero.getName();
-    }
-    
-    public void setHeroName(String name){
-    	hero.setName(name);
-
-    }
-    
+    public double getHeroHealthPercent(){return hero.getHealthPercent();}
+    public double getHeroExpPercent(){return hero.getExpPercent();}
+    public int getHeroLevel(){return hero.getLevel();}
+    public String getHeroName(){return hero.getName();}
+    public void setHeroName(String name){hero.setName(name);}
+  
     public void loadHero(int health, int exp){
     	hero.loadHealth(health);
     	hero.loadExp(exp);
     }
 
-    public void checkForDeath(Canvas canvas) {
+    public void checkForDeath(Canvas canvas){
         if (!hero.isAlive()) {
             gameEnd(canvas);
         }
     }
     
-    public boolean checkAtExit(){
-    	return currentLevel.atExit(hero.getPosition());
-    }
-    
+    public boolean checkAtExit(){return currentLevel.atExit(hero.getPosition());}
 
-    private void gameEnd(Canvas canvas) {
+    private void gameEnd(Canvas canvas){
         state = GameState.END;
         canvas.getGraphicsContext2D().drawImage(new Image("assets/game_over.png"), canvas.getWidth() / 2, canvas.getHeight() / 2);
     }
 
-    public void render(Canvas canvas, Camera camera) {
+    public void render(Canvas canvas, Camera camera){
         if (state.equals(GameState.WALKING)) {
             currentLevel.draw(canvas, camera);
-        } else if (state.equals(GameState.COMBAT)) {
+        } else if (state.equals(GameState.COMBAT)){
             combat.draw(canvas, camera);
-        } else if (state.equals(GameState.START)) {
+        } else if (state.equals(GameState.START)){
             StartScreen startScreen = new StartScreen(0,0);
             startScreen.draw(canvas, camera);
         }
     }
 
-    public void setState(GameState state) {
+    public void setState(GameState state){
         prevState = state;
         this.state = state;
     }
 
-
-
-    public GameState getState() {
-        return state;
-    }
+    public GameState getState(){return state;}
 }

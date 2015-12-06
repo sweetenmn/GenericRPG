@@ -7,7 +7,7 @@ import game.Drawable;
 import game.Position;
 import game.graphics.Camera;
 
-public class MenuObject extends Drawable {
+public class MenuObject extends Drawable{
 	MenuImage type;
 	public MenuObject(MenuImage type){
 		this.type = type;
@@ -31,14 +31,11 @@ public class MenuObject extends Drawable {
 		return p;
 	}
 	
-
-	
 	@Override
 	public void draw(Canvas canvas, Camera camera){
 		GraphicsContext gc = canvas.getGraphicsContext2D();
         double x = position.getX() * sprite.getWidth();
         double y = position.getY() * sprite.getHeight();
         gc.drawImage(sprite, x, y, sprite.getWidth(), sprite.getHeight());
-	}
-	
+	}	
 }
