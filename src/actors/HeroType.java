@@ -58,10 +58,9 @@ public enum HeroType {
 			return new Image("assets/knight_portrait.png");
 		}
     };
-    private int maxHealth;
-    private int attack;
-    private int intel;
-    private int luck;
+    private int maxHealth, attack, intel, luck;
+    
+   
 
     public abstract Image getSpriteDirection(Direction dir);
     public abstract Image getCombatAvatar();

@@ -34,6 +34,10 @@ public class Monster extends Actor {
     	int result = dice.roll();
         return MonsterType.values()[result];
     }
+    
+    public MonsterType getType(){
+    	return type;
+    }
 
     @Override
     public boolean attack(Actor actor) {
@@ -68,7 +72,6 @@ public class Monster extends Actor {
     @Override
     public void die(){
     	this.attacker.addExperience(expValue);
-    	System.out.println("New exp: " + this.attacker.experience);
         this.sprite = new Image("assets/skull.png");
         this.combatSprite = new Image("assets/skull.png");
         alive = false;

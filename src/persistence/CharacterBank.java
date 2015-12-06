@@ -13,9 +13,9 @@ import javafx.scene.control.Alert.AlertType;
 import actors.Hero;
 import actors.HeroType;
 
-public class CharacterBank{
-	private String documentName = "src/assets/Characters.txt";
-	private static String DELIMITER = "/~RPG~/";
+public class CharacterBank {
+	private static final String DOCUMENT_NAME = "src/assets/Characters.txt";
+	private static final String DELIMITER = "/~RPG~/";
 	private ArrayList<Hero> savedHeroes = new ArrayList<Hero>();
 	ObservableList<String> heroNames = FXCollections.observableArrayList(); 
 	
@@ -42,8 +42,9 @@ public class CharacterBank{
 	
 	private void writeHero(Hero hero){
 		FileWriter writer;
-		try{
-			writer = new FileWriter(documentName, true);
+
+		try {
+			writer = new FileWriter(DOCUMENT_NAME, true);
 			writer.write(DELIMITER + hero.getName());
 			writer.write(DELIMITER + hero.getProfession());
 			writer.write(DELIMITER + hero.getLevel());
@@ -64,7 +65,7 @@ public class CharacterBank{
 	}
 	
 	private void clearDoc() throws IOException{
-		FileWriter writer = new FileWriter(documentName);
+		FileWriter writer = new FileWriter(DOCUMENT_NAME);
 		writer.close();
 	}
 	
@@ -101,8 +102,8 @@ public class CharacterBank{
 		savedHeroes.clear();
 		heroNames.clear();
     	FileReader reader;
-		try{
-			reader = new FileReader(documentName);
+		try {
+			reader = new FileReader(DOCUMENT_NAME);
 			BufferedReader bufferedReader = new BufferedReader(reader);
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {

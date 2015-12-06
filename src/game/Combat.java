@@ -1,6 +1,7 @@
 package game;
 
 import actors.Actor;
+import actors.Monster;
 import game.graphics.Camera;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -96,5 +97,9 @@ public class Combat extends Drawable{
         }
 
 
+    }
+    
+    public Monster getMonster(){
+    	return (Monster) monster;
     }
 }

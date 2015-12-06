@@ -2,6 +2,8 @@ package actors;
 
 import game.Direction;
 import game.Level;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import util.Dice;
 
@@ -11,7 +13,9 @@ import util.Dice;
 
 public class Hero extends Actor{
     private int attack, luck, level;
-    int experience, expToNextLevel;
+    private int experience, expToNextLevel;
+    private int expBoost = 0;
+    private int boostCount= 0;
     private Actor attacker;
     private String name;
     private HeroType prof;
@@ -26,6 +30,7 @@ public class Hero extends Actor{
         this.sprite = prof.getSpriteDirection(Direction.DOWN);
         this.alive = true;
         this.experience = 0;
+        this.expBoost = 0;
         this.level = 1;
         this.name = name;
         adjustStats();
@@ -39,6 +44,7 @@ public class Hero extends Actor{
         this.alive = true;
         this.name = name;
         this.level = level;
+        this.expBoost = 0;
         adjustStats();
     }
     
@@ -86,10 +92,57 @@ public class Hero extends Actor{
 
 
     public void addExperience(int monsterExp){
-    	experience += monsterExp;
-    	System.out.println("Gained exp: " + monsterExp);
+    	experience += (monsterExp + getBoost());
     	this.levelIf();
     }
+    
+    public boolean usePotion(int PotionType){
+    	boolean used = false;
+    	switch(PotionType){
+    	case 0:
+    		used = heal();
+    		break;
+    	case 1://exp
+    		used = boost();
+    		break;
+    	}
+    	return used;
+    }
+    
+    private boolean boostActive(){
+    	return boostCount != 0;
+    }
+    
+    private int getBoost(){
+    	if (boostActive()){
+    		return 5 * ((level - 1) + 3);
+    	}
+    	return 0;
+    }
+    
+    private boolean heal(){
+    	if (currentHealth < maxHealth){
+    		currentHealth += 10;
+    		return true;
+    	}
+    	return false;
+    	
+    }
+    
+    private boolean boost(){
+    	boolean boosted = false;
+    	if (!boostActive()){
+    		boostCount = 4;
+			boosted  = true;
+		} else {
+			Alert boostActive = new Alert(AlertType.INFORMATION);
+			boostActive.setContentText("Boost still active!\n"
+					+ "Please wait " + boostCount + " more battle.");
+		}
+    	return boosted;
+    }
+    
+    
     
     private void levelIf(){
     	if (expToNextLevel - experience <= 0){
@@ -115,7 +168,7 @@ public class Hero extends Actor{
 	@Override
 	public void setAttacker(Actor actor){this.attacker = actor;}
 	public void setName(String input){this.name = input;}
-	
+
 	public void setSprite(Image image){sprite = image;}
 	public int getLevel(){return level;}
 	public String getName(){return this.name;}
@@ -124,5 +177,11 @@ public class Hero extends Actor{
 	public HeroType getProfession(){return this.prof;}
 	public double getExpPercent(){return (double)experience / (double)expToNextLevel;}
 	@Override
-    public Image getSprite(){return sprite;}
+    	public Image getSprite(){return sprite;}
+	public Actor getAttacker(){
+		return attacker;
+	}
 }
+
+	
+	
