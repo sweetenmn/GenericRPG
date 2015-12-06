@@ -220,7 +220,7 @@ public class Controller {
     
     private void showLevel(Hero hero){
     	game.setState(GameState.WALKING);
-		Level currentLevel = new Level(hero, "src/assets/Levels/L1.txt");
+		Level currentLevel = new Level(hero);
 		game.changeLevel(currentLevel);
 		viewWalking();  	
 		timer.start();

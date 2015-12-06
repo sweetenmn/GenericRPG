@@ -12,6 +12,7 @@ import javafx.scene.paint.Color;
 import terrain.Exit;
 import terrain.Floor;
 import terrain.Wall;
+import util.Dice;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -44,14 +45,26 @@ public class Level extends Drawable {
     }
 
     public Level(Hero hero, String map) {
-        Scanner scan = null;
         monsters = new ArrayList<>();
+        buildLevel(map);
+        this.hero = hero;
+    }
+    
+    public Level(Hero hero){
+    	monsters = new ArrayList<>();
+    	this.hero = hero;
+    	buildLevel(randomLevel());
+    	
+    }
+    
+    private void buildLevel(String map){
+    	Scanner scan = null;
         try {
             scan = new Scanner(new File(map));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        this.hero = hero;
+        
         width = scan.nextInt();
         height = scan.nextInt();
         wallMap = new boolean[width][height];
@@ -72,6 +85,13 @@ public class Level extends Drawable {
                 }
             }
         }
+    	
+    }
+    
+    public String randomLevel(){
+    	Dice dice = new Dice(12);
+    	int level = dice.roll();
+    	return "src/assets/Levels/L" + level + ".txt";
     }
 
     public void addFloor(int x, int y) {
