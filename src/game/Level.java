@@ -24,11 +24,12 @@ import java.util.Scanner;
  * Created by josephbenton on 9/13/15.
  */
 public class Level extends Drawable {
-    int height;
-    int width;
-    Hero hero;
-    ArrayList<Mob> monsters;
-    boolean[][] wallMap;
+    private int height;
+    private int width;
+    private Hero hero;
+    private Position exit;
+    private ArrayList<Mob> monsters;
+    private boolean[][] wallMap;
 
     public Level(int width, int height, Hero hero) {
         super();
@@ -99,11 +100,24 @@ public class Level extends Drawable {
         contents.add(new Floor(p));
     }
     public void addMonster(int x, int y) {
-        Monster monster = new Monster();
+        Monster monster = new Monster(hero.getLevel());
         monster.setPosition(x, y);
         contents.add(monster);
         monsters.add(monster);
 
+    }
+    
+    public boolean isOccupied(Position p){
+    	for (Mob m: monsters){
+    		if (m.getPosition().equals(p)){
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
+    public void addItemAt(String item, Position p){
+    	
     }
 
     public ArrayList<Mob> getMonsters() {
@@ -119,10 +133,15 @@ public class Level extends Drawable {
     public void addExit(int x, int y) {
         Position p = new Position(x, y);
         contents.add(new Exit(p));
+        this.exit = p;
     }
 
     public boolean isClear(Position p) {
-        return !wallMap[p.getX()][p.getY()];
+        return !wallMap[p.getX()][p.getY()] && !isOccupied(p);
+    }
+    
+    public boolean atExit(Position p){
+    	return p.equals(exit);
     }
 
     @Override

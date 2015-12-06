@@ -21,7 +21,7 @@ public class Hero extends Actor {
 
     public Hero(Profession prof, String name) {
         this.prof = prof;
-        this.sprite = prof.getAvatar();
+        this.sprite = prof.getSpriteDirection(Direction.DOWN);
         this.alive = true;
         this.experience = 0;
         this.level = 1;
@@ -32,7 +32,7 @@ public class Hero extends Actor {
     
     public Hero(Profession prof, String name, int level){
         this.prof = prof;
-        this.sprite = prof.getAvatar();
+        this.sprite = prof.getSpriteDirection(Direction.DOWN);
         this.alive = true;
         this.name = name;
         this.level = level;

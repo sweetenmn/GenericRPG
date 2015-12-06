@@ -27,7 +27,6 @@ public class Game {
     public void moveHero(Direction dir) {
         if (hero.isAlive()) {
             hero.moveAnimated(dir, currentLevel);
-            step();
         }
     }
     public boolean heroAtk() {
@@ -88,6 +87,10 @@ public class Game {
         if (!hero.isAlive()) {
             gameEnd(canvas);
         }
+    }
+    
+    public boolean checkAtExit(){
+    	return currentLevel.atExit(hero.getPosition());
     }
     
 

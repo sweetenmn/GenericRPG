@@ -6,10 +6,7 @@ import javafx.scene.image.Image;
 
 public enum Profession {
     ROGUE(25, 5, 5, 7) {
-        @Override
-        public Image getAvatar() {
-            return new Image("assets/rogue_down.png");
-        }
+
 
 		@Override
 		public Image getSpriteDirection(Direction dir) {
@@ -29,10 +26,7 @@ public enum Profession {
         
     },
     MAGE(20, 8, 10, 10) {
-        @Override
-        public Image getAvatar() {
-            return new Image("assets/mage_sprite.png");
-        }
+
 
 		@Override
 		public Image getSpriteDirection(Direction dir) {
@@ -51,10 +45,7 @@ public enum Profession {
 		}
     },
     KNIGHT(35, 10, 1, 2) {
-        @Override
-        public Image getAvatar() {
-            return new Image("assets/knight_down.png");
-        }
+
 
 		@Override
 		public Image getSpriteDirection(Direction dir) {
@@ -79,7 +70,6 @@ public enum Profession {
     private int luck;
 
 
-    public abstract Image getAvatar();
     public abstract Image getSpriteDirection(Direction dir);
     public abstract Image getCombatAvatar();
     public abstract Image getPortrait();

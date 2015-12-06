@@ -15,16 +15,17 @@ public class Monster extends Mob {
     private MonsterType type;
     private ArrayList<String> loot;
 
-    public Monster() {
+    public Monster(int level) {
     	this.type = randomType();
-        this.maxHealth = type.getMaxHealth();
+        this.maxHealth = type.getMaxHealth(level);
         this.currentHealth = maxHealth;
-        this.attack = type.getAttack();
-        this.luck = type.getLuck();
+        this.attack = type.getAttack(level);
+        this.luck = type.getLuck(level);
         this.loot = type.getLoot();
-        this.expValue = type.getExpValue();
+        this.expValue = type.getExpValue(level);
         this.sprite = type.getAvatar();
         this.alive = true;
+        //System.out.println("LEVEL: " + level + "HEALTH: " + this.maxHealth);
     
     }
     

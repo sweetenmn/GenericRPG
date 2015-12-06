@@ -280,6 +280,7 @@ public class Controller {
                     } else if (code == KeyCode.SHIFT){
                     	game.heroAtk();
                     }
+                    checkHeroAtExit();
                 });
     }
     
@@ -298,6 +299,7 @@ public class Controller {
     }
     
     private void viewWalking(){
+    	camera = new Camera(new Position(0, 0));
     	startPane.setVisible(false);
     	loadPane.setVisible(false);
 		adventurePane.setVisible(true);
@@ -316,6 +318,12 @@ public class Controller {
     	if(game.heroAtk()){
     		adventurePane.setVisible(false);
     		combatPane.setVisible(true);
+    	}
+    }
+    
+    private void checkHeroAtExit(){
+    	if (game.checkAtExit()){
+    		showLevel(game.getHero());
     	}
     }
 
