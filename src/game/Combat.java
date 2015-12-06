@@ -40,7 +40,7 @@ public class Combat extends Drawable{
 
 
     @Override
-    public void draw(Canvas canvas, Camera camera) {
+    public void draw(Canvas canvas, Camera camera){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, 1000, 1000);

@@ -1,6 +1,6 @@
 package menu;
 
-public enum MenuImage {
+public enum MenuImage{
 	TITLE("assets/StartScreen/title_BG.png"),
 	NEW_GAME("assets/StartScreen/new_game.png"),
 	LOAD_GAME("assets/StartScreen/load_game.png");
@@ -12,5 +12,4 @@ public enum MenuImage {
 	public String image(){
 		return imageString;
 	}
-
 }
