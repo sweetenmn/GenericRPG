@@ -112,11 +112,6 @@ public class Game {
         this.state = state;
     }
 
-    public void step() {
-        for (Mob m : mobs) {
-            m.stepTowards(hero, currentLevel);
-        }
-    }
 
     public GameState getState() {
         return state;
