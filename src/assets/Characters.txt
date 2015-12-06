@@ -12,7 +12,7 @@
 /~RPG~/a/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
 /~RPG~/we/~RPG~/MAGE/~RPG~/1/~RPG~/20/~RPG~/0
 /~RPG~/sdf/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
-/~RPG~/knight/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
 /~RPG~/r/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
 /~RPG~/fas/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
 /~RPG~/asdfasd/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
+/~RPG~/knight/~RPG~/KNIGHT/~RPG~/2/~RPG~/15/~RPG~/15

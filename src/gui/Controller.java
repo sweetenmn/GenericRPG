@@ -1,11 +1,16 @@
 package gui;
 
 import java.util.ArrayList;
+
 import persistence.CharacterBank;
 import actors.Hero;
 import actors.HeroType;
 import actors.MonsterType;
-import actors.Profession;
+import game.Direction;
+import game.Game;
+import game.GameState;
+import game.Level;
+import game.Position;
 import game.graphics.Camera;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
@@ -76,7 +81,7 @@ public class Controller{
                 name.setText(game.getHeroName() + " | Level " + game.getHeroLevel());
                 game.render(canvas, camera);
                 game.checkForDeath(canvas);
-                if (game.getCombat() != null) game.getCombat().setHealthBars(combatHeroHealth, combatMonsterHealth);
+                handleCombat();
             }
             last = now;
         }
@@ -306,9 +311,20 @@ public class Controller{
             if (game.heroAtk()) {
                 adventurePane.setVisible(false);
                 combatPane.setVisible(true);
-		runButton.setVisible(true);
+                runButton.setVisible(true);
             }
         }
+    }
+    
+    private void handleCombat(){
+    	if (game.getCombat() != null){
+    		game.getCombat().setHealthBars(combatHeroHealth, combatMonsterHealth);
+    	
+	    	if (!game.getCombat().isMonsterAlive()){
+	    		combatPane.setVisible(false);
+	    		adventurePane.setVisible(true);
+	    	}
+    	}
     }
     
     private void checkHeroAtExit(){

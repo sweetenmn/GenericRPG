@@ -102,7 +102,7 @@ public class Level extends Drawable{
     public boolean isOccupied(Position p){
     	for (Monster m: monsters){
     		if (m.getPosition().equals(p)){
-    			return true;
+    			return m.isAlive();
     		}
     	}
     	return false;
