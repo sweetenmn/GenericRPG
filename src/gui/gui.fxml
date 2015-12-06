@@ -102,25 +102,32 @@
                      <children>
                         <Pane prefHeight="100.0" prefWidth="300.0">
                            <children>
-                              <Label layoutX="90.0" layoutY="5.0" prefHeight="19.0" prefWidth="120.0" text="Choose Hero's class:">
+                              <Label layoutX="94.0" layoutY="5.0" prefHeight="19.0" prefWidth="120.0" text="Choose Hero's class:">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="63.0" fitWidth="49.0" layoutX="20.0" layoutY="22.0" onMouseClicked="#selectMage" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="63.0" fitWidth="49.0" layoutX="80.0" layoutY="29.0" onMouseClicked="#selectMage" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../assets/mage_portrait.png" />
                                  </image>
                               </ImageView>
-                              <ImageView fitHeight="55.0" fitWidth="48.0" layoutX="72.0" layoutY="28.0" onMouseClicked="#selectWarrior" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="55.0" fitWidth="48.0" layoutX="129.0" layoutY="35.0" onMouseClicked="#selectKnight" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/warrior.png" />
+                                    <Image url="@../assets/knight_portrait.png" />
                                  </image>
                               </ImageView>
-                              <Text layoutX="29.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mage" />
-                              <Text layoutX="73.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Warrior" />
-                              <Rectangle fx:id="mageSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="79.0" layoutX="20.0" layoutY="17.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
-                              <Rectangle fx:id="warriorSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="79.0" layoutX="69.0" layoutY="19.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
+                              <Text layoutX="89.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mage" />
+                              <Text layoutX="133.0" layoutY="98.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Knight" />
+                              <Rectangle fx:id="mageSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="79.0" layoutX="80.0" layoutY="27.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
+                              <Rectangle fx:id="knightSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="79.0" layoutX="126.0" layoutY="27.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="52.0" />
+                              <ImageView fitHeight="56.0" fitWidth="55.0" layoutX="176.0" layoutY="35.0" onMouseClicked="#selectRogue" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../assets/rogue_portrait.png" />
+                                 </image>
+                              </ImageView>
+                              <Text layoutX="182.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rogue" />
+                              <Rectangle fx:id="rogueSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="79.0" layoutX="173.0" layoutY="27.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
                            </children>
                         </Pane>
                         <Pane prefHeight="100.0" prefWidth="306.0">

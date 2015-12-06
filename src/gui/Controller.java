@@ -56,7 +56,11 @@ public class Controller {
     @FXML
     Text savedText;
     @FXML
-    Rectangle mageSelect, warriorSelect;
+    Rectangle mageSelect;
+    @FXML
+    Rectangle knightSelect;
+    @FXML
+    Rectangle rogueSelect;
     @FXML
     ProgressBar healthBar, expBar;
     @FXML
@@ -94,6 +98,8 @@ public class Controller {
         startHandlingClicks();     
         gc = canvas.getGraphicsContext2D();
         game.render(canvas, camera);
+		startHandlingWalk();
+		startHandlingDrag(); 
         
     }
     
@@ -159,7 +165,7 @@ public class Controller {
     
     private void newGame(){
     	if (gameReady()){
-    		Hero hero = new Hero(Profession.MAGE);
+    		Hero hero = new Hero(profSelected);
     		hero.setName(nameInput.getText());
     		unselectAll();
     		nameInput.clear();
@@ -185,8 +191,8 @@ public class Controller {
 		Level currentLevel = new Level(hero, "src/assets/Levels/L1.txt");
 		game.changeLevel(currentLevel);
 		viewWalking();
-		startHandlingWalk();
-		startHandlingDrag();    	
+		//startHandlingWalk();
+		//startHandlingDrag();    	
 		timer.start();
     }
 
@@ -266,7 +272,7 @@ public class Controller {
     	loadPane.setVisible(false);
 		adventurePane.setVisible(true);
 		inventory.setVisible(true);
-		portrait.setImage(new Image("/assets/mage_portrait.png"));
+		portrait.setImage(game.getHero().getProfession().getPortrait());
     }
     
     @FXML
@@ -324,14 +330,22 @@ public class Controller {
     }
     
     @FXML
-    public void selectWarrior(){
-    	unselectOthers(warriorSelect);
+    public void selectKnight(){
+    	unselectOthers(knightSelect);
+    	profSelected = Profession.KNIGHT;
+    }
+    
+    @FXML
+    public void selectRogue(){
+    	unselectOthers(rogueSelect);
+    	profSelected = Profession.ROGUE;
     }
     
     private ArrayList<Rectangle> selectBoxes(){
     	ArrayList<Rectangle> boxes = new ArrayList<Rectangle>();
     	boxes.add(mageSelect);
-    	boxes.add(warriorSelect);
+    	boxes.add(knightSelect);
+    	boxes.add(rogueSelect);
     	return boxes;
     }
     

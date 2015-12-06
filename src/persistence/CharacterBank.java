@@ -137,8 +137,8 @@ public class CharacterBank {
 	private Profession stringToProfession(String prof){
 		if (prof.equals("MAGE")){
 			return Profession.MAGE;
-		} else if (prof.equals("WARRIOR")){
-			return Profession.WARRIOR;
+		} else if (prof.equals("KNIGHT")){
+			return Profession.KNIGHT;
 		} else {
 			return Profession.ROGUE;
 		}

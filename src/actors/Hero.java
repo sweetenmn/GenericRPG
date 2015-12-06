@@ -125,23 +125,8 @@ public class Hero extends Actor {
     
     public void moveAnimated(Direction dir, Level currentLevel){
     	move(dir, currentLevel);
-    	switch(dir){
-		case DOWN:
-			sprite = new Image("assets/mage_down.png");
-			break;
-		case LEFT:
-			sprite = new Image("assets/mage_left.png");
-			break;
-		case RIGHT:
-			sprite = new Image("assets/mage_right.png");
-			break;
-		case UP:
-			sprite = new Image("assets/mage_up.png");
-			break;
-		default:
-			break;
+    	setSprite(prof.getSpriteDirection(dir));
     	
-    	}
     }
 
     @Override
