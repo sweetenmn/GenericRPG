@@ -14,8 +14,8 @@ import actors.Hero;
 import actors.Profession;
 
 public class CharacterBank {
-	private String documentName = "src/assets/Characters.txt";
-	private static String DELIMITER = "/~RPG~/";
+	private static final String DOCUMENT_NAME = "src/assets/Characters.txt";
+	private static final String DELIMITER = "/~RPG~/";
 	private ArrayList<Hero> savedHeroes = new ArrayList<Hero>();
 	ObservableList<String> heroNames = FXCollections.observableArrayList(); 
 	
@@ -45,7 +45,7 @@ public class CharacterBank {
 	private void writeHero(Hero hero){
 		FileWriter writer;
 		try {
-			writer = new FileWriter(documentName, true);
+			writer = new FileWriter(DOCUMENT_NAME, true);
 			writer.write(DELIMITER + hero.getName());
 			writer.write(DELIMITER + hero.getProfession());
 			writer.write(DELIMITER + hero.getLevel());
@@ -67,7 +67,7 @@ public class CharacterBank {
 	}
 	
 	private void clearDoc() throws IOException{
-		FileWriter writer = new FileWriter(documentName);
+		FileWriter writer = new FileWriter(DOCUMENT_NAME);
 		writer.close();
 	}
 	
@@ -106,7 +106,7 @@ public class CharacterBank {
 		heroNames.clear();
     	FileReader reader;
 		try {
-			reader = new FileReader(documentName);
+			reader = new FileReader(DOCUMENT_NAME);
 			BufferedReader bufferedReader = new BufferedReader(reader);
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {

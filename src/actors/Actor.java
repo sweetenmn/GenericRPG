@@ -14,7 +14,6 @@ import javafx.scene.image.Image;
 public abstract class Actor extends Drawable {
     protected boolean alive;
 	protected int currentHealth, maxHealth;
-   // protected int currentHealth, maxHealth;
     abstract boolean attack(Actor actor); // returns true if attack is successful, else returns false
 
     abstract void takeDamage(int damage);

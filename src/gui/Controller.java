@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import persistence.CharacterBank;
 import actors.Hero;
+import actors.MonsterType;
 import actors.Profession;
 import game.*;
 import game.graphics.Camera;
@@ -12,7 +13,6 @@ import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyCode;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -26,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
@@ -37,40 +38,37 @@ public class Controller {
     @FXML
     Canvas canvas;
     @FXML
-    Pane startPane, adventurePane, loadPane;
+    Pane startPane, adventurePane, loadPane, combatPane;
     @FXML
-    Pane combatPane;
+    VBox inspectPane;
     @FXML
     GridPane inventory;
     @FXML
     Button enterCombatButton, inspectButton, startButton, saveButton, exitButton, loadButton, clearButton;
     @FXML
+    Button runButton;
+    @FXML
     TextField nameInput;
     @FXML
     ImageView portrait, loadingView;
     @FXML
-    Text name, loadingName, savedText;
+    Text name, loadingName, savedText, inspectType, inspectAttack, inspectHealth;
     @FXML
     Rectangle mageSelect, knightSelect, rogueSelect;
     @FXML
-    ProgressBar healthBar, expBar;
-    @FXML
-    ProgressBar combatHeroHealth;
-    @FXML
-    ProgressBar combatMonsterHealth;
+    ProgressBar healthBar, expBar, combatHeroHealth, combatMonsterHealth;
     
     @FXML
     ChoiceBox<String> characterChoice;
  
     
-    Profession profSelected;
+    private Profession profSelected;
 
-    GraphicsContext gc;
-    Camera camera = new Camera(new Position(0, 0));
-    Position cameraDragStartPos;
-    CharacterBank characters = new CharacterBank();
+    private Camera camera = new Camera(new Position(0, 0));
+    private Position cameraDragStartPos;
+    private CharacterBank characters = new CharacterBank();
     double startX, startY;
-    Game game;
+    private Game game;
     private AnimationTimer timer = new AnimationTimer() {
         long last = 0;
 
@@ -93,7 +91,6 @@ public class Controller {
     	game = new Game();
     	game.setState(GameState.START);
         startHandlingClicks();     
-        gc = canvas.getGraphicsContext2D();
         game.render(canvas, camera);
 		startHandlingWalk();
 		startHandlingDrag(); 
@@ -108,6 +105,7 @@ public class Controller {
         			handleClickAt(ev.getX(), ev.getY());     			
         		}); 	
     }
+   
     
     
     private void handleClickAt(double x, double y){
@@ -267,6 +265,7 @@ public class Controller {
     	pane.addEventHandler(KeyEvent.KEY_PRESSED,
                 ev -> {
                 	clearSavedMessage();
+                	clearInspect();
                 	KeyCode code = ev.getCode();
                     if (code == KeyCode.W || code == KeyCode.UP) {
                         up();
@@ -301,6 +300,7 @@ public class Controller {
     	camera = new Camera(new Position(0, 0));
     	startPane.setVisible(false);
     	loadPane.setVisible(false);
+    	combatPane.setVisible(false);
 		adventurePane.setVisible(true);
 		inventory.setVisible(true);
 		portrait.setImage(game.getHero().getProfession().getPortrait());
@@ -317,6 +317,7 @@ public class Controller {
     	if(game.heroAtk()){
     		adventurePane.setVisible(false);
     		combatPane.setVisible(true);
+    		runButton.setVisible(true);
     	}
     }
     
@@ -330,36 +331,42 @@ public class Controller {
 
     @FXML
     public void inspect() {
-
-    }
-
-    @FXML
-    public void up() {
-        if (game.getState().equals(GameState.WALKING)) {
-            game.moveHero(Direction.UP);
-        	}
+    	if (game.heroInspect()){
+    		MonsterType inspected = game.getInspected();
+    		String health = Integer.toString(inspected.getMaxHealth(game.getHeroLevel()));
+    		String attack = Integer.toString(inspected.getAttack(game.getHeroLevel()));
+    		String type = inspected.name();
+    		inspectType.setText(type);
+    		inspectAttack.setText("Attack: " + attack);
+    		inspectHealth.setText("Health: " + health);
+    		inspectPane.setVisible(true);
+    		
     	}
 
+    }
+    
     @FXML
-    public void down() {
-        if (game.getState().equals(GameState.WALKING)) {
-            game.moveHero(Direction.DOWN);
-            }    
+    public void run(){
+    	if (game.heroRun()){
+    		combatPane.setVisible(false);
+    		adventurePane.setVisible(true);
+    	} else {
+    		runButton.setVisible(false);
+    	}
     }
 
     @FXML
-    public void left() {
-        if (game.getState().equals(GameState.WALKING)) {
-            game.moveHero(Direction.LEFT);
-        	}    
-    }
+    public void up() { game.moveHero(Direction.UP);}
 
     @FXML
-    public void right() {
-        if (game.getState().equals(GameState.WALKING)) {
-            game.moveHero(Direction.RIGHT);
-            }
-    }
+    public void down() { game.moveHero(Direction.DOWN); }
+
+    @FXML
+    public void left() { game.moveHero(Direction.LEFT); }
+
+    @FXML
+    public void right() { game.moveHero(Direction.RIGHT); }
+    
     @FXML
     public void selectMage(){
     	unselectOthers(mageSelect);
@@ -404,6 +411,12 @@ public class Controller {
     private void clearSavedMessage(){
     	if (savedText.isVisible()){
     		savedText.setVisible(false);
+    	}
+    }
+    
+    private void clearInspect(){
+    	if (inspectPane.isVisible()){
+    		inspectPane.setVisible(false);
     	}
     }
     

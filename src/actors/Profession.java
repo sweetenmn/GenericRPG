@@ -64,10 +64,9 @@ public enum Profession {
 		}
     };
 
-    private int maxHealth;
-    private int attack;
-    private int intel;
-    private int luck;
+    private int maxHealth, attack, intel, luck;
+    
+    
 
 
     public abstract Image getSpriteDirection(Direction dir);

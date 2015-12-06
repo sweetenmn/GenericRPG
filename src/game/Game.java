@@ -3,26 +3,32 @@ package game;
 import actors.Actor;
 import actors.Hero;
 import actors.Monster;
+import actors.MonsterType;
 import game.graphics.Camera;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import menu.StartScreen;
 
 import java.util.ArrayList;
 
+import util.Dice;
+
 /**
  * Created by Joseph on 9/20/2015.
  */
 public class Game {
-    Hero hero;
-    ArrayList<Monster> mobs;
-    Level currentLevel;
-    GameState prevState;
-    GameState state;
-    Combat combat;
+    private Hero hero;
+    private ArrayList<Monster> mobs;
+    private Level currentLevel;
+    private GameState prevState;
+    private  GameState state;
+    private Combat combat;
+    private Monster inspected;
 
     public void moveHero(Direction dir) {
-        if (hero.isAlive()) {
+        if (state.equals(GameState.WALKING)&&  hero.isAlive()) {
             hero.moveAnimated(dir, currentLevel);
         }
     }
@@ -37,6 +43,25 @@ public class Game {
             }
         }
         return combat;
+    }
+    
+    public boolean heroInspect(){
+        if (hero.isAlive()) {
+            for (Monster m : mobs) {
+                if (m.getPosition().getDistanceTo(hero.getPosition()) < 2) {
+                	inspected = m;
+                    return true;
+                }
+            }
+            
+        }
+        return false;
+    	
+    }
+    
+    public MonsterType getInspected(){
+    	return inspected.getType();
+    	
     }
     public void changeLevel(Level level) {
         this.currentLevel = level;
@@ -104,6 +129,28 @@ public class Game {
             StartScreen startScreen = new StartScreen(0,0);
             startScreen.draw(canvas, camera);
         }
+    }
+    
+    public boolean heroRun(){
+    	boolean ran = false;
+    	Dice dice = new Dice(2);
+    	int result = dice.roll();
+    	System.out.println(result);
+    	switch(result){
+    	case 0:
+    		currentLevel.removeMonster(combat.getMonster());
+    		state = GameState.WALKING;
+    		ran = true;
+    		break;
+    	case 1:
+    		Alert noRun = new Alert(AlertType.INFORMATION);
+    		noRun.setContentText("Failed to run away!");
+    		noRun.show();
+    		ran = false;
+    		break;
+    	}
+    	return ran;
+    	
     }
 
     public void setState(GameState state) {

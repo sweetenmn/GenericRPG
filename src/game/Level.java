@@ -120,6 +120,11 @@ public class Level extends Drawable {
     public ArrayList<Monster> getMonsters() {
         return monsters;
     }
+    
+    public void removeMonster(Monster m){
+    	monsters.remove(m);
+    	contents.remove(m);
+    }
 
     public void addWall(int x, int y) {
         Position p = new Position(x, y);

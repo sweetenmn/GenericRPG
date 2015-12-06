@@ -16,7 +16,7 @@ public class HeroTest {
 		System.out.println(hero.getExpPercent());
 		hero.addExperience(100);
 		assertEquals(2, hero.getLevel());
-		assertEquals(10, hero.experience);
+		assertEquals(10, hero.getActualExp());
 		System.out.println(hero.getExpPercent());
 		}
 

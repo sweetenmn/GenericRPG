@@ -9,7 +9,7 @@ import util.Dice;
  * Created by Joseph on 9/13/2015.
  */
 public class Monster extends Actor {
-    private int currentHealth, maxHealth, attack, luck, expValue;
+    private int attack, luck, expValue;
     private String name;
     private Hero attacker;
     private MonsterType type;
@@ -45,13 +45,16 @@ public class Monster extends Actor {
     	
     	}
     }
+    
+    public MonsterType getType(){
+    	return type;
+    }
 
     @Override
     boolean attack(Actor actor) {
     	actor.setAttacker(this);
         Dice dice = new Dice(20);
         int roll = dice.roll() + luck;
-        System.out.println(roll);
         if (roll < 10) {
             actor.takeDamage(0);
             return false;
@@ -81,7 +84,6 @@ public class Monster extends Actor {
     @Override
     public void die() {
     	this.attacker.addExperience(expValue);
-    	System.out.println("New exp: " + this.attacker.experience);
         this.sprite = new Image("assets/skull.png");
         alive = false;
     }
