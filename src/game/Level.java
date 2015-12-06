@@ -10,17 +10,16 @@ import terrain.Exit;
 import terrain.Floor;
 import terrain.Wall;
 import util.Dice;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
 /**
  * Created by josephbenton on 9/13/15.
  */
-public class Level extends Drawable {
+
+public class Level extends Drawable{
     private int height;
     private int width;
     private Hero hero;
@@ -28,21 +27,21 @@ public class Level extends Drawable {
     private ArrayList<Monster> monsters;
     private boolean[][] wallMap;
 
-    public Level(int width, int height, Hero hero) {
+    public Level(int width, int height, Hero hero){
         super();
         this.hero = hero;
         this.height = height;
         this.width = width;
         this.monsters = new ArrayList<>();
         wallMap = new boolean[width][height];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
+        for(int i = 0; i < width; i++){
+            for(int j = 0; j < height; j++){
                 addFloor(i, j);
             }
         }
     }
 
-    public Level(Hero hero, String map) {
+    public Level(Hero hero, String map){
         monsters = new ArrayList<>();
         buildLevel(map);
         this.hero = hero;
@@ -52,38 +51,35 @@ public class Level extends Drawable {
     	monsters = new ArrayList<>();
     	this.hero = hero;
     	buildLevel(randomLevel());
-    	
     }
     
     private void buildLevel(String map){
     	Scanner scan = null;
         try {
             scan = new Scanner(new File(map));
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e){
             e.printStackTrace();
         }
-        
         width = scan.nextInt();
         height = scan.nextInt();
         wallMap = new boolean[width][height];
         scan.nextLine();
-        for (int i = 0; i < height; i++) {
+        for(int i = 0; i < height; i++){
             String line = scan.nextLine();
-            for (int j = 0; j < width; j++) {
+            for (int j = 0; j < width; j++){
                 addFloor(j, i);
-                if (line.charAt(j) == 'H') {
+                if (line.charAt(j) == 'H'){
                     hero.setPosition(j, i);
-                } else if (line.charAt(j) == 'M') {
+                } else if (line.charAt(j) == 'M'){
                     addMonster(j, i);
-                } else if (line.charAt(j) == 'E') {
+                } else if (line.charAt(j) == 'E'){
                     addExit(j, i);
-                } else if (line.charAt(j) == '#') {
+                } else if (line.charAt(j) == '#'){
                     wallMap[j][i] = true;
                     addWall(j, i);
                 }
             }
         }
-    	
     }
     
     public String randomLevel(){
@@ -92,16 +88,15 @@ public class Level extends Drawable {
     	return "src/assets/Levels/L" + level + ".txt";
     }
 
-    public void addFloor(int x, int y) {
+    public void addFloor(int x, int y){
         Position p = new Position(x, y);
         contents.add(new Floor(p));
     }
-    public void addMonster(int x, int y) {
+    public void addMonster(int x, int y){
         Monster monster = new Monster(hero.getLevel());
         monster.setPosition(x, y);
         contents.add(monster);
         monsters.add(monster);
-
     }
     
     public boolean isOccupied(Position p){
@@ -117,23 +112,21 @@ public class Level extends Drawable {
     	
     }
 
-    public ArrayList<Monster> getMonsters() {
-        return monsters;
-    }
+    public ArrayList<Monster> getMonsters(){return monsters;}
 
-    public void addWall(int x, int y) {
+    public void addWall(int x, int y){
         Position p = new Position(x, y);
         contents.add(new Wall(p));
         wallMap[p.getX()][p.getY()] = true;
     }
 
-    public void addExit(int x, int y) {
+    public void addExit(int x, int y){
         Position p = new Position(x, y);
         contents.add(new Exit(p));
         this.exit = p;
     }
 
-    public boolean isClear(Position p) {
+    public boolean isClear(Position p){
         return !wallMap[p.getX()][p.getY()] && !isOccupied(p);
     }
     
@@ -142,21 +135,21 @@ public class Level extends Drawable {
     }
 
     @Override
-    public void draw(Canvas canvas, Camera camera) {
+    public void draw(Canvas canvas, Camera camera){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, 1000, 1000);
         drawGrid(canvas,camera);
-        for (Drawable obj : contents) {
+        for(Drawable obj : contents){
             obj.draw(canvas, camera);
         }
         hero.draw(canvas, camera);
     }
 
-    private void drawGrid(Canvas canvas, Camera camera) {
+    private void drawGrid(Canvas canvas, Camera camera){
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setStroke(Color.LIGHTGRAY);
-        for (int j = 0; j < canvas.getWidth(); j += 32) {
+        for(int j = 0; j < canvas.getWidth(); j += 32){
             int offsetX = camera.getPosition().getX() % 32;
             int offsetY = camera.getPosition().getY() % 32;
             gc.strokeLine(j - offsetX, 0, j - offsetX, canvas.getHeight());
@@ -164,12 +157,9 @@ public class Level extends Drawable {
         }
     }
 
-    public Hero getHero() {
+    public Hero getHero(){return hero;}
 
-        return hero;
-    }
-
-    public boolean inBounds(Position p) {
+    public boolean inBounds(Position p){
         boolean inBoundsX = (p.getX() < width && p.getX() >= 0);
         boolean inBoundsY = (p.getY() < height && p.getY() >= 0);
         return inBoundsX && inBoundsY;

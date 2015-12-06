@@ -1,11 +1,9 @@
 package gui;
 
-
 import java.util.ArrayList;
-
 import persistence.CharacterBank;
 import actors.Hero;
-import actors.Profession;
+import actors.HeroType;
 import game.*;
 import game.graphics.Camera;
 import javafx.animation.AnimationTimer;
@@ -29,7 +27,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
-public class Controller {
+public class Controller{
     private long FRAMES_PER_SEC = 20L;
     private long NANO_INTERVAL = 100000000L / FRAMES_PER_SEC;
     @FXML
@@ -58,12 +56,10 @@ public class Controller {
     ProgressBar combatHeroHealth;
     @FXML
     ProgressBar combatMonsterHealth;
-    
     @FXML
     ChoiceBox<String> characterChoice;
- 
     
-    Profession profSelected;
+    HeroType profSelected;
 
     GraphicsContext gc;
     Camera camera = new Camera(new Position(0, 0));
@@ -71,25 +67,25 @@ public class Controller {
     CharacterBank characters = new CharacterBank();
     double startX, startY;
     Game game;
-    private AnimationTimer timer = new AnimationTimer() {
+    private AnimationTimer timer = new AnimationTimer(){
         long last = 0;
 
         @Override
-        public void handle(long now) {
-            if (now - last > NANO_INTERVAL) {
+        public void handle(long now){
+            if(now - last > NANO_INTERVAL){
                 healthBar.setProgress(game.getHeroHealthPercent());
                 expBar.setProgress(game.getHeroExpPercent());
                 name.setText(game.getHeroName() + " | Level " + game.getHeroLevel());
                 game.render(canvas, camera);
                 game.checkForDeath(canvas);
+                if (game.getCombat() != null) game.getCombat().setHealthBars(combatHeroHealth, combatMonsterHealth);
             }
             last = now;
         }
     };
 
-
     @FXML
-    public void initialize() {
+    public void initialize(){
     	game = new Game();
     	game.setState(GameState.START);
         startHandlingClicks();     
@@ -97,18 +93,14 @@ public class Controller {
         game.render(canvas, camera);
 		startHandlingWalk();
 		startHandlingDrag(); 
-        
-    }
-    
-   
+    }   
     
     private void startHandlingClicks(){
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
-        		ev ->{
+        		ev -> {
         			handleClickAt(ev.getX(), ev.getY());     			
         		}); 	
     }
-    
     
     private void handleClickAt(double x, double y){
     	if (game.getState() == GameState.START |
@@ -142,8 +134,7 @@ public class Controller {
     	setChoice();
     	game.setState(GameState.CHARACTER_LOAD);
     }
-   
-    
+       
     @FXML
     public void startGame(){
     	switch(game.getState()){
@@ -152,11 +143,9 @@ public class Controller {
 			break;
 		case CHARACTER_LOAD:
 			loadGame();
-
 			break;
 		case COMBAT: case END: case LOADING: case START: case WALKING:
-			break;
-    	
+			break;   	
     	}
     }
     
@@ -172,7 +161,6 @@ public class Controller {
     		startGame();
     		clearChoice();
     	}
-    	
     }
     
     private void newGame(){
@@ -207,6 +195,7 @@ public class Controller {
     		
     	}
     }
+    
     @FXML
     public void clearChoice(){
     	loadingName.setVisible(false);
@@ -216,7 +205,6 @@ public class Controller {
     	clearButton.setVisible(false);
     }
     
-    
     private void showLevel(Hero hero){
     	game.setState(GameState.WALKING);
 		Level currentLevel = new Level(hero);
@@ -224,18 +212,16 @@ public class Controller {
 		viewWalking();  	
 		timer.start();
     }
-
     
     private boolean gameReady(){
     	boolean ready = profSelected != null;
-    	if (!nameInput.getText().matches("^[a-zA-Z]+$")){
+    	if(!nameInput.getText().matches("^[a-zA-Z]+$")){
     		ready = false;
     		illegalName();
     		
-    	} else if (characters.heroExists(nameInput.getText())){
+    	}else if(characters.heroExists(nameInput.getText())){
     		ready = ready & confirm(ConfirmType.OVERWRITE);
     	}
-    	
     	return ready;
     }
     
@@ -247,7 +233,6 @@ public class Controller {
     }
     
     private boolean confirm(ConfirmType type){
-    	
     	Alert alert = new Alert(AlertType.CONFIRMATION);
     	switch(type){
 		case EXIT:
@@ -256,9 +241,7 @@ public class Controller {
 		case OVERWRITE:
 			createOverwriteAlert(alert);
 			break;
-    	
     	}
-
     	alert.showAndWait();
     	return alert.getResult() == ButtonType.OK;
     }
@@ -270,11 +253,11 @@ public class Controller {
                 	KeyCode code = ev.getCode();
                     if (code == KeyCode.W || code == KeyCode.UP) {
                         up();
-                    } else if (code == KeyCode.A|| code == KeyCode.LEFT)  {
+                    } else if (code == KeyCode.A|| code == KeyCode.LEFT){
                         left();
-                    } else if (code == KeyCode.S || code == KeyCode.DOWN) {
+                    } else if (code == KeyCode.S || code == KeyCode.DOWN){
                         down();
-                    } else if (code == KeyCode.D || code == KeyCode.RIGHT) {
+                    } else if (code == KeyCode.D || code == KeyCode.RIGHT){
                         right();
                     } else if (code == KeyCode.SHIFT){
                     	game.heroAtk();
@@ -313,11 +296,18 @@ public class Controller {
     }
 
     @FXML
+    public void attack() {
+        game.attack();
+    }
+
+    @FXML
     public void enterCombat() {
-    	if(game.heroAtk()){
-    		adventurePane.setVisible(false);
-    		combatPane.setVisible(true);
-    	}
+        if (game.getState().equals(GameState.WALKING)) {
+            if (game.heroAtk()) {
+                adventurePane.setVisible(false);
+                combatPane.setVisible(true);
+            }
+        }
     }
     
     private void checkHeroAtExit(){
@@ -326,56 +316,55 @@ public class Controller {
     	}
     }
 
-
-
     @FXML
-    public void inspect() {
+    public void inspect(){
 
     }
 
     @FXML
-    public void up() {
+    public void up(){
         if (game.getState().equals(GameState.WALKING)) {
             game.moveHero(Direction.UP);
         	}
     	}
 
     @FXML
-    public void down() {
-        if (game.getState().equals(GameState.WALKING)) {
+    public void down(){
+        if(game.getState().equals(GameState.WALKING)){
             game.moveHero(Direction.DOWN);
             }    
     }
 
     @FXML
-    public void left() {
-        if (game.getState().equals(GameState.WALKING)) {
+    public void left(){
+        if (game.getState().equals(GameState.WALKING)){
             game.moveHero(Direction.LEFT);
         	}    
     }
 
     @FXML
-    public void right() {
-        if (game.getState().equals(GameState.WALKING)) {
+    public void right(){
+        if (game.getState().equals(GameState.WALKING)){
             game.moveHero(Direction.RIGHT);
             }
     }
+    
     @FXML
     public void selectMage(){
     	unselectOthers(mageSelect);
-    	profSelected = Profession.MAGE;
+    	profSelected = HeroType.MAGE;
     }
     
     @FXML
     public void selectKnight(){
     	unselectOthers(knightSelect);
-    	profSelected = Profession.KNIGHT;
+    	profSelected = HeroType.KNIGHT;
     }
     
     @FXML
     public void selectRogue(){
     	unselectOthers(rogueSelect);
-    	profSelected = Profession.ROGUE;
+    	profSelected = HeroType.ROGUE;
     }
     
     private ArrayList<Rectangle> selectBoxes(){
@@ -421,8 +410,7 @@ public class Controller {
     	alert.setContentText("Exit to main screen without saving?\n"
     			+ "Unsaved progress will be lost.");
     }
-    
-    
+        
     @FXML
     public void exitToStart(){
     	if (confirm(ConfirmType.EXIT)){
@@ -432,8 +420,6 @@ public class Controller {
     		combatPane.setVisible(false);
     		inventory.setVisible(false);
     		game.render(canvas, camera);
-    	}
-    	
+    	}	
     }
-
 }

@@ -11,9 +11,9 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import actors.Hero;
-import actors.Profession;
+import actors.HeroType;
 
-public class CharacterBank {
+public class CharacterBank{
 	private String documentName = "src/assets/Characters.txt";
 	private static String DELIMITER = "/~RPG~/";
 	private ArrayList<Hero> savedHeroes = new ArrayList<Hero>();
@@ -24,27 +24,25 @@ public class CharacterBank {
 	}	
 	
 	public void saveHero(Hero hero){
-		try {
+		try{
 			if (heroExists(hero.getName())){
 					clearDoc();
 					overwriteHero(hero);
 					for (Hero h: savedHeroes){
 						writeHero(h);
 					}
-			} else {
+			}else{
 				writeHero(hero);
 				updateBank();
 			}
-		} catch (IOException e) {
-			
+		}catch(IOException e) {
 			e.printStackTrace();
 		}
-
 	}
 	
 	private void writeHero(Hero hero){
 		FileWriter writer;
-		try {
+		try{
 			writer = new FileWriter(documentName, true);
 			writer.write(DELIMITER + hero.getName());
 			writer.write(DELIMITER + hero.getProfession());
@@ -53,12 +51,11 @@ public class CharacterBank {
 			writer.write(DELIMITER + hero.getActualExp());
 			writer.write("\n");
 			writer.close();
-		} catch (IOException e) {
+		}catch (IOException e){
 			Alert badNum = new Alert(AlertType.ERROR);
 			badNum.setContentText("Internal Error - Unable to save Hero.");
 			badNum.show();
 		}
-		
 	}
 	
 	private void overwriteHero(Hero hero){
@@ -79,7 +76,6 @@ public class CharacterBank {
 			}
 		}
 		return where;
-		
 	}
 	
 	public boolean heroExists(String name){
@@ -105,14 +101,14 @@ public class CharacterBank {
 		savedHeroes.clear();
 		heroNames.clear();
     	FileReader reader;
-		try {
+		try{
 			reader = new FileReader(documentName);
 			BufferedReader bufferedReader = new BufferedReader(reader);
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
 				parts = line.split(DELIMITER);
 				String name = parts[1];
-				Profession prof = stringToProfession(parts[2]);
+				HeroType prof = stringToProfession(parts[2]);
 				int level = Integer.valueOf(parts[3]);
 				int health = Integer.valueOf(parts[4]);
 				int exp = Integer.valueOf(parts[5]);
@@ -123,30 +119,24 @@ public class CharacterBank {
 				heroNames.add(name);
 			}
 			reader.close();
-		} catch (IOException e) {
+		}catch(IOException e) {
 			Alert internalErr = new Alert(AlertType.ERROR);
 			internalErr.setContentText("Internal error - Unable to load existing Heroes");
 			internalErr.show();
-
 		}
-		
 	}
 	
-	private Profession stringToProfession(String prof){
+	private HeroType stringToProfession(String prof){
 		if (prof.equals("MAGE")){
-			return Profession.MAGE;
+			return HeroType.MAGE;
 		} else if (prof.equals("KNIGHT")){
-			return Profession.KNIGHT;
+			return HeroType.KNIGHT;
 		} else {
-			return Profession.ROGUE;
+			return HeroType.ROGUE;
 		}
 	}
 	
 	public ObservableList<String> getSavedNames(){
 		return heroNames;
 	}
-	
-	
-	
-
 }
