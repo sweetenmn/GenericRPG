@@ -1,5 +1,7 @@
 package actors;
 
+import java.util.ArrayList;
+
 import javafx.scene.image.Image;
 import util.Dice;
 
@@ -7,19 +9,40 @@ import util.Dice;
  * Created by Joseph on 9/13/2015.
  */
 public class Monster extends Mob {
-    private int maxHealth, currentHealth, attack, luck, expValue;
+    private int currentHealth, maxHealth, attack, luck, expValue;
     private String name;
     private Hero attacker;
+    private MonsterType type;
+    private ArrayList<String> loot;
 
-    public Monster(int maxHealth, int attack, int luck, int expValue, String name) {
-        this.maxHealth = maxHealth;
+    public Monster() {
+    	this.type = randomType();
+        this.maxHealth = type.getMaxHealth();
         this.currentHealth = maxHealth;
-        this.attack = attack;
-        this.luck = luck;
-        this.name = name;
-        this.sprite = new Image("assets/demon.png");
+        this.attack = type.getAttack();
+        this.luck = type.getLuck();
+        this.loot = type.getLoot();
+        this.expValue = type.getExpValue();
+        this.sprite = type.getAvatar();
         this.alive = true;
-        this.expValue =  expValue;
+    
+    }
+    
+    private MonsterType randomType(){
+    	Dice dice = new Dice(3);
+    	int result = dice.roll();
+    	switch(result){
+    	case 0:
+    		return MonsterType.DEMON;
+    	case 1:
+    		return MonsterType.TENTACLE;
+    	case 2:
+    		return MonsterType.OGRE;
+    	default:
+    		return MonsterType.DEMON;
+    		
+    	
+    	}
     }
 
     @Override

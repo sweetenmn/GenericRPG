@@ -79,7 +79,7 @@ public class Level extends Drawable {
         contents.add(new Floor(p));
     }
     public void addMonster(int x, int y) {
-        Monster monster = new Monster(15, 3, 2, 15, "Boogaloo");
+        Monster monster = new Monster();
         monster.setPosition(x, y);
         contents.add(monster);
         monsters.add(monster);

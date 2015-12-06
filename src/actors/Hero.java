@@ -9,24 +9,58 @@ import util.Dice;
  * Created by josephbenton on 9/13/15.
  */
 public class Hero extends Actor {
-    private int maxHealth, currentHealth, attack, luck, level;
+    private int attack, luck, level;
     int experience, expToNextLevel;
     private Actor attacker;
     private String name;
+    private Profession prof;
+    private static final int EXP_BUFF = 25;
+    private static final int HEALTH_BUFF = 3;
+    private static final int STAT_BUFF = 1;
+    private static final int INIT_EXP_REQUIRED = 100;
 
-    public Hero(Profession prof, int x, int y) {
-        this.setPosition(x, y);
-        this.maxHealth = prof.getHealth();
-        this.currentHealth = maxHealth;
-        this.attack = prof.getAttack();
-        this.luck = prof.getLuck();
-        this.name = prof.name().toLowerCase();
+    public Hero(Profession prof, String name) {
+        this.prof = prof;
         this.sprite = prof.getAvatar();
         this.alive = true;
         this.experience = 0;
         this.level = 1;
-        this.expToNextLevel = 100;
+        this.name = name;
+        adjustStats();
+        currentHealth = maxHealth;
     }
+    
+    public Hero(Profession prof, String name, int level){
+        this.prof = prof;
+        this.sprite = prof.getAvatar();
+        this.alive = true;
+        this.name = name;
+        this.level = level;
+        adjustStats();
+    }
+    
+    
+    private void adjustStats(){
+    	this.expToNextLevel = offsetByLevel(INIT_EXP_REQUIRED, EXP_BUFF);
+    	this.maxHealth = offsetByLevel(prof.getMaxHealth(), HEALTH_BUFF);
+    	this.attack = offsetByLevel(prof.getAttack(), STAT_BUFF);
+    	this.luck = offsetByLevel(prof.getLuck(), STAT_BUFF);
+    	
+    }
+    
+    private int offsetByLevel(int initial, int factorOf){
+    	int levelOffset = this.level - 1;
+    	return initial + (levelOffset * factorOf);
+    }
+    
+    public void loadHealth(int health){
+    	this.currentHealth = health;
+    }
+    
+    public void loadExp(int exp){
+    	this.experience = exp;
+    }
+    
 
     @Override
     public boolean attack(Actor actor) {
@@ -54,9 +88,9 @@ public class Hero extends Actor {
         }
 
     }
-    public double getHealthPercent() {
-        return (double)currentHealth / (double)maxHealth;
-    }
+    //public double getHealthPercent() {
+      //  return (double)currentHealth / (double)maxHealth;
+    //}
     
     public double getExpPercent() {
     	return (double)experience / (double)expToNextLevel;
@@ -93,23 +127,8 @@ public class Hero extends Actor {
     
     public void moveAnimated(Direction dir, Level currentLevel){
     	move(dir, currentLevel);
-    	switch(dir){
-		case DOWN:
-			sprite = new Image("assets/mage_down.png");
-			break;
-		case LEFT:
-			sprite = new Image("assets/mage_left.png");
-			break;
-		case RIGHT:
-			sprite = new Image("assets/mage_right.png");
-			break;
-		case UP:
-			sprite = new Image("assets/mage_up.png");
-			break;
-		default:
-			break;
+    	setSprite(prof.getSpriteDirection(dir));
     	
-    	}
     }
 
     @Override
@@ -121,7 +140,6 @@ public class Hero extends Actor {
 	@Override
 	public void setAttacker(Actor actor) {
 		this.attacker = actor;
-		
 	}
 	
 	public void setName(String input){
@@ -129,6 +147,16 @@ public class Hero extends Actor {
 	}
 	public String getName(){
 		return this.name;
+	}
+	
+	public int getActualHealth(){
+		return currentHealth;
+	}
+	public int getActualExp(){
+		return this.experience;
+	}
+	public Profession getProfession(){
+		return this.prof;
 	}
 
 

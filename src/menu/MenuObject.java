@@ -35,9 +35,9 @@ public class MenuObject extends Drawable {
 	
 	@Override
 	public void draw(Canvas canvas, Camera camera){
-   	 GraphicsContext gc = canvas.getGraphicsContext2D();
-        double x = position.getX() * sprite.getWidth() - camera.getPosition().getX();
-        double y = position.getY() * sprite.getHeight() - camera.getPosition().getY();
+		GraphicsContext gc = canvas.getGraphicsContext2D();
+        double x = position.getX() * sprite.getWidth();
+        double y = position.getY() * sprite.getHeight();
         gc.drawImage(sprite, x, y, sprite.getWidth(), sprite.getHeight());
 	}
 	

@@ -30,15 +30,18 @@ public class Game {
             step();
         }
     }
-    public void heroAtk() {
+    public boolean heroAtk() {
+    	boolean combat = false;
         if (hero.isAlive()) {
             for (Mob m : mobs) {
                 if (m.getPosition().getDistanceTo(hero.getPosition()) < 2) {
                     startCombat(m);
+                    combat = true;
                 }
             }
         }
         step();
+        return combat;
     }
     public void changeLevel(Level level) {
         this.currentLevel = level;
@@ -50,9 +53,13 @@ public class Game {
         combat = new Combat(hero, monster);
         setState(GameState.COMBAT);
     }
+    
+    public Hero getHero(){
+    	return hero;
+    }
 
     public double getHeroHealthPercent() {
-        return hero.getHealthPercent();
+    	return hero.getHealthPercent();
     }
     
     public double getHeroExpPercent() {
@@ -67,15 +74,22 @@ public class Game {
     	return hero.getName();
     }
     
-    public void setHeroName(String input){
-    	hero.setName(input);
+    public void setHeroName(String name){
+    	hero.setName(name);
+
+    }
+    
+    public void loadHero(int health, int exp){
+    	hero.loadHealth(health);
+    	hero.loadExp(exp);
     }
 
-    public void checkStates(Canvas canvas) {
+    public void checkForDeath(Canvas canvas) {
         if (!hero.isAlive()) {
             gameEnd(canvas);
         }
     }
+    
 
     private void gameEnd(Canvas canvas) {
         state = GameState.END;

@@ -12,8 +12,5 @@ public enum MenuImage {
 	public String image(){
 		return imageString;
 	}
-	
-
-	
 
 }
