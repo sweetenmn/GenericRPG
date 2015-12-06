@@ -8,7 +8,7 @@ public class HeroTest {
 	//passes without this.sprite = prof.getAvatar();
 	@Test
 	public void basicTest() {
-		Hero hero = new Hero(Profession.KNIGHT);
+		Hero hero = new Hero(Profession.KNIGHT, "Me");
 		assertEquals(1, hero.getLevel());
 		hero.addExperience(10);
 		assertEquals(1, hero.getLevel());

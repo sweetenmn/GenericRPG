@@ -4,3 +4,5 @@
 /~RPG~/knight/~RPG~/KNIGHT/~RPG~/1/~RPG~/30/~RPG~/0
 /~RPG~/skflk/~RPG~/KNIGHT/~RPG~/1/~RPG~/30/~RPG~/0
 /~RPG~/thi/~RPG~/MAGE/~RPG~/1/~RPG~/15/~RPG~/0
+/~RPG~/Malia/~RPG~/ROGUE/~RPG~/1/~RPG~/20/~RPG~/0
+/~RPG~/ro/~RPG~/ROGUE/~RPG~/1/~RPG~/20/~RPG~/0

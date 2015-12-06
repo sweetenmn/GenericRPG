@@ -42,29 +42,20 @@ public class Controller {
     @FXML
     GridPane inventory;
     @FXML
-    Button attackButton, inspectButton, startButton;
-    @FXML
-    Button saveButton;
-    @FXML
-    Button exitButton;
+    Button attackButton, inspectButton, startButton, saveButton, exitButton, loadButton, clearButton;
     @FXML
     TextField nameInput;
     @FXML
-    ImageView portrait;
+    ImageView portrait, loadingView;
     @FXML
-    Text name;
+    Text name, loadingName, savedText;
     @FXML
-    Text savedText;
-    @FXML
-    Rectangle mageSelect;
-    @FXML
-    Rectangle knightSelect;
-    @FXML
-    Rectangle rogueSelect;
+    Rectangle mageSelect, knightSelect, rogueSelect;
     @FXML
     ProgressBar healthBar, expBar;
     @FXML
     ChoiceBox<String> characterChoice;
+ 
     
     Profession profSelected;
 
@@ -124,22 +115,22 @@ public class Controller {
     
     private void checkNewClicked(double x, double y){
     	if (x > 180 && x < 354 && y >175 && y < 200){
-    		characterCreation();
+    		viewCharacterCreation();
     	}
     }
     private void checkLoadClicked(double x, double y){
     	if (x > 170 && x < 365 && y > 214 && y < 236){
-    		loadCharacter();
+    		viewCharacterLoading();
     	}
     }
     
-    private void characterCreation(){
+    private void viewCharacterCreation(){
     	startPane.setVisible(true);
     	loadPane.setVisible(false);
     	game.setState(GameState.CHARACTER_CREATE);
     }
     
-    private void loadCharacter(){
+    private void viewCharacterLoading(){
     	startPane.setVisible(false);
     	loadPane.setVisible(true);
     	setChoice();
@@ -163,10 +154,24 @@ public class Controller {
     	}
     }
     
+    @FXML
+    public void loadCharacter(){
+    	if (loadButton.getText().equals("VIEW")){
+    		if (characterChoice.getSelectionModel().getSelectedItem() != null){
+    			clearButton.setVisible(true);
+    			loadButton.setText("START");
+    			displayChoice();
+    		}
+    	} else {
+    		startGame();
+    		clearChoice();
+    	}
+    	
+    }
+    
     private void newGame(){
     	if (gameReady()){
-    		Hero hero = new Hero(profSelected);
-    		hero.setName(nameInput.getText());
+    		Hero hero = new Hero(profSelected, nameInput.getText());
     		unselectAll();
     		nameInput.clear();
     		showLevel(hero);
@@ -186,13 +191,31 @@ public class Controller {
     	characterChoice.setItems(characters.getSavedNames());
     }
     
+    public void displayChoice(){
+    	if (characterChoice.getSelectionModel().getSelectedItem() != null){
+    		String name = characterChoice.getSelectionModel().getSelectedItem();
+    		Hero hero = characters.getHero(name);
+    		loadingName.setVisible(true);
+    		loadingName.setText(name + " | Level " + hero.getLevel());
+    		loadingView.setImage(hero.getProfession().getPortrait());
+    		
+    	}
+    }
+    @FXML
+    public void clearChoice(){
+    	loadingName.setVisible(false);
+    	characterChoice.getSelectionModel().clearSelection();
+    	loadingView.setImage(null);
+    	loadButton.setText("VIEW");
+    	clearButton.setVisible(false);
+    }
+    
+    
     private void showLevel(Hero hero){
     	game.setState(GameState.WALKING);
 		Level currentLevel = new Level(hero, "src/assets/Levels/L1.txt");
 		game.changeLevel(currentLevel);
-		viewWalking();
-		//startHandlingWalk();
-		//startHandlingDrag();    	
+		viewWalking();  	
 		timer.start();
     }
 

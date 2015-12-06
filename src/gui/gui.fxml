@@ -167,19 +167,29 @@
                               <Separator opacity="0.0" prefHeight="5.0" prefWidth="200.0" />
                               <ChoiceBox fx:id="characterChoice" prefHeight="25.0" prefWidth="167.0" />
                               <Separator opacity="0.0" prefHeight="10.0" prefWidth="200.0" />
-                              <Button fx:id="startButton1" mnemonicParsing="false" onAction="#startGame" text="START">
-                                 <effect>
-                                    <ColorAdjust brightness="-0.35" contrast="0.07" />
-                                 </effect>
-                              </Button>
+                              <HBox alignment="CENTER">
+                                 <children>
+                                    <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearChoice" text="CLEAR" visible="false">
+                                       <effect>
+                                          <ColorAdjust brightness="-0.35" contrast="0.07" />
+                                       </effect>
+                                    </Button>
+                                    <Separator orientation="VERTICAL" prefHeight="25.0" prefWidth="76.0" visible="false" />
+                                    <Button fx:id="loadButton" mnemonicParsing="false" onAction="#loadCharacter" text="VIEW">
+                                       <effect>
+                                          <ColorAdjust brightness="-0.35" contrast="0.07" />
+                                       </effect>
+                                    </Button>
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                         <Pane prefHeight="100.0" prefWidth="237.0">
                            <children>
                               <VBox alignment="TOP_CENTER" layoutX="-3.0" layoutY="-1.0" prefHeight="101.0" prefWidth="240.0">
                                  <children>
-                                    <ImageView fitHeight="72.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" />
-                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+                                    <ImageView fx:id="loadingView" fitHeight="72.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" />
+                                    <Text fx:id="loadingName" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" visible="false" />
                                  </children>
                               </VBox>
                            </children>

@@ -19,20 +19,22 @@ public class Hero extends Actor {
     private static final int STAT_BUFF = 1;
     private static final int INIT_EXP_REQUIRED = 100;
 
-    public Hero(Profession prof) {
+    public Hero(Profession prof, String name) {
         this.prof = prof;
         this.sprite = prof.getAvatar();
         this.alive = true;
         this.experience = 0;
         this.level = 1;
+        this.name = name;
         adjustStats();
         this.currentHealth = maxHealth;
     }
     
-    public Hero(Profession prof, int level){
+    public Hero(Profession prof, String name, int level){
         this.prof = prof;
         this.sprite = prof.getAvatar();
         this.alive = true;
+        this.name = name;
         this.level = level;
         adjustStats();
     }

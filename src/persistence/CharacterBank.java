@@ -112,13 +112,11 @@ public class CharacterBank {
 			while ((line = bufferedReader.readLine()) != null) {
 				parts = line.split(DELIMITER);
 				String name = parts[1];
-				System.out.println(name);
 				Profession prof = stringToProfession(parts[2]);
 				int level = Integer.valueOf(parts[3]);
 				int health = Integer.valueOf(parts[4]);
 				int exp = Integer.valueOf(parts[5]);
-				Hero hero = new Hero(prof, level);
-				hero.setName(name);
+				Hero hero = new Hero(prof, name, level);
 				hero.loadExp(exp);
 				hero.loadHealth(health);
 				savedHeroes.add(hero);
@@ -126,9 +124,9 @@ public class CharacterBank {
 			}
 			reader.close();
 		} catch (IOException e) {
-			Alert badNum = new Alert(AlertType.ERROR);
-			badNum.setContentText("Internal error - Unable to load existing Heroes");
-			badNum.show();
+			Alert internalErr = new Alert(AlertType.ERROR);
+			internalErr.setContentText("Internal error - Unable to load existing Heroes");
+			internalErr.show();
 
 		}
 		
