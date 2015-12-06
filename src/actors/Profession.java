@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 
 public enum Profession {
-    ROGUE(20, 3, 5, 7) {
+    ROGUE(25, 5, 5, 7) {
         @Override
         public Image getAvatar() {
             return new Image("assets/rogue_down.png");
@@ -28,7 +28,7 @@ public enum Profession {
 		}
         
     },
-    MAGE(15, 6, 10, 10) {
+    MAGE(20, 8, 10, 10) {
         @Override
         public Image getAvatar() {
             return new Image("assets/mage_sprite.png");
@@ -50,7 +50,7 @@ public enum Profession {
 			return new Image("assets/mage_portrait.png");
 		}
     },
-    KNIGHT(30, 10, 1, 2) {
+    KNIGHT(35, 10, 1, 2) {
         @Override
         public Image getAvatar() {
             return new Image("assets/knight_down.png");
@@ -73,7 +73,7 @@ public enum Profession {
 		}
     };
 
-    private int health;
+    private int maxHealth;
     private int attack;
     private int intel;
     private int luck;
@@ -85,8 +85,8 @@ public enum Profession {
     public abstract Image getPortrait();
 
 
-    public int getHealth() {
-        return health;
+    public int getMaxHealth() {
+        return maxHealth;
     }
 
     public int getAttack() {
@@ -121,7 +121,7 @@ public enum Profession {
     }
 
     Profession(int health, int attack, int intel, int luck) {
-        this.health = health;
+        this.maxHealth = health;
         this.attack = attack;
         this.intel = intel;
         this.luck = luck;

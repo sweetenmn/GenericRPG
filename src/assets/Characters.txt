@@ -1,8 +1,13 @@
 /~RPG~/k/~RPG~/MAGE/~RPG~/1/~RPG~/15/~RPG~/0
-/~RPG~/s/~RPG~/ROGUE/~RPG~/1/~RPG~/20/~RPG~/0
 /~RPG~/h/~RPG~/MAGE/~RPG~/1/~RPG~/15/~RPG~/0
 /~RPG~/knight/~RPG~/KNIGHT/~RPG~/1/~RPG~/30/~RPG~/0
 /~RPG~/skflk/~RPG~/KNIGHT/~RPG~/1/~RPG~/30/~RPG~/0
 /~RPG~/thi/~RPG~/MAGE/~RPG~/1/~RPG~/15/~RPG~/0
 /~RPG~/Malia/~RPG~/ROGUE/~RPG~/1/~RPG~/20/~RPG~/0
 /~RPG~/ro/~RPG~/ROGUE/~RPG~/1/~RPG~/20/~RPG~/0
+/~RPG~/g/~RPG~/ROGUE/~RPG~/1/~RPG~/20/~RPG~/0
+/~RPG~/s/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
+/~RPG~/af/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
+/~RPG~/adfa/~RPG~/MAGE/~RPG~/1/~RPG~/20/~RPG~/0
+/~RPG~/asdf/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
+/~RPG~/a/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0

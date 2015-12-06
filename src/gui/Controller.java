@@ -40,9 +40,11 @@ public class Controller {
     @FXML
     Pane startPane, adventurePane, loadPane;
     @FXML
+    Pane combatPane;
+    @FXML
     GridPane inventory;
     @FXML
-    Button attackButton, inspectButton, startButton, saveButton, exitButton, loadButton, clearButton;
+    Button enterCombatButton, inspectButton, startButton, saveButton, exitButton, loadButton, clearButton;
     @FXML
     TextField nameInput;
     @FXML
@@ -53,6 +55,11 @@ public class Controller {
     Rectangle mageSelect, knightSelect, rogueSelect;
     @FXML
     ProgressBar healthBar, expBar;
+    @FXML
+    ProgressBar combatHeroHealth;
+    @FXML
+    ProgressBar combatMonsterHealth;
+    
     @FXML
     ChoiceBox<String> characterChoice;
  
@@ -305,8 +312,11 @@ public class Controller {
     }
 
     @FXML
-    public void attack() {
-        game.heroAtk();
+    public void enterCombat() {
+    	if(game.heroAtk()){
+    		adventurePane.setVisible(false);
+    		combatPane.setVisible(true);
+    	}
     }
 
     @FXML
@@ -415,6 +425,7 @@ public class Controller {
     		timer.stop();
     		game.setState(GameState.START);
     		adventurePane.setVisible(false);
+    		combatPane.setVisible(false);
     		inventory.setVisible(false);
     		game.render(canvas, camera);
     	}

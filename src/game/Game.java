@@ -30,15 +30,18 @@ public class Game {
             step();
         }
     }
-    public void heroAtk() {
+    public boolean heroAtk() {
+    	boolean combat = false;
         if (hero.isAlive()) {
             for (Mob m : mobs) {
                 if (m.getPosition().getDistanceTo(hero.getPosition()) < 2) {
                     startCombat(m);
+                    combat = true;
                 }
             }
         }
         step();
+        return combat;
     }
     public void changeLevel(Level level) {
         this.currentLevel = level;

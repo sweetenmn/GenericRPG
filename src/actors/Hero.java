@@ -9,7 +9,7 @@ import util.Dice;
  * Created by josephbenton on 9/13/15.
  */
 public class Hero extends Actor {
-    private int maxHealth, currentHealth, attack, luck, level;
+    private int attack, luck, level;
     int experience, expToNextLevel;
     private Actor attacker;
     private String name;
@@ -27,7 +27,7 @@ public class Hero extends Actor {
         this.level = 1;
         this.name = name;
         adjustStats();
-        this.currentHealth = maxHealth;
+        currentHealth = maxHealth;
     }
     
     public Hero(Profession prof, String name, int level){
@@ -42,7 +42,7 @@ public class Hero extends Actor {
     
     private void adjustStats(){
     	this.expToNextLevel = offsetByLevel(INIT_EXP_REQUIRED, EXP_BUFF);
-    	this.maxHealth = offsetByLevel(prof.getHealth(), HEALTH_BUFF);
+    	this.maxHealth = offsetByLevel(prof.getMaxHealth(), HEALTH_BUFF);
     	this.attack = offsetByLevel(prof.getAttack(), STAT_BUFF);
     	this.luck = offsetByLevel(prof.getLuck(), STAT_BUFF);
     	
@@ -88,9 +88,9 @@ public class Hero extends Actor {
         }
 
     }
-    public double getHealthPercent() {
-        return (double)currentHealth / (double)maxHealth;
-    }
+    //public double getHealthPercent() {
+      //  return (double)currentHealth / (double)maxHealth;
+    //}
     
     public double getExpPercent() {
     	return (double)experience / (double)expToNextLevel;
@@ -150,12 +150,11 @@ public class Hero extends Actor {
 	}
 	
 	public int getActualHealth(){
-		return this.currentHealth;
+		return currentHealth;
 	}
 	public int getActualExp(){
 		return this.experience;
 	}
-	
 	public Profession getProfession(){
 		return this.prof;
 	}
