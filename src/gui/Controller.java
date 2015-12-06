@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import persistence.CharacterBank;
 import actors.Hero;
-import actors.Profession;
+import actors.HeroType;
 import game.*;
 import game.graphics.Camera;
 import javafx.animation.AnimationTimer;
@@ -20,7 +20,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -64,7 +63,7 @@ public class Controller {
     ChoiceBox<String> characterChoice;
  
     
-    Profession profSelected;
+    HeroType profSelected;
 
     GraphicsContext gc;
     Camera camera = new Camera(new Position(0, 0));
@@ -83,6 +82,7 @@ public class Controller {
                 name.setText(game.getHeroName() + " | Level " + game.getHeroLevel());
                 game.render(canvas, camera);
                 game.checkForDeath(canvas);
+                if (game.getCombat() != null) game.getCombat().setHealthBars(combatHeroHealth, combatMonsterHealth);
             }
             last = now;
         }
@@ -105,7 +105,7 @@ public class Controller {
     
     private void startHandlingClicks(){
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
-        		ev ->{
+        		ev -> {
         			handleClickAt(ev.getX(), ev.getY());     			
         		}); 	
     }
@@ -312,11 +312,18 @@ public class Controller {
     }
 
     @FXML
+    public void attack() {
+        game.attack();
+    }
+
+    @FXML
     public void enterCombat() {
-    	if(game.heroAtk()){
-    		adventurePane.setVisible(false);
-    		combatPane.setVisible(true);
-    	}
+        if (game.getState().equals(GameState.WALKING)) {
+            if (game.heroAtk()) {
+                adventurePane.setVisible(false);
+                combatPane.setVisible(true);
+            }
+        }
     }
 
     @FXML
@@ -359,19 +366,19 @@ public class Controller {
     @FXML
     public void selectMage(){
     	unselectOthers(mageSelect);
-    	profSelected = Profession.MAGE;
+    	profSelected = HeroType.MAGE;
     }
     
     @FXML
     public void selectKnight(){
     	unselectOthers(knightSelect);
-    	profSelected = Profession.KNIGHT;
+    	profSelected = HeroType.KNIGHT;
     }
     
     @FXML
     public void selectRogue(){
     	unselectOthers(rogueSelect);
-    	profSelected = Profession.ROGUE;
+    	profSelected = HeroType.ROGUE;
     }
     
     private ArrayList<Rectangle> selectBoxes(){

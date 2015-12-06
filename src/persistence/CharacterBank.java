@@ -11,7 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import actors.Hero;
-import actors.Profession;
+import actors.HeroType;
 
 public class CharacterBank {
 	private String documentName = "src/assets/Characters.txt";
@@ -112,7 +112,7 @@ public class CharacterBank {
 			while ((line = bufferedReader.readLine()) != null) {
 				parts = line.split(DELIMITER);
 				String name = parts[1];
-				Profession prof = stringToProfession(parts[2]);
+				HeroType prof = stringToProfession(parts[2]);
 				int level = Integer.valueOf(parts[3]);
 				int health = Integer.valueOf(parts[4]);
 				int exp = Integer.valueOf(parts[5]);
@@ -132,13 +132,13 @@ public class CharacterBank {
 		
 	}
 	
-	private Profession stringToProfession(String prof){
+	private HeroType stringToProfession(String prof){
 		if (prof.equals("MAGE")){
-			return Profession.MAGE;
+			return HeroType.MAGE;
 		} else if (prof.equals("KNIGHT")){
-			return Profession.KNIGHT;
+			return HeroType.KNIGHT;
 		} else {
-			return Profession.ROGUE;
+			return HeroType.ROGUE;
 		}
 	}
 	

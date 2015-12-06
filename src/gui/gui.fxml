@@ -216,7 +216,7 @@
                               </Label>
                               <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="303.0">
                                  <children>
-                                    <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="59.0" text="ATTACK">
+                                    <Button mnemonicParsing="false" onAction="#attack" prefHeight="35.0" prefWidth="59.0" text="ATTACK">
                                        <effect>
                                           <ColorAdjust brightness="-0.26" />
                                        </effect>

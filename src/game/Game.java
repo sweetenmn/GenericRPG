@@ -22,6 +22,7 @@ public class Game {
     Level currentLevel;
     GameState prevState;
     GameState state;
+
     Combat combat;
 
     public void moveHero(Direction dir) {
@@ -30,6 +31,7 @@ public class Game {
             step();
         }
     }
+
     public boolean heroAtk() {
     	boolean combat = false;
         if (hero.isAlive()) {
@@ -48,20 +50,23 @@ public class Game {
         this.hero = level.getHero();
         this.mobs = level.getMonsters();
     }
-
     public void startCombat(Actor monster) {
         combat = new Combat(hero, monster);
         setState(GameState.COMBAT);
     }
-    
+
     public Hero getHero(){
     	return hero;
+    }
+
+    public Combat getCombat() {
+        return combat;
     }
 
     public double getHeroHealthPercent() {
     	return hero.getHealthPercent();
     }
-    
+
     public double getHeroExpPercent() {
     	return hero.getExpPercent();
     }
@@ -101,6 +106,8 @@ public class Game {
             currentLevel.draw(canvas, camera);
         } else if (state.equals(GameState.COMBAT)) {
             combat.draw(canvas, camera);
+            if (!combat.isMonsterAlive()) state = GameState.WALKING;
+            if (!combat.isHeroAlive()) state = GameState.END;
         } else if (state.equals(GameState.START)) {
             StartScreen startScreen = new StartScreen(0,0);
             startScreen.draw(canvas, camera);
@@ -120,5 +127,9 @@ public class Game {
 
     public GameState getState() {
         return state;
+    }
+
+    public void attack() {
+        combat.heroAttack();
     }
 }

@@ -4,7 +4,7 @@ import game.Direction;
 import javafx.scene.image.Image;
 
 
-public enum Profession {
+public enum HeroType {
     ROGUE(25, 5, 5, 7) {
         @Override
         public Image getAvatar() {
@@ -120,7 +120,7 @@ public enum Profession {
 		return end;    	
     }
 
-    Profession(int health, int attack, int intel, int luck) {
+    HeroType(int health, int attack, int intel, int luck) {
         this.maxHealth = health;
         this.attack = attack;
         this.intel = intel;

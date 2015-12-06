@@ -13,15 +13,16 @@ public class Hero extends Actor {
     int experience, expToNextLevel;
     private Actor attacker;
     private String name;
-    private Profession prof;
+    private HeroType prof;
     private static final int EXP_BUFF = 25;
     private static final int HEALTH_BUFF = 3;
     private static final int STAT_BUFF = 1;
     private static final int INIT_EXP_REQUIRED = 100;
 
-    public Hero(Profession prof, String name) {
+    public Hero(HeroType prof, String name) {
         this.prof = prof;
         this.sprite = prof.getAvatar();
+        this.combatSprite = prof.getCombatAvatar();
         this.alive = true;
         this.experience = 0;
         this.level = 1;
@@ -30,9 +31,10 @@ public class Hero extends Actor {
         currentHealth = maxHealth;
     }
     
-    public Hero(Profession prof, String name, int level){
+    public Hero(HeroType prof, String name, int level){
         this.prof = prof;
         this.sprite = prof.getAvatar();
+        this.combatSprite = prof.getCombatAvatar();
         this.alive = true;
         this.name = name;
         this.level = level;
@@ -155,7 +157,7 @@ public class Hero extends Actor {
 	public int getActualExp(){
 		return this.experience;
 	}
-	public Profession getProfession(){
+	public HeroType getProfession(){
 		return this.prof;
 	}
 

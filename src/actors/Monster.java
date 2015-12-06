@@ -9,7 +9,7 @@ import util.Dice;
  * Created by Joseph on 9/13/2015.
  */
 public class Monster extends Mob {
-    private int currentHealth, maxHealth, attack, luck, expValue;
+    private int attack, luck, expValue;
     private String name;
     private Hero attacker;
     private MonsterType type;
@@ -24,6 +24,7 @@ public class Monster extends Mob {
         this.loot = type.getLoot();
         this.expValue = type.getExpValue();
         this.sprite = type.getAvatar();
+        this.combatSprite = type.getCombatAvatar();
         this.alive = true;
     
     }
@@ -31,22 +32,11 @@ public class Monster extends Mob {
     private MonsterType randomType(){
     	Dice dice = new Dice(3);
     	int result = dice.roll();
-    	switch(result){
-    	case 0:
-    		return MonsterType.DEMON;
-    	case 1:
-    		return MonsterType.TENTACLE;
-    	case 2:
-    		return MonsterType.OGRE;
-    	default:
-    		return MonsterType.DEMON;
-    		
-    	
-    	}
+        return MonsterType.values()[result];
     }
 
     @Override
-    boolean attack(Actor actor) {
+    public boolean attack(Actor actor) {
     	actor.setAttacker(this);
         Dice dice = new Dice(20);
         int roll = dice.roll() + luck;
@@ -82,6 +72,7 @@ public class Monster extends Mob {
     	this.attacker.addExperience(expValue);
     	System.out.println("New exp: " + this.attacker.experience);
         this.sprite = new Image("assets/skull.png");
+        this.combatSprite = new Image("assets/skull.png");
         alive = false;
     }
 

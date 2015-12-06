@@ -13,9 +13,14 @@ import javafx.scene.image.Image;
  */
 public abstract class Actor extends Drawable {
     protected boolean alive;
+
+    public Image getCombatSprite() {
+        return combatSprite;
+    }
+
+    protected Image combatSprite;
 	protected int currentHealth, maxHealth;
-   // protected int currentHealth, maxHealth;
-    abstract boolean attack(Actor actor); // returns true if attack is successful, else returns false
+    public abstract boolean attack(Actor actor); // returns true if attack is successful, else returns false
 
     abstract void takeDamage(int damage);
 
@@ -38,11 +43,11 @@ public abstract class Actor extends Drawable {
     public void drawForCombat(Canvas canvas, boolean isHero) {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         double height = canvas.getHeight() / 2;
-        double width = canvas.getWidth() / 3;
+        double width = canvas.getWidth() / 5;
         if (isHero) {
-            gc.drawImage(sprite, width, height, 50, 50);
+            gc.drawImage(combatSprite, 50, 100);
         } else {
-            gc.drawImage(sprite, width * 2, height, 50, 50);
+            gc.drawImage(combatSprite, 350, 100);
         }
     }
     public abstract void die();
