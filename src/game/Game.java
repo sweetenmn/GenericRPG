@@ -2,13 +2,10 @@ package game;
 
 import actors.Actor;
 import actors.Hero;
-import actors.Mob;
+import actors.Monster;
 import game.graphics.Camera;
-import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import menu.StartScreen;
 
 import java.util.ArrayList;
@@ -18,7 +15,7 @@ import java.util.ArrayList;
  */
 public class Game {
     Hero hero;
-    ArrayList<Mob> mobs;
+    ArrayList<Monster> mobs;
     Level currentLevel;
     GameState prevState;
     GameState state;
@@ -32,14 +29,13 @@ public class Game {
     public boolean heroAtk() {
     	boolean combat = false;
         if (hero.isAlive()) {
-            for (Mob m : mobs) {
+            for (Monster m : mobs) {
                 if (m.getPosition().getDistanceTo(hero.getPosition()) < 2) {
                     startCombat(m);
                     combat = true;
                 }
             }
         }
-        step();
         return combat;
     }
     public void changeLevel(Level level) {
@@ -115,11 +111,7 @@ public class Game {
         this.state = state;
     }
 
-    public void step() {
-        for (Mob m : mobs) {
-            m.stepTowards(hero, currentLevel);
-        }
-    }
+
 
     public GameState getState() {
         return state;

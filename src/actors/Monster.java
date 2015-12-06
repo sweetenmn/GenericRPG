@@ -8,7 +8,7 @@ import util.Dice;
 /**
  * Created by Joseph on 9/13/2015.
  */
-public class Monster extends Mob {
+public class Monster extends Actor {
     private int currentHealth, maxHealth, attack, luck, expValue;
     private String name;
     private Hero attacker;

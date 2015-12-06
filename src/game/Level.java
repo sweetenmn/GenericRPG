@@ -1,13 +1,10 @@
 package game;
 
-import actors.Actor;
 import actors.Hero;
-import actors.Mob;
 import actors.Monster;
 import game.graphics.Camera;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Alert;
 import javafx.scene.paint.Color;
 import terrain.Exit;
 import terrain.Floor;
@@ -28,7 +25,7 @@ public class Level extends Drawable {
     private int width;
     private Hero hero;
     private Position exit;
-    private ArrayList<Mob> monsters;
+    private ArrayList<Monster> monsters;
     private boolean[][] wallMap;
 
     public Level(int width, int height, Hero hero) {
@@ -108,7 +105,7 @@ public class Level extends Drawable {
     }
     
     public boolean isOccupied(Position p){
-    	for (Mob m: monsters){
+    	for (Monster m: monsters){
     		if (m.getPosition().equals(p)){
     			return true;
     		}
@@ -120,7 +117,7 @@ public class Level extends Drawable {
     	
     }
 
-    public ArrayList<Mob> getMonsters() {
+    public ArrayList<Monster> getMonsters() {
         return monsters;
     }
 
