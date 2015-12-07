@@ -41,7 +41,7 @@ public class Game {
     	boolean combat = false;
         if(hero.isAlive()){
             for (Monster m : mobs){
-                if(m.getPosition().getDistanceTo(hero.getPosition()) < 2) {
+                if(m.getPosition().getDistanceTo(hero.getPosition()) < 2 && m.isAlive()) {
                     startCombat(m);
                     combat = true;
                 }
@@ -154,7 +154,6 @@ public class Game {
     	boolean ran = false;
     	Dice dice = new Dice(2);
     	int result = dice.roll();
-    	System.out.println(result);
     	switch(result){
     	case 0:
     		currentLevel.removeMonster(combat.getMonster());
@@ -191,6 +190,13 @@ public class Game {
     }
     
     public void dropLoot(){
-    	currentLevel.addItem(combat.getMonster());
+    	if (combat.moreLoot()){
+    		currentLevel.addItem(combat.getMonster());
+    		combat.dropLoot();
+    		
+    	}
+    	
     }
+    
+    
 }

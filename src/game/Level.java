@@ -63,29 +63,32 @@ public class Level extends Drawable{
     	Scanner scan = null;
         try {
             scan = new Scanner(new File(map));
-        } catch (FileNotFoundException e){
-            e.printStackTrace();
-        }
-        width = scan.nextInt();
-        height = scan.nextInt();
-        wallMap = new boolean[width][height];
-        scan.nextLine();
-        for(int i = 0; i < height; i++){
-            String line = scan.nextLine();
-            for (int j = 0; j < width; j++){
-                addFloor(j, i);
-                if (line.charAt(j) == 'H'){
-                    hero.setPosition(j, i);
-                } else if (line.charAt(j) == 'M'){
-                    addMonster(j, i);
-                } else if (line.charAt(j) == 'E'){
-                    addExit(j, i);
-                } else if (line.charAt(j) == '#'){
-                    wallMap[j][i] = true;
-                    addWall(j, i);
-                }
+            width = scan.nextInt();
+            height = scan.nextInt();
+            wallMap = new boolean[width][height];
+            scan.nextLine();
+            for(int i = 0; i < height; i++){
+            	String line = scan.nextLine();
+            	for (int j = 0; j < width; j++){
+            		addFloor(j, i);
+            		if (line.charAt(j) == 'H'){
+            			hero.setPosition(j, i);
+            		} else if (line.charAt(j) == 'M'){
+            			addMonster(j, i);
+            		} else if (line.charAt(j) == 'E'){
+            			addExit(j, i);
+            		} else if (line.charAt(j) == '#'){
+            			wallMap[j][i] = true;
+            			addWall(j, i);
+            		}
+            	}
             }
+            	
+        } catch (FileNotFoundException e){
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText("Internal error: Level map not found");
         }
+        
     }
     
     public String randomLevel(){

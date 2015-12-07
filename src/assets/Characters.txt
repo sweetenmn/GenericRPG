@@ -8,7 +8,6 @@
 /~RPG~/s/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
 /~RPG~/af/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
 /~RPG~/adfa/~RPG~/MAGE/~RPG~/1/~RPG~/20/~RPG~/0
-/~RPG~/asdf/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
 /~RPG~/a/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
 /~RPG~/we/~RPG~/MAGE/~RPG~/1/~RPG~/20/~RPG~/0
 /~RPG~/sdf/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
@@ -19,3 +18,10 @@
 /~RPG~/Marina/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
 /~RPG~/Corelia/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
 /~RPG~/knitht/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
+/~RPG~/asdghh/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
+/~RPG~/asdf/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
+/~RPG~/asdfs/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
+/~RPG~/asdftwe/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0
+/~RPG~/Cora/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
+/~RPG~/kneeeeight/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
+/~RPG~/be/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
