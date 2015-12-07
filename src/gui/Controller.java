@@ -3,6 +3,7 @@ package gui;
 import java.util.ArrayList;
 
 import persistence.CharacterBank;
+import terrain.Item;
 import actors.Hero;
 import actors.HeroType;
 import actors.MonsterType;
@@ -83,6 +84,7 @@ public class Controller{
                 game.checkForDeath(canvas);
                 handleCombat();
                 game.render(canvas, camera);
+                updateInventory();
             }
             last = now;
         }
@@ -98,13 +100,30 @@ public class Controller{
 		startHandlingDrag(); 
     }   
     
+    
+    
     private void startHandlingClicks(){
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
                 ev -> {
                     handleClickAt(ev.getX(), ev.getY());
                 });
     }
-   
+    
+    public void updateInventory() {
+    	int counter = 0;
+    	if(game.getHeroInventory().size() > 0){
+	    	for(int r = 0; r < 7; r++){
+	    		for(int c = 0; c < 2 && game.getHeroInventory().size() > counter && inventory.getChildren().size() < game.getHeroInventory().size(); c++){
+	    			Item i = game.getHeroInventory().get(counter);
+	    			ImageView temp = new ImageView(i.getSprite());
+	    			temp.setOnMouseClicked(k -> {game.useItem(i.getType());
+	    			inventory.getChildren().remove(temp);});
+	    			inventory.add(temp, c, r);
+	    			counter++;
+	    		}
+	    	}
+	    }
+  	}
     
     private void handleClickAt(double x, double y){
     	if (game.getState() == GameState.START |
