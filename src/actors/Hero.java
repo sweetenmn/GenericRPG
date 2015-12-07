@@ -116,12 +116,11 @@ public class Hero extends Actor{
     		used = boost();
     		break;
     	}
-    	int removed = 0;
     	if (used){
     		for (Item i: inventory){
-    			if (removed == 0 && i.getType().equals(type)){
+    			if (i.getType().equals(type)){
     				inventory.remove(i);
-    				removed++;
+    				return used;
     			}
     		}
     	}
@@ -132,13 +131,19 @@ public class Hero extends Actor{
     }
     private int getBoost(){
     	if (boostActive()){
+    		boostCount--;
     		return 5 * ((level - 1) + 3);
     	}
     	return 0;
     }
     private boolean heal(){
     	if (currentHealth < maxHealth){
-    		currentHealth += ItemType.HEALTH.getValue(level);
+    		int value = ItemType.HEALTH.getValue(level);
+    		if (maxHealth - currentHealth < value){
+    			currentHealth = maxHealth;
+    		} else {
+    			currentHealth += ItemType.HEALTH.getValue(level);
+    		}
     		return true;
     	}
     	return false;
@@ -151,8 +156,9 @@ public class Hero extends Actor{
 			boosted  = true;
 		} else {
 			Alert boostActive = new Alert(AlertType.INFORMATION);
-			boostActive.setContentText("Boost still active!\n"
-					+ "Please wait " + boostCount + " more battle.");
+			boostActive.setContentText("Experience boost still active!\n"
+					+ "Please wait " + boostCount + " more battles.");
+			boostActive.show();
 		}
     	return boosted;
     }
@@ -161,8 +167,6 @@ public class Hero extends Actor{
     		level += 1;
     		experience = Math.abs(expToNextLevel - experience);
     		expToNextLevel += 25;
-    		System.out.println("exp to next level: " + this.expToNextLevel);
-    		System.out.println("hero level: " + this.level);
     	}
     }
     public void moveAnimated(Direction dir, Level currentLevel){
@@ -208,6 +212,16 @@ public class Hero extends Actor{
     }
 	public Actor getAttacker(){
 		return attacker;
+	}
+	
+	public int getNumPotions(ItemType type){
+		int num = 0;
+		for (Item i: inventory){
+			if (i.getType() == type){
+				num++;
+			}
+		}
+		return num;
 	}
 }
 

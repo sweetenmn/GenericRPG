@@ -19,7 +19,8 @@ public class Combat extends Drawable{
     Hero hero;
     Monster monster;
     Projectile projectile;
-    public Combat(Hero hero, Monster monster) {
+    private boolean hasDroppedLoot = false;
+    public Combat(Actor hero, Actor monster) {
         this.hero = hero;
         this.monster = monster;
         hero.setAttacker(monster);
@@ -31,7 +32,9 @@ public class Combat extends Drawable{
         if (projectile == null || projectile.isFinished()) {
             if (hero.attack(monster)) {
                 projectile = new Projectile(true);
-            } else System.out.println("Your attack failed!");
+            } else {
+            	System.out.println("Your attack failed!");
+            }
         }
     }
 
@@ -105,6 +108,13 @@ public class Combat extends Drawable{
         }
 
 
+    }
+    
+    public void dropLoot(){
+    	hasDroppedLoot = true;
+    }
+    public boolean moreLoot(){
+    	return !hasDroppedLoot;
     }
     
     public Monster getMonster(){

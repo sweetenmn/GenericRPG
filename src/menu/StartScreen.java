@@ -27,6 +27,7 @@ public class StartScreen extends Drawable {
 	
 	public void render(Canvas canvas, Camera camera){
 		this.draw(canvas, camera);
+		
 	}
 	
 	@Override

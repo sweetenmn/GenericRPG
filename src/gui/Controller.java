@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import persistence.CharacterBank;
 import terrain.Item;
+import terrain.ItemType;
 import actors.Hero;
 import actors.HeroType;
 import actors.MonsterType;
@@ -21,6 +22,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -46,7 +48,7 @@ public class Controller{
     @FXML
     VBox inspectPane;
     @FXML
-    GridPane inventory;
+    VBox inventory;
     @FXML
     Button enterCombatButton, inspectButton, startButton, saveButton, exitButton, loadButton, clearButton;
     @FXML
@@ -55,6 +57,10 @@ public class Controller{
     TextField nameInput;
     @FXML
     ImageView portrait, loadingView;
+    @FXML
+    Label healthCount;
+    @FXML
+    Label expCount;
     @FXML
     Text name, loadingName, savedText, inspectType, inspectAttack, inspectHealth;
     @FXML
@@ -84,7 +90,6 @@ public class Controller{
                 game.checkForDeath(canvas);
                 handleCombat();
                 game.render(canvas, camera);
-                updateInventory();
             }
             last = now;
         }
@@ -109,22 +114,8 @@ public class Controller{
                 });
     }
     
+    
 
-    public void updateInventory() {
-    	int counter = 0;
-    	if(game.getHeroInventory().size() > 0){
-	    	for(int r = 0; r < 7; r++){
-	    		for(int c = 0; c < 2 && game.getHeroInventory().size() > counter && inventory.getChildren().size() < game.getHeroInventory().size(); c++){
-	    			Item i = game.getHeroInventory().get(counter);
-	    			ImageView temp = new ImageView(i.getSprite());
-	    			temp.setOnMouseClicked(k -> {game.useItem(i.getType());
-	    			inventory.getChildren().remove(temp);});
-	    			inventory.add(temp, c, r);
-	    			counter++;
-	    		}
-	    	}
-	    }
-  	}
     
     private void handleClickAt(double x, double y){
     	if (game.getState() == GameState.START |
@@ -291,6 +282,7 @@ public class Controller{
                         enterCombat();
                     }
                     checkHeroAtExit();
+                    updateInventory();
 
                 });
     }
@@ -401,6 +393,25 @@ public class Controller{
 
     @FXML
     public void right() { game.moveHero(Direction.RIGHT); }
+    
+    public void updateInventory(){
+    	healthCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.HEALTH)));
+    	expCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.EXPERIENCE)));
+    }
+    @FXML
+    public void useExpPotion(){
+    	if (expCount.getText() != "0"){
+    		game.useItem(ItemType.EXPERIENCE);
+    		updateInventory();
+    	}
+    }
+    @FXML
+    public void useHealthPotion(){
+    	if (healthCount.getText() != "0"){
+    		game.useItem(ItemType.HEALTH);
+    		updateInventory();
+    	}
+    }
     
     @FXML
     public void selectMage(){
