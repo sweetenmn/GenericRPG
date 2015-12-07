@@ -219,7 +219,7 @@
                                     <ColorAdjust hue="-0.42" />
                                  </effect>
                               </ProgressBar>
-                              <Label text="Name | Level">
+                              <Label fx:id="combatHeroName" text="Name | Level">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -242,7 +242,7 @@
                                     <ColorAdjust hue="0.91" />
                                  </effect>
                               </ProgressBar>
-                              <Label text="Monster Type">
+                              <Label fx:id="combatMonsterName" text="Monster Type">
                                  <font>
                                     <Font size="14.0" />
                                  </font>

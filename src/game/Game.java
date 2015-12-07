@@ -80,7 +80,7 @@ public class Game {
         this.mobs = level.getMonsters();
     }
 
-    public void startCombat(Actor monster) {
+    public void startCombat(Monster monster) {
         combat = new Combat(hero, monster);
         setState(GameState.COMBAT);
     }
@@ -131,7 +131,9 @@ public class Game {
     }
 
     private void gameEnd(Canvas canvas){
-        state = GameState.END;
+        if (!state.equals(GameState.CHARACTER_CREATE) && !state.equals(GameState.CHARACTER_LOAD)) {
+            state = GameState.END;
+        }
     }
 
     public void render(Canvas canvas, Camera camera){

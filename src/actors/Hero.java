@@ -42,7 +42,6 @@ public class Hero extends Actor{
         adjustStats();
         currentHealth = maxHealth;
     }
-    
     public Hero(HeroType prof, String name, int level){
         this.prof = prof;
         this.sprite = prof.getSpriteDirection(Direction.DOWN);
@@ -53,22 +52,22 @@ public class Hero extends Actor{
         this.expBoost = 0;
         adjustStats();
     }
-    
     private void adjustStats(){
     	this.expToNextLevel = offsetByLevel(INIT_EXP_REQUIRED, EXP_BUFF);
     	this.maxHealth = offsetByLevel(prof.getMaxHealth(), HEALTH_BUFF);
     	this.attack = offsetByLevel(prof.getAttack(), ATK_BUFF);
     	this.luck = offsetByLevel(prof.getLuck(), STAT_BUFF);
     }
-    
     private int offsetByLevel(int initial, int factorOf){
     	int levelOffset = this.level - 1;
     	return initial + (levelOffset * factorOf);
     }
-    
-    public void loadHealth(int health){this.currentHealth = health;}
-    public void loadExp(int exp){this.experience = exp;}
-
+    public void loadHealth(int health) {
+        this.currentHealth = health;
+    }
+    public void loadExp(int exp){
+        this.experience = exp;
+    }
     @Override
     public boolean attack(Actor actor){
     	actor.setAttacker(this);
@@ -85,7 +84,6 @@ public class Hero extends Actor{
             return true;
         }
     }
-
     @Override
     public void takeDamage(int damage){
         System.out.println(this.name + " took " + damage + " damage!");
@@ -94,7 +92,6 @@ public class Hero extends Actor{
             this.die();
         }
     }
-    
     public void addIfInventorySpace(Item i) throws IllegalStateException{
     	if (inventory.size() < 14){
     		inventory.add(i);
@@ -102,18 +99,13 @@ public class Hero extends Actor{
     		throw new IllegalStateException();
     	}
     }
-    
     public ArrayList<Item> getInventory(){
     	return inventory;
     }
-    
-
-
     public void addExperience(int monsterExp){
     	experience += (monsterExp + getBoost());
     	this.levelIf();
     }
-    
     public boolean usePotion(ItemType type){
     	boolean used = false;
     	switch(type){
@@ -135,18 +127,15 @@ public class Hero extends Actor{
     	}
     	return used;
     }
-    
     private boolean boostActive(){
     	return boostCount != 0;
     }
-    
     private int getBoost(){
     	if (boostActive()){
     		return 5 * ((level - 1) + 3);
     	}
     	return 0;
     }
-    
     private boolean heal(){
     	if (currentHealth < maxHealth){
     		currentHealth += ItemType.HEALTH.getValue(level);
@@ -155,7 +144,6 @@ public class Hero extends Actor{
     	return false;
     	
     }
-    
     private boolean boost(){
     	boolean boosted = false;
     	if (!boostActive()){
@@ -168,9 +156,6 @@ public class Hero extends Actor{
 		}
     	return boosted;
     }
-    
-    
-    
     private void levelIf(){
     	if (expToNextLevel - experience <= 0){
     		level += 1;
@@ -180,31 +165,47 @@ public class Hero extends Actor{
     		System.out.println("hero level: " + this.level);
     	}
     }
-    
     public void moveAnimated(Direction dir, Level currentLevel){
     	move(dir, currentLevel);
     	setSprite(prof.getSpriteDirection(dir));
     }
-
     @Override
     public void die(){
         this.sprite = new Image("assets/skull.png");
         alive = false;
     }
-
 	@Override
-	public void setAttacker(Actor actor){this.attacker = actor;}
-	public void setName(String input){this.name = input;}
-
-	public void setSprite(Image image){sprite = image;}
-	public int getLevel(){return level;}
-	public String getName(){return this.name;}
-	public int getActualHealth(){return currentHealth;}
-	public int getActualExp(){return this.experience;}
-	public HeroType getProfession(){return this.prof;}
-	public double getExpPercent(){return (double)experience / (double)expToNextLevel;}
+	public void setAttacker(Actor actor) {
+        this.attacker = actor;
+    }
+	public void setName(String input) {
+        this.name = input;
+    }
+	public void setSprite(Image image) {
+        sprite = image;
+    }
+	public int getLevel() {
+        return level;
+    }
+	public String getName() {
+        return this.name;
+    }
+	public int getActualHealth() {
+        return currentHealth;
+    }
+	public int getActualExp() {
+        return this.experience;
+    }
+	public HeroType getProfession() {
+        return this.prof;
+    }
+	public double getExpPercent() {
+        return (double)experience / (double)expToNextLevel;
+    }
 	@Override
-    	public Image getSprite(){return sprite;}
+    	public Image getSprite() {
+        return sprite;
+    }
 	public Actor getAttacker(){
 		return attacker;
 	}
