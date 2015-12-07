@@ -1,5 +1,6 @@
 package terrain;
 
+import javafx.scene.image.Image;
 import game.Drawable;
 
 public class Item extends Drawable{
@@ -14,6 +15,10 @@ public class Item extends Drawable{
 	
 	public ItemType getType(){
 		return type;
+	}
+	
+	public Image getSprite(){
+		return sprite;
 	}
 
 	
