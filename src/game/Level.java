@@ -92,6 +92,7 @@ public class Level extends Drawable{
     public String randomLevel(){
     	Dice dice = new Dice(12);
     	int level = dice.roll();
+    	System.out.println("LEVEL: " + level);
     	return "src/assets/Levels/L" + level + ".txt";
     }
 
@@ -154,7 +155,6 @@ public class Level extends Drawable{
     
     public void checkAddToInventory(Position p){
     	try{
-    		
     		if (containsItem(p)){
     			Item item = getItemAt(p);
     			hero.addIfInventorySpace(item);
@@ -186,7 +186,6 @@ public class Level extends Drawable{
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, 1000, 1000);
         drawGrid(canvas,camera);
-        //checkItems();
         for(Drawable obj : contents){
             obj.draw(canvas, camera);
         }

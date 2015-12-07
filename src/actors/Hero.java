@@ -21,40 +21,41 @@ public class Hero extends Actor{
     private int boostCount= 0;
     private Actor attacker;
     private String name;
-    private HeroType prof;
+    private HeroType type;
     private ArrayList<Item> inventory = new ArrayList<Item>();
     private static final int EXP_BUFF = 25;
     private static final int HEALTH_BUFF = 3;
-    private static final int STAT_BUFF = 1;
     private static final int ATK_BUFF = 3;
     private static final int INIT_EXP_REQUIRED = 100;
     private static final int EXP_BOOST = 3;
 
     public Hero(HeroType prof, String name) {
-        this.prof = prof;
-        this.combatSprite = prof.getCombatAvatar();
-        this.sprite = prof.getSpriteDirection(Direction.DOWN);
-        this.alive = true;
+        create(prof, name);
         this.experience = 0;
         this.level = 1;
-        this.name = name;
         adjustStats();
         currentHealth = maxHealth;
     }
+    
     public Hero(HeroType prof, String name, int level){
-        this.prof = prof;
+        create(prof, name);
+        this.level = level;
+        adjustStats();
+    }
+    
+    public void create(HeroType prof, String name){
+        this.type = prof;
         this.sprite = prof.getSpriteDirection(Direction.DOWN);
         this.combatSprite = prof.getCombatAvatar();
         this.alive = true;
         this.name = name;
-        this.level = level;
-        adjustStats();
     }
+    
     private void adjustStats(){
     	this.expToNextLevel = offsetByLevel(INIT_EXP_REQUIRED, EXP_BUFF);
-    	this.maxHealth = offsetByLevel(prof.getMaxHealth(), HEALTH_BUFF);
-    	this.attack = offsetByLevel(prof.getAttack(), ATK_BUFF);
-    	this.luck = offsetByLevel(prof.getLuck(), STAT_BUFF);
+    	this.maxHealth = offsetByLevel(type.getMaxHealth(), HEALTH_BUFF);
+    	this.attack = offsetByLevel(type.getAttack(), ATK_BUFF);
+    	this.luck = type.getLuck();
     }
     private int offsetByLevel(int initial, int factorOf){
     	int levelOffset = this.level - 1;
@@ -98,7 +99,7 @@ public class Hero extends Actor{
         }
     }
     public void addIfInventorySpace(Item i) throws IllegalStateException{
-    	if (inventory.size() < 14){
+    	if (inventory.size() < 20){
     		inventory.add(i);
     	} else {
     		throw new IllegalStateException();
@@ -108,7 +109,9 @@ public class Hero extends Actor{
     	return inventory;
     }
     public void addExperience(int monsterExp){
-    	experience += (monsterExp + getBoost());
+    	int gained = monsterExp + getBoost();
+    	experience += (gained);
+    	System.out.println("Gained "+ gained + " experience!");
     	this.levelIf();
     }
     public boolean usePotion(ItemType type){
@@ -137,7 +140,7 @@ public class Hero extends Actor{
     private int getBoost(){
     	if (boostActive()){
     		boostCount--;
-    		return 5 * ((level - 1) + EXP_BOOST);
+    		return 3 * ((level - 1) + EXP_BOOST);
     	}
     	return 0;
     }
@@ -176,7 +179,7 @@ public class Hero extends Actor{
     }
     public void moveAnimated(Direction dir, Level currentLevel){
     	move(dir, currentLevel);
-    	setSprite(prof.getSpriteDirection(dir));
+    	setSprite(type.getSpriteDirection(dir));
     }
     @Override
     public void die(){
@@ -206,7 +209,7 @@ public class Hero extends Actor{
         return this.experience;
     }
 	public HeroType getProfession() {
-        return this.prof;
+        return this.type;
     }
 	public double getExpPercent() {
         return (double)experience / (double)expToNextLevel;
