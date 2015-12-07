@@ -12,7 +12,4 @@ public class Camera extends Drawable{
         this.position = position;
     }
 
-    @Override
-    public void draw(Canvas canvas, Camera camera) {
-    }
 }

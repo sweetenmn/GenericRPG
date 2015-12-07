@@ -11,7 +11,6 @@ import javafx.scene.paint.Color;
 import terrain.Exit;
 import terrain.Floor;
 import terrain.Item;
-import terrain.ItemType;
 import terrain.Wall;
 import util.Dice;
 
@@ -88,7 +87,6 @@ public class Level extends Drawable{
             Alert alert = new Alert(AlertType.ERROR);
             alert.setContentText("Internal error: Level map not found");
         }
-        
     }
     
     public String randomLevel(){

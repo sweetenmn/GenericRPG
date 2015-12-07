@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 
 public enum HeroType {
-    ROGUE(25, 5, 5, 7) {
+    ROGUE(25, 5, 7) {
 
 
 
@@ -25,7 +25,7 @@ public enum HeroType {
 			return new Image("assets/rogue_portrait.png");
 		}
     },
-    MAGE(20, 8, 10, 10){
+    MAGE(20, 8, 10){
 		@Override
 		public Image getSpriteDirection(Direction dir){
 			String img = "assets/mage_" + getEnd(dir);
@@ -42,7 +42,7 @@ public enum HeroType {
 			return new Image("assets/mage_portrait.png");
 		}
     },
-    KNIGHT(35, 10, 1, 2){
+    KNIGHT(35, 10, 0){
 		@Override
 		public Image getSpriteDirection(Direction dir){
 			String img = "assets/knight_" + getEnd(dir);
@@ -59,7 +59,7 @@ public enum HeroType {
 			return new Image("assets/knight_portrait.png");
 		}
     };
-    private int maxHealth, attack, intel, luck;
+    private int maxHealth, attack, luck;
     
    
 
@@ -69,7 +69,6 @@ public enum HeroType {
 
     public int getMaxHealth(){return maxHealth;}
     public int getAttack(){return attack;}
-    public int getIntel(){return intel;}
     public int getLuck(){return luck;}
     
     private static String getEnd(Direction dir){
@@ -91,10 +90,9 @@ public enum HeroType {
 		return end;    	
     }
 
-    HeroType(int health, int attack, int intel, int luck) {
+    HeroType(int health, int attack,  int luck) {
         this.maxHealth = health;
         this.attack = attack;
-        this.intel = intel;
         this.luck = luck;
     }
 }

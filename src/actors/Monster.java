@@ -1,8 +1,6 @@
 package actors;
 
-import java.util.ArrayList;
 import javafx.scene.image.Image;
-import terrain.Item;
 import util.Dice;
 
 /**
@@ -67,6 +65,7 @@ public class Monster extends Actor {
 
     @Override
     public void die(){
+    	
     	this.attacker.addExperience(expValue);
         this.sprite = new Image("assets/skull.png");
         this.combatSprite = new Image("assets/skull.png");

@@ -3,7 +3,6 @@ package gui;
 import java.util.ArrayList;
 
 import persistence.CharacterBank;
-import terrain.Item;
 import terrain.ItemType;
 import actors.Hero;
 import actors.HeroType;
@@ -30,7 +29,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
@@ -64,6 +62,10 @@ public class Controller{
     @FXML
     Text name, loadingName, savedText, inspectType, inspectAttack, inspectHealth;
     @FXML
+    Label combatHeroName;
+    @FXML
+    Label combatMonsterName;
+    @FXML
     Rectangle mageSelect, knightSelect, rogueSelect;
     @FXML
     ProgressBar healthBar, expBar, combatHeroHealth, combatMonsterHealth;
@@ -87,8 +89,11 @@ public class Controller{
                 healthBar.setProgress(game.getHeroHealthPercent());
                 expBar.setProgress(game.getHeroExpPercent());
                  name.setText(game.getHeroName() + " | Level " + game.getHeroLevel());
-                game.checkForDeath(canvas);
+            
+                
+                checkForGameOver();
                 handleCombat();
+                
                 game.render(canvas, camera);
             }
             last = now;
@@ -162,7 +167,7 @@ public class Controller{
 		case CHARACTER_LOAD:
 			loadGame();
 			break;
-		case COMBAT: case END: case LOADING: case START: case WALKING:
+		case COMBAT: case END: case START: case WALKING:
 			break;   	
     	}
     }
@@ -197,6 +202,7 @@ public class Controller{
     	String name = characterChoice.getSelectionModel().getSelectedItem();
 		Hero hero = characters.getHero(name);
 		showLevel(hero);
+		updateInventory();
     }
     
     private void setChoice(){
@@ -338,6 +344,8 @@ public class Controller{
     private void handleCombat(){
     	if (game.getCombat() != null) {
             game.getCombat().setHealthBars(combatHeroHealth, combatMonsterHealth);
+            combatHeroName.setText(name.getText());
+            combatMonsterName.setText(game.getCombat().getMonster().getType().name());
     	
 	    	if (!game.getCombat().isMonsterAlive()){
 	    		combatPane.setVisible(false);
@@ -395,8 +403,11 @@ public class Controller{
     public void right() { game.moveHero(Direction.RIGHT); }
     
     public void updateInventory(){
-    	healthCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.HEALTH)));
-    	expCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.EXPERIENCE)));
+    	if (notAtMenu()){
+    		healthCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.HEALTH)));
+    		expCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.EXPERIENCE)));
+    		
+    	}
     }
     @FXML
     public void useExpPotion(){
@@ -412,6 +423,8 @@ public class Controller{
     		updateInventory();
     	}
     }
+    
+    
     
     @FXML
     public void selectMage(){
@@ -491,5 +504,24 @@ public class Controller{
     		inventory.setVisible(false);
     		game.render(canvas, camera);
     	}	
+    }
+    
+    private boolean notAtMenu(){
+    	switch(game.getState()){
+		case CHARACTER_CREATE: case CHARACTER_LOAD: case END: case START:
+			return false;
+		case COMBAT: case WALKING:
+			return true;
+			
+    	
+    	}
+    	return false;
+    }
+    
+    private void checkForGameOver(){
+    	game.checkForDeath(canvas);
+    	if (!game.getHero().isAlive()){
+    		combatPane.setVisible(false);
+    	}
     }
 }

@@ -1,6 +1,5 @@
 package game;
 
-import actors.Actor;
 import actors.Hero;
 import actors.Monster;
 import game.graphics.Camera;
@@ -10,7 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import terrain.Potion;
 
 /**
  * Created by josephbenton on 11/23/15.
@@ -19,8 +17,7 @@ public class Combat extends Drawable{
     Hero hero;
     Monster monster;
     Projectile projectile;
-    private boolean hasDroppedLoot = false;
-    public Combat(Actor hero, Actor monster) {
+    public Combat(Hero hero, Monster monster) {
         this.hero = hero;
         this.monster = monster;
         hero.setAttacker(monster);
@@ -32,6 +29,7 @@ public class Combat extends Drawable{
         if (projectile == null || projectile.isFinished()) {
             if (hero.attack(monster)) {
                 projectile = new Projectile(true);
+
             } else {
             	System.out.println("Your attack failed!");
             }
@@ -98,6 +96,7 @@ public class Combat extends Drawable{
             } else {
                 finished = true;
                 if (leftToRight) {
+
                     monsterAttack();
                 }
             }
@@ -106,15 +105,6 @@ public class Combat extends Drawable{
         public boolean isFinished() {
             return finished;
         }
-
-
-    }
-    
-    public void dropLoot(){
-    	hasDroppedLoot = true;
-    }
-    public boolean moreLoot(){
-    	return !hasDroppedLoot;
     }
     
     public Monster getMonster(){

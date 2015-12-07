@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import terrain.ItemType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -36,7 +37,7 @@ public class CharacterBank {
 				updateBank();
 			}
 		}catch(IOException e) {
-			e.printStackTrace();
+			fail();
 		}
 	}
 	
@@ -50,13 +51,20 @@ public class CharacterBank {
 			writer.write(DELIMITER + hero.getLevel());
 			writer.write(DELIMITER + hero.getActualHealth());
 			writer.write(DELIMITER + hero.getActualExp());
+			writer.write(DELIMITER + hero.getNumPotions(ItemType.HEALTH));
+			writer.write(DELIMITER + hero.getNumPotions(ItemType.EXPERIENCE));
 			writer.write("\n");
 			writer.close();
 		}catch (IOException e){
-			Alert badNum = new Alert(AlertType.ERROR);
-			badNum.setContentText("Internal Error - Unable to save Hero.");
-			badNum.show();
+			fail();
 		}
+	}
+	
+	private void fail(){
+		Alert fail = new Alert(AlertType.ERROR);
+		fail.setContentText("Internal Error - Unable to save Hero.");
+		fail.show();
+		
 	}
 	
 	private void overwriteHero(Hero hero){
@@ -113,9 +121,10 @@ public class CharacterBank {
 				int level = Integer.valueOf(parts[3]);
 				int health = Integer.valueOf(parts[4]);
 				int exp = Integer.valueOf(parts[5]);
+				int healthPotions = Integer.valueOf(parts[6]);
+				int expPotions = Integer.valueOf(parts[7]);
 				Hero hero = new Hero(prof, name, level);
-				hero.loadExp(exp);
-				hero.loadHealth(health);
+				hero.loadFromSaved(health, exp, healthPotions, expPotions);
 				savedHeroes.add(hero);
 				heroNames.add(name);
 			}

@@ -18,7 +18,6 @@ import util.Dice;
 public class Hero extends Actor{
     private int attack, luck, level;
     private int experience, expToNextLevel;
-    private int expBoost = 0;
     private int boostCount= 0;
     private Actor attacker;
     private String name;
@@ -29,6 +28,7 @@ public class Hero extends Actor{
     private static final int STAT_BUFF = 1;
     private static final int ATK_BUFF = 3;
     private static final int INIT_EXP_REQUIRED = 100;
+    private static final int EXP_BOOST = 3;
 
     public Hero(HeroType prof, String name) {
         this.prof = prof;
@@ -36,7 +36,6 @@ public class Hero extends Actor{
         this.sprite = prof.getSpriteDirection(Direction.DOWN);
         this.alive = true;
         this.experience = 0;
-        this.expBoost = 0;
         this.level = 1;
         this.name = name;
         adjustStats();
@@ -49,7 +48,6 @@ public class Hero extends Actor{
         this.alive = true;
         this.name = name;
         this.level = level;
-        this.expBoost = 0;
         adjustStats();
     }
     private void adjustStats(){
@@ -62,24 +60,31 @@ public class Hero extends Actor{
     	int levelOffset = this.level - 1;
     	return initial + (levelOffset * factorOf);
     }
-    public void loadHealth(int health) {
-        this.currentHealth = health;
+    
+    public void loadFromSaved(int health, int exp, int healthPotions, int expPotions){
+    	this.currentHealth = health;
+    	this.experience = exp;
+    	for (int i = 0; i < healthPotions; i++){
+    		inventory.add(new Item(ItemType.HEALTH));
+    	}
+    	for (int j = 0; j < expPotions; j++){
+    		inventory.add(new Item(ItemType.EXPERIENCE));
+    	}
+    
     }
-    public void loadExp(int exp){
-        this.experience = exp;
-    }
+    
     @Override
     public boolean attack(Actor actor){
     	actor.setAttacker(this);
         Dice dice = new Dice(20);
         int roll = dice.roll() + luck;
-        if (roll < 10){
+        if (roll < 5){
             actor.takeDamage(0);
             return false;
         } else if (roll < 20){
             actor.takeDamage(attack);
             return true;
-        } else{
+        } else {
             actor.takeDamage(attack * 2);
             return true;
         }
@@ -132,7 +137,7 @@ public class Hero extends Actor{
     private int getBoost(){
     	if (boostActive()){
     		boostCount--;
-    		return 5 * ((level - 1) + 3);
+    		return 5 * ((level - 1) + EXP_BOOST);
     	}
     	return 0;
     }

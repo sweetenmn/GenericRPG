@@ -1,6 +1,5 @@
 package game;
 
-import actors.Actor;
 import actors.Hero;
 import actors.Monster;
 import actors.MonsterType;
@@ -8,7 +7,6 @@ import game.graphics.Camera;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
 import menu.EndScreen;
 import menu.StartScreen;
 
@@ -25,7 +23,6 @@ public class Game {
     private Hero hero;
     private ArrayList<Monster> mobs;
     private Level currentLevel;
-    private GameState prevState;
     private  GameState state;
     private Combat combat;
     private Monster inspected;
@@ -111,11 +108,6 @@ public class Game {
     }
     
     
-    
-    public void loadHero(int health, int exp){
-    	hero.loadHealth(health);
-    	hero.loadExp(exp);
-    }
 
     public void checkForDeath(Canvas canvas){
         if (!hero.isAlive()) {
@@ -174,7 +166,6 @@ public class Game {
     }
 
     public void setState(GameState state){
-        prevState = state;
         this.state = state;
     }
 
@@ -192,11 +183,7 @@ public class Game {
     }
     
     public void dropLoot(){
-    	if (combat.moreLoot()){
-    		currentLevel.addItem(combat.getMonster());
-    		combat.dropLoot();
-    		
-    	}
+    	currentLevel.addItem(combat.getMonster());
     	
     }
     

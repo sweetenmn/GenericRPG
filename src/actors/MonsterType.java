@@ -1,7 +1,5 @@
 package actors;
 
-import game.Position;
-
 import java.util.ArrayList;
 
 import terrain.Item;
@@ -9,7 +7,7 @@ import terrain.ItemType;
 import javafx.scene.image.Image;
 
 public enum MonsterType{
-	OGRE(15, 1, 5, 30){
+	OGRE(20, 1, 5, 30){
 		@Override
 		public Image getAvatar() {return new Image("assets/ogre_sprite.png");}
 		@Override
@@ -17,7 +15,7 @@ public enum MonsterType{
 		@Override
 		public ArrayList<Item> getLoot(){return setLoot(0, 1);}
 		
-	}, DEMON(10, 2, 3, 15){
+	}, DEMON(15, 2, 3, 15){
 		@Override
 		public Image getAvatar(){return new Image("assets/demon_sprite.png");}
 		@Override
@@ -25,7 +23,7 @@ public enum MonsterType{
 		@Override
 		public ArrayList<Item> getLoot(){return setLoot(1, 0);}
 		
-	}, TENTACLE(20, 4, 4, 25){
+	}, TENTACLE(25, 4, 4, 25){
 		@Override
 		public Image getAvatar(){return new Image("assets/tentacle_sprite.png");}
 		@Override
@@ -50,7 +48,7 @@ public enum MonsterType{
     public int getAttack(int level){return attack + ((level-1) * 2);}
     public int getLuck(int level){return luck + ((level-1) * 1);}
     public int getExpValue(int level){return expValue + ((level-1) * 3);}
-    public int getMaxHealth(int level){return maxHealth +((level-1) * 2);}
+    public int getMaxHealth(int level){return maxHealth + ((level-1) * 2);}
     
     private static ArrayList<Item> setLoot(int healthPotions, int expPotions){
     	ArrayList<Item> loot = new ArrayList<Item>();
@@ -60,7 +58,6 @@ public enum MonsterType{
     	for (int i = 0; i < healthPotions; i++){
     		loot.add(new Item(ItemType.HEALTH));
     	}
-    	System.out.println(loot.size());
     	return loot;
     }
 }

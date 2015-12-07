@@ -37,8 +37,6 @@ public abstract class Actor extends Drawable{
     
     public void drawForCombat(Canvas canvas, boolean isHero){
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        double height = canvas.getHeight() / 2;
-        double width = canvas.getWidth() / 5;
         if (isHero) {
             gc.drawImage(combatSprite, 50, 100);
         } else {
