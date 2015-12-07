@@ -19,3 +19,4 @@
 /~RPG~/Corelia/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
 /~RPG~/knitht/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0
 /~RPG~/fas/~RPG~/ROGUE/~RPG~/1/~RPG~/5/~RPG~/70
+/~RPG~/roge/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0

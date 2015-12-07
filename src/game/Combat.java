@@ -47,6 +47,7 @@ public class Combat extends Drawable{
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, 1000, 1000);
+        gc.drawImage(new Image("assets/combat_background.png"), 0, 0, 600, 300);
         hero.drawForCombat(canvas, true);
         monster.drawForCombat(canvas, false);
         if (projectile != null) {
