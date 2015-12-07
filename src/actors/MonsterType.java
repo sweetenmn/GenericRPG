@@ -54,12 +54,13 @@ public enum MonsterType{
     
     private static ArrayList<Item> setLoot(int healthPotions, int expPotions){
     	ArrayList<Item> loot = new ArrayList<Item>();
-    	for (int i = 0; i <= healthPotions; i++){
-    		loot.add(new Item(ItemType.Health, new Position(0,0)));
+    	for (int j = 0; j < expPotions ; j++){
+    		loot.add(new Item(ItemType.EXPERIENCE));
     	}
-    	for (int j = 0; j <= expPotions; j++){
-    		loot.add(new Item(ItemType.Experience, new Position(0,0)));
+    	for (int i = 0; i < healthPotions; i++){
+    		loot.add(new Item(ItemType.HEALTH));
     	}
+    	System.out.println(loot.size());
     	return loot;
     }
 }

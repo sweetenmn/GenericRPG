@@ -10,10 +10,8 @@ import util.Dice;
  */
 public class Monster extends Actor {
     private int attack, luck, expValue;
-    private String name;
     private Hero attacker;
     private MonsterType type;
-    private ArrayList<Item> loot;
 
     public Monster(int level){
     	this.type = randomType();
@@ -21,7 +19,6 @@ public class Monster extends Actor {
         this.currentHealth = maxHealth;
         this.attack = type.getAttack(level);
         this.luck = type.getLuck(level);
-        this.loot = type.getLoot();
         this.expValue = type.getExpValue(level);
         this.sprite = type.getAvatar();
         this.combatSprite = type.getCombatAvatar();
@@ -38,13 +35,14 @@ public class Monster extends Actor {
     public MonsterType getType(){
     	return type;
     }
+    
+    
 
     @Override
     public boolean attack(Actor actor) {
     	actor.setAttacker(this);
         Dice dice = new Dice(20);
         int roll = dice.roll() + luck;
-        System.out.println(roll);
         if (roll < 10){
             actor.takeDamage(0);
             return false;
@@ -60,7 +58,7 @@ public class Monster extends Actor {
     @Override
     void takeDamage(int damage){
         currentHealth -= damage;
-        System.out.println(name + " just took " + damage + " damage!");
+        System.out.println(type.name() + " just took " + damage + " damage!");
         if (currentHealth <= 0){
             this.die();
         }

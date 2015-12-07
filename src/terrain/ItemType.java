@@ -3,13 +3,13 @@ package terrain;
 import javafx.scene.image.Image;
 
 public enum ItemType{
-	Health("Health Potion", "Heals the Hero for 10 health.", 10){
+	HEALTH("Health Potion", "Heals the Hero for 10 health.", 10){
 		@Override
 		public Image getAvatar(){
 			return new Image("assets/health_potion.png");
 		};
 	},
-	Experience("Experience Potion", "Grants the Hero additional experience", 10){
+	EXPERIENCE("Experience Potion", "Grants the Hero additional experience", 10){
 		@Override
 		public Image getAvatar(){
 			return new Image("assets/exp_potion.png");

@@ -69,6 +69,7 @@ public class Controller{
     private Position cameraDragStartPos;
     private CharacterBank characters = new CharacterBank();
     double startX, startY;
+    private boolean lootDropped = false;
     Game game;
     private AnimationTimer timer = new AnimationTimer(){
         long last = 0;
@@ -79,9 +80,9 @@ public class Controller{
                 healthBar.setProgress(game.getHeroHealthPercent());
                 expBar.setProgress(game.getHeroExpPercent());
                 name.setText(game.getHeroName() + " | Level " + game.getHeroLevel());
-                game.render(canvas, camera);
                 game.checkForDeath(canvas);
                 handleCombat();
+                game.render(canvas, camera);
             }
             last = now;
         }
@@ -264,9 +265,10 @@ public class Controller{
                     } else if (code == KeyCode.D || code == KeyCode.RIGHT){
                         right();
                     } else if (code == KeyCode.SHIFT){
-                    	game.heroAtk();
+                    	enterCombat();
                     }
                     checkHeroAtExit();
+                    
                 });
     }
     
@@ -312,6 +314,8 @@ public class Controller{
                 adventurePane.setVisible(false);
                 combatPane.setVisible(true);
                 runButton.setVisible(true);
+                lootDropped = true;
+                
             }
         }
     }
@@ -323,6 +327,11 @@ public class Controller{
 	    	if (!game.getCombat().isMonsterAlive()){
 	    		combatPane.setVisible(false);
 	    		adventurePane.setVisible(true);
+	    		if (lootDropped){
+	    			game.dropLoot();
+	    			lootDropped = false;
+	    		}
+	    		
 	    	}
     	}
     }

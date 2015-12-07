@@ -111,7 +111,12 @@ public class Game {
         }
     }
     
-    public boolean checkAtExit(){return currentLevel.atExit(hero.getPosition());}
+    public boolean checkAtExit(){
+    	if (state == GameState.WALKING){
+    		return currentLevel.atExit(hero.getPosition());
+    	}
+    	return false;
+    }
 
     private void gameEnd(Canvas canvas){
         state = GameState.END;
@@ -169,5 +174,9 @@ public class Game {
     
     public Combat getCombat(){
     	return combat;
+    }
+    
+    public void dropLoot(){
+    	currentLevel.addItem(combat.getMonster());
     }
 }

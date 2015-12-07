@@ -28,6 +28,7 @@ public class Level extends Drawable{
     private Hero hero;
     private Position exit;
     private ArrayList<Monster> monsters;
+    private ArrayList<Item> items = new ArrayList<Item>();
     private boolean[][] wallMap;
 
     public Level(int width, int height, Hero hero){
@@ -138,6 +139,15 @@ public class Level extends Drawable{
         return !wallMap[p.getX()][p.getY()] && !isOccupied(p);
     }
     
+    public boolean containsItem(Position p){
+    	for (Item item: items){
+    		if(item.getPosition().equals(p)){
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
     public boolean atExit(Position p){
     	return p.equals(exit);
     }
@@ -148,18 +158,48 @@ public class Level extends Drawable{
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, 1000, 1000);
         drawGrid(canvas,camera);
-        checkItems();
+        //checkItems();
         for(Drawable obj : contents){
             obj.draw(canvas, camera);
         }
         hero.draw(canvas, camera);
     }
     
-    private void checkItems(){
+    public void checkItems(){
     	for (Monster m: monsters){
     		if (!m.isAlive()){
-    			contents.add(new Item(ItemType.Health, Direction.DOWN.getAdj(m.getPosition())));
+    			for (Item item: m.getType().getLoot()){
+    				item.setPosition(getOpen(m.getPosition()));
+    				contents.add(item);
+    				items.add(item);
+    			}
     		}
+    	}
+    }
+    
+    public void addItem(Monster m){
+    	for (Item item: m.getType().getLoot()){
+			item.setPosition(getOpen(m.getPosition()));
+			contents.add(item);
+			items.add(item);
+		}
+    }
+    
+    private Position getOpen(Position p){
+    	Position down = Direction.DOWN.getAdj(p);
+    	Position left = Direction.LEFT.getAdj(p);
+    	Position up = Direction.UP.getAdj(p);
+    	Position right = Direction.RIGHT.getAdj(p);
+    	if (isClear(down) && !containsItem(down)){
+    		return down;
+    	} else if (isClear(left) && !containsItem(left)){
+    		return left;
+    	} else if (isClear(up) && !containsItem(up)){
+    		return up;
+    	} else if (isClear(right) &&!containsItem(right)){
+    		return right;
+    	} else {
+    		return p;
     	}
     }
 
