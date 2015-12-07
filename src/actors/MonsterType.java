@@ -1,6 +1,9 @@
 package actors;
 
+import game.Position;
+
 import java.util.ArrayList;
+
 import terrain.Item;
 import terrain.ItemType;
 import javafx.scene.image.Image;
@@ -52,10 +55,10 @@ public enum MonsterType{
     private static ArrayList<Item> setLoot(int healthPotions, int expPotions){
     	ArrayList<Item> loot = new ArrayList<Item>();
     	for (int i = 0; i <= healthPotions; i++){
-    		loot.add(new Item(ItemType.Health));
+    		loot.add(new Item(ItemType.Health, new Position(0,0)));
     	}
     	for (int j = 0; j <= expPotions; j++){
-    		loot.add(new Item(ItemType.Experience));
+    		loot.add(new Item(ItemType.Experience, new Position(0,0)));
     	}
     	return loot;
     }

@@ -8,8 +8,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import terrain.Exit;
 import terrain.Floor;
+import terrain.Item;
+import terrain.ItemType;
 import terrain.Wall;
 import util.Dice;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -145,10 +148,19 @@ public class Level extends Drawable{
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, 1000, 1000);
         drawGrid(canvas,camera);
+        checkItems();
         for(Drawable obj : contents){
             obj.draw(canvas, camera);
         }
         hero.draw(canvas, camera);
+    }
+    
+    private void checkItems(){
+    	for (Monster m: monsters){
+    		if (!m.isAlive()){
+    			contents.add(new Item(ItemType.Health, Direction.DOWN.getAdj(m.getPosition())));
+    		}
+    	}
     }
 
     private void drawGrid(Canvas canvas, Camera camera){
