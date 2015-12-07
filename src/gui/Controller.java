@@ -104,6 +104,7 @@ public class Controller{
                     handleClickAt(ev.getX(), ev.getY());
                 });
     }
+    
    
     
     private void handleClickAt(double x, double y){

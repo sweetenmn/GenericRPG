@@ -124,6 +124,15 @@ public class Hero extends Actor{
     		used = boost();
     		break;
     	}
+    	int removed = 0;
+    	if (used){
+    		for (Item i: inventory){
+    			if (removed == 0 && i.getType().equals(type)){
+    				inventory.remove(i);
+    				removed++;
+    			}
+    		}
+    	}
     	return used;
     }
     
