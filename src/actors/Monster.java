@@ -23,7 +23,6 @@ public class Monster extends Actor {
         this.sprite = type.getAvatar();
         this.combatSprite = type.getCombatAvatar();
         this.alive = true;
-        //System.out.println("LEVEL: " + level + "HEALTH: " + this.maxHealth);
     }
     
     private MonsterType randomType(){
@@ -35,7 +34,6 @@ public class Monster extends Actor {
     public MonsterType getType(){
     	return type;
     }
-    
     
 
     @Override

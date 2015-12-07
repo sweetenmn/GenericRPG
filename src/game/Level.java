@@ -5,6 +5,8 @@ import actors.Monster;
 import game.graphics.Camera;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
 import terrain.Exit;
 import terrain.Floor;
@@ -112,8 +114,13 @@ public class Level extends Drawable{
     	return false;
     }
     
-    public void addItemAt(String item, Position p){
-    	
+    public Item getItemAt(Position p){
+    	for (Item item: items){
+    		if (item.getPosition().equals(p)){
+    			return item;
+    		}
+    	}
+    	return null;
     }
 
     public ArrayList<Monster> getMonsters(){return monsters;}
@@ -121,6 +128,11 @@ public class Level extends Drawable{
     public void removeMonster(Monster m){
     	monsters.remove(m);
     	contents.remove(m);
+    }
+    
+    private void removeItem(Item i){
+    	items.remove(i);
+    	contents.remove(i);
     }
 
     public void addWall(int x, int y){
@@ -137,6 +149,21 @@ public class Level extends Drawable{
 
     public boolean isClear(Position p){
         return !wallMap[p.getX()][p.getY()] && !isOccupied(p);
+    }
+    
+    public void checkAddToInventory(Position p){
+    	try{
+    		
+    		if (containsItem(p)){
+    			Item item = getItemAt(p);
+    			hero.addIfInventorySpace(item);
+    			removeItem(item);
+    		}
+    	} catch (IllegalStateException e) {
+    		Alert nospace = new Alert(AlertType.INFORMATION);
+    		nospace.setContentText("Inventory is full.");
+    		nospace.show();
+    	}
     }
     
     public boolean containsItem(Position p){

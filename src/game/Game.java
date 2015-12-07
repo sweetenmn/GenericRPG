@@ -13,6 +13,8 @@ import menu.StartScreen;
 
 import java.util.ArrayList;
 
+import terrain.Item;
+import terrain.ItemType;
 import util.Dice;
 
 /**
@@ -30,6 +32,7 @@ public class Game {
     public void moveHero(Direction dir) {
         if (state.equals(GameState.WALKING)&&  hero.isAlive()) {
             hero.moveAnimated(dir, currentLevel);
+            currentLevel.checkAddToInventory(hero.getPosition());
         }
     }
 
@@ -46,6 +49,10 @@ public class Game {
         return combat;
     }
     
+    public ArrayList<Item> getHeroInventory(){
+    	return hero.getInventory();
+    }
+    
     public boolean heroInspect(){
         if (hero.isAlive()) {
             for (Monster m : mobs) {
@@ -54,10 +61,12 @@ public class Game {
                     return true;
                 }
             }
-            
         }
-        return false;
-    	
+        return false;	
+    }
+
+    public void useItem(ItemType type){
+    	hero.usePotion(type);
     }
     
     public MonsterType getInspected(){
@@ -99,6 +108,8 @@ public class Game {
     	hero.setName(name);
 
     }
+    
+    
     
     public void loadHero(int health, int exp){
     	hero.loadHealth(health);

@@ -1,10 +1,14 @@
 package actors;
 
+import java.util.ArrayList;
+
 import game.Direction;
 import game.Level;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import terrain.Item;
+import terrain.ItemType;
 import util.Dice;
 
 /**
@@ -19,9 +23,11 @@ public class Hero extends Actor{
     private Actor attacker;
     private String name;
     private HeroType prof;
+    private ArrayList<Item> inventory = new ArrayList<Item>();
     private static final int EXP_BUFF = 25;
     private static final int HEALTH_BUFF = 3;
     private static final int STAT_BUFF = 1;
+    private static final int ATK_BUFF = 3;
     private static final int INIT_EXP_REQUIRED = 100;
 
     public Hero(HeroType prof, String name) {
@@ -51,7 +57,7 @@ public class Hero extends Actor{
     private void adjustStats(){
     	this.expToNextLevel = offsetByLevel(INIT_EXP_REQUIRED, EXP_BUFF);
     	this.maxHealth = offsetByLevel(prof.getMaxHealth(), HEALTH_BUFF);
-    	this.attack = offsetByLevel(prof.getAttack(), STAT_BUFF);
+    	this.attack = offsetByLevel(prof.getAttack(), ATK_BUFF);
     	this.luck = offsetByLevel(prof.getLuck(), STAT_BUFF);
     }
     
@@ -89,6 +95,18 @@ public class Hero extends Actor{
         }
     }
     
+    public void addIfInventorySpace(Item i) throws IllegalStateException{
+    	if (inventory.size() < 14){
+    		inventory.add(i);
+    	} else {
+    		throw new IllegalStateException();
+    	}
+    }
+    
+    public ArrayList<Item> getInventory(){
+    	return inventory;
+    }
+    
 
 
     public void addExperience(int monsterExp){
@@ -96,13 +114,13 @@ public class Hero extends Actor{
     	this.levelIf();
     }
     
-    public boolean usePotion(int PotionType){
+    public boolean usePotion(ItemType type){
     	boolean used = false;
-    	switch(PotionType){
-    	case 0:
+    	switch(type){
+    	case HEALTH:
     		used = heal();
     		break;
-    	case 1://exp
+    	case EXPERIENCE:
     		used = boost();
     		break;
     	}
@@ -122,7 +140,7 @@ public class Hero extends Actor{
     
     private boolean heal(){
     	if (currentHealth < maxHealth){
-    		currentHealth += 10;
+    		currentHealth += ItemType.HEALTH.getValue(level);
     		return true;
     	}
     	return false;

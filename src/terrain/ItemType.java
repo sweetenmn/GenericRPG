@@ -22,7 +22,7 @@ public enum ItemType{
 		public abstract Image getAvatar();
 		public String getName(){return name;}
 		public String getDescription(){return description;}
-		public int getValue(){return value;}
+		public int getValue(int level){return value + ((level - 1) * 3);}
 				
 		ItemType(String name, String description, int value){
 			this.name = name;
