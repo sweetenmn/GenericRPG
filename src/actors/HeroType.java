@@ -8,6 +8,7 @@ public enum HeroType {
     ROGUE(25, 5, 5, 7) {
 
 
+
 		@Override
 		public Image getSpriteDirection(Direction dir){
 			String img = "assets/rogue_" + getEnd(dir);
