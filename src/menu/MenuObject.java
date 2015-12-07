@@ -17,17 +17,20 @@ public class MenuObject extends Drawable{
 	
 	private Position getPosition(MenuImage type){
 		Position p = null;
-		switch(type){
-		case LOAD_GAME:
-			p = new Position(0,5);
-			break;
-		case NEW_GAME:
-			p = new Position(0,3);
-			break;
-		case TITLE:
-			p = new Position(0,0);
-			break;
-		}
+		switch(type) {
+            case LOAD_GAME:
+                p = new Position(0, 5);
+                break;
+            case NEW_GAME:
+                p = new Position(0, 3);
+                break;
+            case TITLE:
+                p = new Position(0, 0);
+                break;
+            case GAME_OVER:
+                p = new Position(250, 150);
+                break;
+        }
 		return p;
 	}
 	

@@ -9,6 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import menu.EndScreen;
 import menu.StartScreen;
 
 import java.util.ArrayList;
@@ -131,7 +132,6 @@ public class Game {
 
     private void gameEnd(Canvas canvas){
         state = GameState.END;
-        canvas.getGraphicsContext2D().drawImage(new Image("assets/game_over.png"), canvas.getWidth() / 2, canvas.getHeight() / 2);
     }
 
     public void render(Canvas canvas, Camera camera){
@@ -144,6 +144,9 @@ public class Game {
         } else if (state.equals(GameState.START)) {
             StartScreen startScreen = new StartScreen(0,0);
             startScreen.draw(canvas, camera);
+        } else if (state.equals(GameState.END)) {
+            EndScreen endScreen = new EndScreen(0, 0);
+            endScreen.draw(canvas, camera);
         }
     }
     

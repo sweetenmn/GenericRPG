@@ -79,7 +79,7 @@ public class Controller{
             if(now - last > NANO_INTERVAL){
                 healthBar.setProgress(game.getHeroHealthPercent());
                 expBar.setProgress(game.getHeroExpPercent());
-                name.setText(game.getHeroName() + " | Level " + game.getHeroLevel());
+                 name.setText(game.getHeroName() + " | Level " + game.getHeroLevel());
                 game.checkForDeath(canvas);
                 handleCombat();
                 game.render(canvas, camera);
@@ -100,18 +100,19 @@ public class Controller{
     
     private void startHandlingClicks(){
         canvas.addEventHandler(MouseEvent.MOUSE_CLICKED,
-        		ev -> {
-        			handleClickAt(ev.getX(), ev.getY());     			
-        		}); 	
+                ev -> {
+                    handleClickAt(ev.getX(), ev.getY());
+                });
     }
    
     
     private void handleClickAt(double x, double y){
     	if (game.getState() == GameState.START |
     			game.getState() == GameState.CHARACTER_CREATE |
-    			game.getState() == GameState.CHARACTER_LOAD){
+    			game.getState() == GameState.CHARACTER_LOAD |
+                game.getState() == GameState.END){
     		checkNewClicked(x, y);
-    		checkLoadClicked(x, y);	
+    		checkLoadClicked(x, y);
     	}
     }
     
@@ -127,16 +128,18 @@ public class Controller{
     }
     
     private void viewCharacterCreation(){
+        combatPane.setVisible(false);
     	startPane.setVisible(true);
     	loadPane.setVisible(false);
     	game.setState(GameState.CHARACTER_CREATE);
     }
     
     private void viewCharacterLoading(){
-    	startPane.setVisible(false);
+        combatPane.setVisible(false);
+        startPane.setVisible(false);
     	loadPane.setVisible(true);
-    	setChoice();
-    	game.setState(GameState.CHARACTER_LOAD);
+        setChoice();
+        game.setState(GameState.CHARACTER_LOAD);
     }
        
     @FXML
@@ -231,8 +234,8 @@ public class Controller{
     
     private void illegalName(){
     	Alert badName = new Alert(AlertType.INFORMATION);
-    	badName.setContentText("That is not an "
-    		+ "appropriate name for a hero!");
+        badName.setContentText("That is not an "
+                + "appropriate name for a hero!");
     	badName.show();
     }
     
@@ -250,25 +253,25 @@ public class Controller{
     	return alert.getResult() == ButtonType.OK;
     }
     
-    private void startHandlingWalk(){
-    	pane.addEventHandler(KeyEvent.KEY_PRESSED,
+    private void startHandlingWalk() {
+        pane.addEventHandler(KeyEvent.KEY_PRESSED,
                 ev -> {
-                	clearSavedMessage();
-                	clearInspect();
-                	KeyCode code = ev.getCode();
+                    clearSavedMessage();
+                    clearInspect();
+                    KeyCode code = ev.getCode();
                     if (code == KeyCode.W || code == KeyCode.UP) {
                         up();
-                    } else if (code == KeyCode.A|| code == KeyCode.LEFT){
+                    } else if (code == KeyCode.A || code == KeyCode.LEFT) {
                         left();
-                    } else if (code == KeyCode.S || code == KeyCode.DOWN){
+                    } else if (code == KeyCode.S || code == KeyCode.DOWN) {
                         down();
-                    } else if (code == KeyCode.D || code == KeyCode.RIGHT){
+                    } else if (code == KeyCode.D || code == KeyCode.RIGHT) {
                         right();
-                    } else if (code == KeyCode.SHIFT){
-                    	enterCombat();
+                    } else if (code == KeyCode.SHIFT) {
+                        enterCombat();
                     }
                     checkHeroAtExit();
-                    
+
                 });
     }
     
@@ -321,8 +324,8 @@ public class Controller{
     }
     
     private void handleCombat(){
-    	if (game.getCombat() != null){
-    		game.getCombat().setHealthBars(combatHeroHealth, combatMonsterHealth);
+    	if (game.getCombat() != null) {
+            game.getCombat().setHealthBars(combatHeroHealth, combatMonsterHealth);
     	
 	    	if (!game.getCombat().isMonsterAlive()){
 	    		combatPane.setVisible(false);
@@ -441,10 +444,10 @@ public class Controller{
     			+ "Do you wish to continue?");
     }
     
-    private void createQuitAlert(Alert alert){
-    	alert.setTitle("Exit Confirmation");
-    	alert.setContentText("Exit to main screen without saving?\n"
-    			+ "Unsaved progress will be lost.");
+    private void createQuitAlert(Alert alert) {
+        alert.setTitle("Exit Confirmation");
+        alert.setContentText("Exit to main screen without saving?\n"
+                + "Unsaved progress will be lost.");
     }
         
     @FXML
