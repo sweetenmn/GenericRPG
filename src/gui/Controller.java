@@ -193,6 +193,7 @@ public class Controller{
     private void newGame(){
     	if (gameReady()){
     		Hero hero = new Hero(profSelected, nameInput.getText());
+    		hero.addSprites();
     		unselectAll();
     		nameInput.clear();
     		showLevel(hero);
@@ -255,7 +256,7 @@ public class Controller{
     		ready = false;
     		illegalName();
     		
-    	}else if(characters.heroExists(nameInput.getText())){
+    	}else if(characters.getHero(nameInput.getText()) != null){
     		ready = ready & confirm(ConfirmType.OVERWRITE);
     	}
     	return ready;
@@ -366,6 +367,7 @@ public class Controller{
     
     private void checkHeroAtExit(){
     	if (game.checkAtExit()){
+    		game.getHero().incMapLevel();
     		showLevel(game.getHero());
     	}
     }
@@ -374,8 +376,8 @@ public class Controller{
     public void inspect(){
     	if (game.heroInspect()){
     		MonsterType inspected = game.getInspected();
-    		String health = Integer.toString(inspected.getMaxHealth(game.getHeroLevel()));
-    		String attack = Integer.toString(inspected.getAttack(game.getHeroLevel()));
+    		String health = Integer.toString(inspected.getMaxHealth(game.mapLevel()));
+    		String attack = Integer.toString(inspected.getAttack(game.mapLevel()));
     		String type = inspected.name();
     		inspectType.setText(type);
     		inspectAttack.setText("Attack: " + attack);

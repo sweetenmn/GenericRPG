@@ -10,6 +10,6 @@ import javafx.scene.image.Image;
 public class Floor extends Drawable{
     public Floor(Position p){
         this.position = p;
-        this.sprite = new Image("assets/floor_cobble.png");
+        this.sprite = new Image("assets/dungeon/floor_cobble.png");
     }
 }

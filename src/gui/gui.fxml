@@ -24,13 +24,13 @@
                <children>
                   <ImageView fitHeight="43.0" fitWidth="70.0" onMouseClicked="#useHealthPotion" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../assets/health_potion.png" />
+                        <Image url="@../assets/dungeon/health_potion.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="healthCount" text="0" />
                   <ImageView fitHeight="43.0" fitWidth="70.0" onMouseClicked="#useExpPotion" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../assets/exp_potion.png" />
+                        <Image url="@../assets/dungeon/exp_potion.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="expCount" text="0" />
@@ -121,12 +121,12 @@
                               </Label>
                               <ImageView fitHeight="63.0" fitWidth="49.0" layoutX="79.0" layoutY="25.0" onMouseClicked="#selectMage" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/mage_portrait.png" />
+                                    <Image url="@../assets/sprites/mage_portrait.png" />
                                  </image>
                               </ImageView>
                               <ImageView fitHeight="55.0" fitWidth="48.0" layoutX="128.0" layoutY="31.0" onMouseClicked="#selectKnight" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/knight_portrait.png" />
+                                    <Image url="@../assets/sprites/knight_portrait.png" />
                                  </image>
                               </ImageView>
                               <Text layoutX="88.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mage" />
@@ -135,7 +135,7 @@
                               <Rectangle fx:id="knightSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="77.0" layoutX="125.0" layoutY="23.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="52.0" />
                               <ImageView fitHeight="56.0" fitWidth="55.0" layoutX="175.0" layoutY="31.0" onMouseClicked="#selectRogue" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../assets/rogue_portrait.png" />
+                                    <Image url="@../assets/sprites/rogue_portrait.png" />
                                  </image>
                               </ImageView>
                               <Text layoutX="181.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rogue" />

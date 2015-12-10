@@ -16,7 +16,7 @@ public class Monster extends Actor {
         this.maxHealth = type.getMaxHealth(level);
         this.currentHealth = maxHealth;
         this.attack = type.getAttack(level);
-        this.luck = type.getLuck(level);
+        this.luck = type.getLuck();
         this.expValue = type.getExpValue(level);
         this.sprite = type.getAvatar();
         this.combatSprite = type.getCombatAvatar();
@@ -33,6 +33,10 @@ public class Monster extends Actor {
     public MonsterType getType(){
     	return type;
     }
+    
+    public int getHealth(){
+    	return currentHealth;
+    }
 
 
     @Override
@@ -42,8 +46,8 @@ public class Monster extends Actor {
     public void die(){
     	
     	((Hero) attacker).addExperience(expValue);
-        this.sprite = new Image("assets/skull.png");
-        this.combatSprite = new Image("assets/skull.png");
+        this.sprite = new Image("assets/sprites/skull.png");
+        this.combatSprite = new Image("assets/sprites/skull.png");
         alive = false;
     }
 

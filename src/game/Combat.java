@@ -22,6 +22,7 @@ public class Combat extends Drawable{
         this.monster = monster;
         hero.setAttacker(monster);
         monster.setAttacker(hero);
+        System.out.println("MONSTER HEALTH " + monster.getHealth());
     }
 
 
@@ -43,7 +44,7 @@ public class Combat extends Drawable{
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, 1000, 1000);
-        gc.drawImage(new Image("assets/combat_background.png"), 0, 0, 600, 300);
+        gc.drawImage(new Image("assets/combat/combat_background.png"), 0, 0, 600, 300);
         hero.drawForCombat(canvas, true);
         monster.drawForCombat(canvas, false);
         if (projectile != null) {
@@ -79,7 +80,7 @@ public class Combat extends Drawable{
             finished = false;
             position = 50;
             range = 250;
-            this.sprite = new Image(friendly ? "assets/fireball_right.png" : "assets/fireball_left.png");
+            this.sprite = new Image(friendly ? "assets/combat/fireball_right.png" : "assets/combat/fireball_left.png");
             leftToRight = friendly;
         }
         public void draw (Canvas canvas) {

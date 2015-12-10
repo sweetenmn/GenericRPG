@@ -5,58 +5,58 @@ import javafx.scene.image.Image;
 
 
 public enum HeroType {
-    ROGUE(25, 5, 7) {
+    ROGUE(30, 7, 7) {
 
 
 
 		@Override
 		public Image getSpriteDirection(Direction dir){
-			String img = "assets/rogue_" + getEnd(dir);
+			String img = "assets/sprites/rogue_" + getEnd(dir);
 			return new Image(img);
 		}
 
 		@Override
 		public Image getCombatAvatar(){
-			return new Image("assets/rogue_combat.png");
+			return new Image("assets/combat/rogue_combat.png");
 		}
 
 		@Override
 		public Image getPortrait(){
-			return new Image("assets/rogue_portrait.png");
+			return new Image("assets/sprites/rogue_portrait.png");
 		}
     },
-    MAGE(20, 8, 10){
+    MAGE(25, 8, 10){
 		@Override
 		public Image getSpriteDirection(Direction dir){
-			String img = "assets/mage_" + getEnd(dir);
+			String img = "assets/sprites/mage_" + getEnd(dir);
 			return new Image(img);
 		}
 
 		@Override
 		public Image getCombatAvatar(){
-			return new Image("assets/mage_combat.png");
+			return new Image("assets/combat/mage_combat.png");
 		}
 
 		@Override
 		public Image getPortrait(){
-			return new Image("assets/mage_portrait.png");
+			return new Image("assets/sprites/mage_portrait.png");
 		}
     },
     KNIGHT(35, 10, 0){
 		@Override
 		public Image getSpriteDirection(Direction dir){
-			String img = "assets/knight_" + getEnd(dir);
+			String img = "assets/sprites/knight_" + getEnd(dir);
 			return new Image(img);
 		}
 
 		@Override
 		public Image getCombatAvatar(){
-			return new Image("assets/knight_combat.png");
+			return new Image("assets/combat/knight_combat.png");
 		}
 
 		@Override
 		public Image getPortrait(){
-			return new Image("assets/knight_portrait.png");
+			return new Image("assets/sprites/knight_portrait.png");
 		}
     };
     private int maxHealth, attack, luck;

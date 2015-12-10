@@ -182,6 +182,14 @@ public class Game {
     public GameState getState() {
         return state;
     }
+    
+    public int mapLevel(){
+    	return hero.getMapLevel();
+    }
+    
+    public void mapLevelUp(){
+    	hero.incMapLevel();
+    }
 
     public void attack() {
         combat.heroAttack();
@@ -199,6 +207,7 @@ public class Game {
     	currentLevel.addItem(combat.getMonster());
     	
     }
+    
     
     
 }

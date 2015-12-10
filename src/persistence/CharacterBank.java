@@ -26,7 +26,7 @@ public class CharacterBank {
 	
 	public void saveHero(Hero hero){
 		try{
-			if (heroExists(hero.getName())){
+			if (getHero(hero.getName()) != null){
 					clearDoc();
 					overwriteHero(hero);
 					for (Hero h: savedHeroes){
@@ -53,6 +53,7 @@ public class CharacterBank {
 			writer.write(DELIMITER + hero.getActualExp());
 			writer.write(DELIMITER + hero.getNumPotions(ItemType.HEALTH));
 			writer.write(DELIMITER + hero.getNumPotions(ItemType.EXPERIENCE));
+			writer.write(DELIMITER + hero.getMapLevel());
 			writer.write("\n");
 			writer.close();
 		}catch (IOException e){
@@ -68,7 +69,7 @@ public class CharacterBank {
 	}
 	
 	private void overwriteHero(Hero hero){
-		savedHeroes.remove(getIndexOf(hero.getName()));
+		savedHeroes.remove(getHero(hero.getName()));
 		savedHeroes.add(hero);
 	}
 	
@@ -77,24 +78,6 @@ public class CharacterBank {
 		writer.close();
 	}
 	
-	private int getIndexOf(String name){
-		int where = 0;
-		for (Hero h: savedHeroes){
-			if (h.getName().equals(name)){
-				where = savedHeroes.indexOf(h);
-			}
-		}
-		return where;
-	}
-	
-	public boolean heroExists(String name){
-		for (Hero h: savedHeroes){
-			if (h.getName().equals(name)){
-				return true;
-			}
-		}
-		return false;
-	}
 	
 	public Hero getHero(String name){
 		for (Hero h: savedHeroes){
@@ -123,8 +106,11 @@ public class CharacterBank {
 				int exp = Integer.valueOf(parts[5]);
 				int healthPotions = Integer.valueOf(parts[6]);
 				int expPotions = Integer.valueOf(parts[7]);
-				Hero hero = new Hero(prof, name, level);
+				int mapLevel = Integer.valueOf(parts[8]);
+				Hero hero = new Hero(prof, name, level, mapLevel);
 				hero.loadFromSaved(health, exp, healthPotions, expPotions);
+				hero.addSprites();
+				
 				savedHeroes.add(hero);
 				heroNames.add(name);
 			}

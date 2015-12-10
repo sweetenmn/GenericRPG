@@ -15,38 +15,42 @@ import terrain.ItemType;
  */
 
 public class Hero extends Actor{
-    private int level;
-    private int experience, expToNextLevel;
-    private int boostCount= 0;
+    private int level, experience, expToNextLevel;
+    private int boostCount = 0;
+    private int mapLevel = 0;
     private Actor attacker;
     private HeroType type;
     private ArrayList<Item> inventory = new ArrayList<Item>();
     private static final int EXP_BUFF = 25;
-    private static final int HEALTH_BUFF = 3;
-    private static final int ATK_BUFF = 3;
+    private static final int HEALTH_BUFF = 4;
+    private static final int ATK_BUFF = 4;
     private static final int INIT_EXP_REQUIRED = 100;
     private static final int EXP_BOOST = 3;
 
-    public Hero(HeroType prof, String name) {
-        create(prof, name);
+    public Hero(HeroType type, String name) {
+        create(type, name);
         this.experience = 0;
         this.level = 1;
         adjustStats();
         currentHealth = maxHealth;
     }
     
-    public Hero(HeroType prof, String name, int level){
-        create(prof, name);
+    public Hero(HeroType type, String name, int level, int mapLevel){
+        create(type, name);
         this.level = level;
+        this.mapLevel = mapLevel;
         adjustStats();
     }
-    
-    public void create(HeroType prof, String name){
-        this.type = prof;
-        this.sprite = prof.getSpriteDirection(Direction.DOWN);
-        this.combatSprite = prof.getCombatAvatar();
+    public void create(HeroType type, String name){
+        this.type = type;
         this.alive = true;
         this.name = name;
+    }
+    
+    public void addSprites(){
+        setSprite(type.getSpriteDirection(Direction.DOWN));
+        this.combatSprite = type.getCombatAvatar();
+    	
     }
     
     private void adjustStats(){
@@ -79,12 +83,11 @@ public class Hero extends Actor{
     		throw new IllegalStateException();
     	}
     }
-    public ArrayList<Item> getInventory(){
-    	return inventory;
-    }
+    public ArrayList<Item> getInventory(){ return inventory;}
+    
     public void addExperience(int monsterExp){
     	int gained = monsterExp + getBoost();
-    	experience += (gained);
+    	experience += gained;
     	System.out.println("Gained "+ gained + " experience!");
     	this.levelIf();
     }
@@ -200,6 +203,14 @@ public class Hero extends Actor{
     }
 	public Actor getAttacker(){
 		return attacker;
+	}
+	
+	public int getMapLevel(){
+		return mapLevel;
+	}
+	
+	public void incMapLevel(){
+		mapLevel++;
 	}
 	
 	public int getNumPotions(ItemType type){

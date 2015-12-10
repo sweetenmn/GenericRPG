@@ -11,6 +11,6 @@ public class Wall extends Drawable {
 
     public Wall(Position p) {
         this.position = p;
-        this.sprite = new Image("assets/white_wall.png");
+        this.sprite = new Image("assets/dungeon/white_wall.png");
     }
 }

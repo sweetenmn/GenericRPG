@@ -10,6 +10,6 @@ import javafx.scene.image.Image;
 public class Exit extends Drawable{
     public Exit(Position p){
         this.position = p;
-        sprite = new Image("assets/stairs_up.png");
+        sprite = new Image("assets/dungeon/stairs_up.png");
     }
 }
