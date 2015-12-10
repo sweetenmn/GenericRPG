@@ -27,19 +27,14 @@ public class Combat extends Drawable{
 
     public void heroAttack() {
         if (projectile == null || projectile.isFinished()) {
-            if (hero.attack(monster)) {
-                projectile = new Projectile(true);
-
-            } else {
-            	System.out.println("Your attack failed!");
-            }
+            hero.attack(monster);
+            projectile = new Projectile(true);
         }
     }
 
     private void monsterAttack() {
-        if (monster.attack(hero)) {
-            projectile = new Projectile(false);
-        }
+    	monster.attack(hero);
+        projectile = new Projectile(false);
     }
 
 

@@ -1,5 +1,5 @@
 package gui;
 
 public enum ConfirmType{
-	OVERWRITE, EXIT;
+	OVERWRITE, EXIT, RESURRECT;
 }

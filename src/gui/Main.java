@@ -14,6 +14,7 @@ public class Main extends Application {
         primaryStage.setTitle("GenericRPG");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+        primaryStage.setResizable(false);
     }
     public static void main(String[] args){
         launch(args);

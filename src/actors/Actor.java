@@ -1,5 +1,6 @@
 package actors;
 
+import util.Dice;
 import game.Direction;
 import game.Drawable;
 import game.Level;
@@ -14,16 +15,39 @@ import javafx.scene.image.Image;
 
 public abstract class Actor extends Drawable{
     protected boolean alive;
-
     public Image getCombatSprite() {
         return combatSprite;
     }
 
     protected Image combatSprite;
-	protected int currentHealth, maxHealth;
-    public abstract boolean attack(Actor actor); // returns true if attack is successful, else returns false
+	protected int currentHealth, maxHealth, luck, attack;
+	protected String name;
+	protected Actor attacker;
+	
+    public void attack(Actor actor){
+    	actor.setAttacker(this);
+        Dice dice = new Dice(20);
+        int roll = dice.roll() + luck;
+        if (roll < 5){
+            actor.takeDamage(attack / 2);
+        } else if (roll < 20){
+            actor.takeDamage(attack);
+        } else {
+            actor.takeDamage(attack * 2);
+        }
+    }
 
-    abstract void takeDamage(int damage);
+    protected void takeDamage(int damage){
+        System.out.println(this.name + " took " + damage + " damage!");
+        currentHealth -= damage;
+        if (currentHealth <= 0) {
+            this.die();
+        }
+    }
+    
+	public void setAttacker(Actor actor) {
+        this.attacker = actor;
+    }
 
     public void move(Direction dir, Level currentLevel){
         Position p = dir.getAdj(this.getPosition());
@@ -44,5 +68,4 @@ public abstract class Actor extends Drawable{
         }
     }
     public abstract void die();
-    public abstract void setAttacker(Actor actor);
 }

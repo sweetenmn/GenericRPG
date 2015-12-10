@@ -1,4 +1,10 @@
 /~RPG~/Marina/~RPG~/KNIGHT/~RPG~/2/~RPG~/30/~RPG~/65/~RPG~/3/~RPG~/2
-/~RPG~/Me/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0/~RPG~/0/~RPG~/0
-/~RPG~/Jason/~RPG~/MAGE/~RPG~/3/~RPG~/12/~RPG~/0/~RPG~/2/~RPG~/2
 /~RPG~/Coralia/~RPG~/ROGUE/~RPG~/1/~RPG~/13/~RPG~/70/~RPG~/0/~RPG~/2
+/~RPG~/Gawain/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/79/~RPG~/0/~RPG~/1
+/~RPG~/Ray/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0/~RPG~/0/~RPG~/0
+/~RPG~/fad/~RPG~/MAGE/~RPG~/1/~RPG~/20/~RPG~/0/~RPG~/0/~RPG~/0
+/~RPG~/Me/~RPG~/KNIGHT/~RPG~/2/~RPG~/35/~RPG~/0/~RPG~/0/~RPG~/0
+/~RPG~/This/~RPG~/ROGUE/~RPG~/0/~RPG~/25/~RPG~/0/~RPG~/0/~RPG~/0
+/~RPG~/Phoenix/~RPG~/ROGUE/~RPG~/1/~RPG~/0/~RPG~/40/~RPG~/2/~RPG~/0
+/~RPG~/Jason/~RPG~/MAGE/~RPG~/3/~RPG~/26/~RPG~/78/~RPG~/0/~RPG~/2
+/~RPG~/Maxwell/~RPG~/ROGUE/~RPG~/1/~RPG~/25/~RPG~/0/~RPG~/0/~RPG~/0

@@ -7,7 +7,7 @@ import terrain.ItemType;
 import javafx.scene.image.Image;
 
 public enum MonsterType{
-	OGRE(20, 1, 5, 30){
+	OGRE(20, 3, 6, 30){
 		@Override
 		public Image getAvatar() {return new Image("assets/ogre_sprite.png");}
 		@Override
@@ -15,7 +15,7 @@ public enum MonsterType{
 		@Override
 		public ArrayList<Item> getLoot(){return setLoot(0, 1);}
 		
-	}, DEMON(15, 2, 3, 15){
+	}, DEMON(15, 5, 4, 15){
 		@Override
 		public Image getAvatar(){return new Image("assets/demon_sprite.png");}
 		@Override
@@ -23,7 +23,7 @@ public enum MonsterType{
 		@Override
 		public ArrayList<Item> getLoot(){return setLoot(1, 0);}
 		
-	}, TENTACLE(25, 4, 4, 25){
+	}, TENTACLE(25, 6, 5, 25){
 		@Override
 		public Image getAvatar(){return new Image("assets/tentacle_sprite.png");}
 		@Override

@@ -133,7 +133,10 @@ public class Game {
             currentLevel.draw(canvas, camera);
         } else if (state.equals(GameState.COMBAT)){
             combat.draw(canvas, camera);
-            if (!combat.isMonsterAlive()) state = GameState.WALKING;
+            if (combatSuccess()){
+            	dropLoot();
+            	state = GameState.WALKING;
+            }
             if (!combat.isHeroAlive()) state = GameState.END;
         } else if (state.equals(GameState.START)) {
             StartScreen startScreen = new StartScreen(0,0);
@@ -164,6 +167,12 @@ public class Game {
     	return ran;
     	
     }
+    
+    public void newLevel(Hero hero){
+    	setState(GameState.WALKING);
+		Level currentLevel = new Level(hero);
+		changeLevel(currentLevel);
+    }
 
     public void setState(GameState state){
         this.state = state;
@@ -180,6 +189,10 @@ public class Game {
     
     public Combat getCombat(){
     	return combat;
+    }
+    
+    public boolean combatSuccess(){
+    	return !combat.isMonsterAlive();
     }
     
     public void dropLoot(){

@@ -10,7 +10,6 @@ import actors.MonsterType;
 import game.Direction;
 import game.Game;
 import game.GameState;
-import game.Level;
 import game.Position;
 import game.graphics.Camera;
 import javafx.animation.AnimationTimer;
@@ -78,7 +77,6 @@ public class Controller{
     private Position cameraDragStartPos;
     private CharacterBank characters = new CharacterBank();
     double startX, startY;
-    private boolean lootDropped = false;
     Game game;
     private AnimationTimer timer = new AnimationTimer(){
         long last = 0;
@@ -161,11 +159,17 @@ public class Controller{
     @FXML
     public void startGame(){
     	switch(game.getState()){
-		case CHARACTER_CREATE:
-			newGame();
+		case CHARACTER_CREATE: newGame();
 			break;
 		case CHARACTER_LOAD:
-			loadGame();
+			try{
+				loadGame();
+			} catch (IllegalStateException e) {
+				if (confirm(ConfirmType.RESURRECT)){
+					getFromSelection().resurrect();
+					loadGame();
+				}
+			}
 			break;
 		case COMBAT: case END: case START: case WALKING:
 			break;   	
@@ -199,11 +203,21 @@ public class Controller{
     }
     
     private void loadGame(){
-    	String name = characterChoice.getSelectionModel().getSelectedItem();
-		Hero hero = characters.getHero(name);
-		showLevel(hero);
-		updateInventory();
+		Hero hero = getFromSelection();
+		if (!hero.isAlive()){
+			throw new IllegalStateException();
+		} else {
+			showLevel(hero);
+			updateInventory();
+			
+		}
     }
+    
+    private Hero getFromSelection(){
+    	String name = characterChoice.getSelectionModel().getSelectedItem();
+		return characters.getHero(name);
+    }
+
     
     private void setChoice(){
     	characterChoice.setItems(characters.getSavedNames());
@@ -230,9 +244,7 @@ public class Controller{
     }
     
     private void showLevel(Hero hero){
-    	game.setState(GameState.WALKING);
-		Level currentLevel = new Level(hero);
-		game.changeLevel(currentLevel);
+		game.newLevel(hero);
 		viewWalking();  	
 		timer.start();
     }
@@ -259,11 +271,11 @@ public class Controller{
     private boolean confirm(ConfirmType type){
     	Alert alert = new Alert(AlertType.CONFIRMATION);
     	switch(type){
-		case EXIT:
-			createQuitAlert(alert);
+		case EXIT: createQuitAlert(alert);
 			break;
-		case OVERWRITE:
-			createOverwriteAlert(alert);
+		case OVERWRITE: createOverwriteAlert(alert);
+			break;
+		case RESURRECT: createResurrectAlert(alert);
 			break;
     	}
     	alert.showAndWait();
@@ -334,9 +346,7 @@ public class Controller{
             if (game.heroAtk()) {
                 adventurePane.setVisible(false);
                 combatPane.setVisible(true);
-                runButton.setVisible(true);
-                lootDropped = true;
-                
+                runButton.setVisible(true);                
             }
         }
     }
@@ -347,15 +357,10 @@ public class Controller{
             combatHeroName.setText(name.getText());
             combatMonsterName.setText(game.getCombat().getMonster().getType().name());
     	
-	    	if (!game.getCombat().isMonsterAlive()){
+	    	if (game.combatSuccess()){
 	    		combatPane.setVisible(false);
 	    		adventurePane.setVisible(true);
-	    		if (lootDropped){
-	    			game.dropLoot();
-	    			lootDropped = false;
-	    		}
-	    		
-	    	}
+	    	} 
     	}
     }
     
@@ -406,7 +411,6 @@ public class Controller{
     	if (notAtMenu()){
     		healthCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.HEALTH)));
     		expCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.EXPERIENCE)));
-    		
     	}
     }
     @FXML
@@ -493,6 +497,14 @@ public class Controller{
         alert.setContentText("Exit to main screen without saving?\n"
                 + "Unsaved progress will be lost.");
     }
+    
+    private void createResurrectAlert(Alert alert){
+    	alert.setTitle("Resurrect Dead Hero");
+    	alert.setHeaderText("This hero has died.");
+    	alert.setContentText("Do you wish to resurrect this hero?\nThey will "
+    			+"lose their items and any "
+    			+"progress and experience they made for their level.");
+    }
         
     @FXML
     public void exitToStart(){
@@ -522,6 +534,8 @@ public class Controller{
     	game.checkForDeath(canvas);
     	if (!game.getHero().isAlive()){
     		combatPane.setVisible(false);
+    		inventory.setVisible(false);
+    		saveHero();
     	}
     }
 }

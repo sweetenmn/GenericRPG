@@ -9,18 +9,16 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import terrain.Item;
 import terrain.ItemType;
-import util.Dice;
 
 /**
  * Created by josephbenton on 9/13/15.
  */
 
 public class Hero extends Actor{
-    private int attack, luck, level;
+    private int level;
     private int experience, expToNextLevel;
     private int boostCount= 0;
     private Actor attacker;
-    private String name;
     private HeroType type;
     private ArrayList<Item> inventory = new ArrayList<Item>();
     private static final int EXP_BUFF = 25;
@@ -74,30 +72,6 @@ public class Hero extends Actor{
     
     }
     
-    @Override
-    public boolean attack(Actor actor){
-    	actor.setAttacker(this);
-        Dice dice = new Dice(20);
-        int roll = dice.roll() + luck;
-        if (roll < 5){
-            actor.takeDamage(0);
-            return false;
-        } else if (roll < 20){
-            actor.takeDamage(attack);
-            return true;
-        } else {
-            actor.takeDamage(attack * 2);
-            return true;
-        }
-    }
-    @Override
-    public void takeDamage(int damage){
-        System.out.println(this.name + " took " + damage + " damage!");
-        currentHealth -= damage;
-        if (currentHealth <= 0) {
-            this.die();
-        }
-    }
     public void addIfInventorySpace(Item i) throws IllegalStateException{
     	if (inventory.size() < 20){
     		inventory.add(i);
@@ -177,13 +151,19 @@ public class Hero extends Actor{
     		expToNextLevel += 25;
     	}
     }
+    
+    public void resurrect(){
+    	currentHealth = maxHealth;
+    	experience = 0;
+    	inventory.clear();
+    	alive = true;
+    }
     public void moveAnimated(Direction dir, Level currentLevel){
     	move(dir, currentLevel);
     	setSprite(type.getSpriteDirection(dir));
     }
     @Override
     public void die(){
-        this.sprite = new Image("assets/skull.png");
         alive = false;
     }
 	@Override
