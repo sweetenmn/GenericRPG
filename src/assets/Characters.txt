@@ -1,10 +1,4 @@
-/~RPG~/asdf/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0/~RPG~/0/~RPG~/0/~RPG~/1
-/~RPG~/Jason/~RPG~/KNIGHT/~RPG~/2/~RPG~/-13/~RPG~/89/~RPG~/0/~RPG~/1/~RPG~/2
-/~RPG~/Coralyn/~RPG~/MAGE/~RPG~/1/~RPG~/20/~RPG~/0/~RPG~/0/~RPG~/0/~RPG~/0
-/~RPG~/Me/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0/~RPG~/0/~RPG~/0/~RPG~/0
-/~RPG~/Eric/~RPG~/KNIGHT/~RPG~/2/~RPG~/3/~RPG~/38/~RPG~/0/~RPG~/3/~RPG~/1
-/~RPG~/Marzipan/~RPG~/KNIGHT/~RPG~/2/~RPG~/-8/~RPG~/61/~RPG~/0/~RPG~/3/~RPG~/1
-/~RPG~/Malice/~RPG~/ROGUE/~RPG~/1/~RPG~/-6/~RPG~/45/~RPG~/0/~RPG~/0/~RPG~/0
-/~RPG~/Alice/~RPG~/ROGUE/~RPG~/1/~RPG~/30/~RPG~/0/~RPG~/0/~RPG~/0/~RPG~/0
-/~RPG~/Meal/~RPG~/KNIGHT/~RPG~/2/~RPG~/35/~RPG~/35/~RPG~/0/~RPG~/2/~RPG~/1
-/~RPG~/Caly/~RPG~/ROGUE/~RPG~/1/~RPG~/30/~RPG~/0/~RPG~/0/~RPG~/0/~RPG~/0
+/~RPG~/Coralia/~RPG~/MAGE/~RPG~/2/~RPG~/30/~RPG~/0/~RPG~/0/~RPG~/0/~RPG~/0
+/~RPG~/Maxwell/~RPG~/KNIGHT/~RPG~/1/~RPG~/35/~RPG~/0/~RPG~/0/~RPG~/0/~RPG~/0
+/~RPG~/Mal/~RPG~/KNIGHT/~RPG~/8/~RPG~/42/~RPG~/112/~RPG~/2/~RPG~/17/~RPG~/4
+/~RPG~/jenny/~RPG~/KNIGHT/~RPG~/1/~RPG~/33/~RPG~/45/~RPG~/1/~RPG~/0/~RPG~/0

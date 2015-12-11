@@ -22,10 +22,10 @@ public class Hero extends Actor{
     private HeroType type;
     private ArrayList<Item> inventory = new ArrayList<Item>();
     private static final int EXP_BUFF = 25;
-    private static final int HEALTH_BUFF = 4;
-    private static final int ATK_BUFF = 4;
+    private static final int HEALTH_BUFF = 5;
+    private static final int ATK_BUFF = 3;
     private static final int INIT_EXP_REQUIRED = 100;
-    private static final int EXP_BOOST = 3;
+    private static final int EXP_BOOST = 4;
 
     public Hero(HeroType type, String name) {
         create(type, name);
@@ -39,9 +39,12 @@ public class Hero extends Actor{
         create(type, name);
         this.level = level;
         this.mapLevel = mapLevel;
+
         adjustStats();
     }
-    public void create(HeroType type, String name){
+    
+    
+    private void create(HeroType type, String name){
         this.type = type;
         this.alive = true;
         this.name = name;
@@ -73,22 +76,24 @@ public class Hero extends Actor{
     	for (int j = 0; j < expPotions; j++){
     		inventory.add(new Item(ItemType.EXPERIENCE));
     	}
+        if (currentHealth <= 0){
+        	alive = false;
+        }
     
     }
     
-    public void addIfInventorySpace(Item i) throws IllegalStateException{
+    public boolean addIfInventorySpace(Item i){
     	if (inventory.size() < 20){
     		inventory.add(i);
-    	} else {
-    		throw new IllegalStateException();
+    		return true;
     	}
+    	return false;
     }
     public ArrayList<Item> getInventory(){ return inventory;}
     
     public void addExperience(int monsterExp){
-    	int gained = monsterExp + getBoost();
+    	int gained = monsterExp + getBoost() + type.getIntel();
     	experience += gained;
-    	System.out.println("Gained "+ gained + " experience!");
     	this.levelIf();
     }
     public boolean usePotion(ItemType type){
@@ -117,7 +122,7 @@ public class Hero extends Actor{
     private int getBoost(){
     	if (boostActive()){
     		boostCount--;
-    		return 3 * ((level - 1) + EXP_BOOST);
+    		return (level - 1) + EXP_BOOST;
     	}
     	return 0;
     }
@@ -149,9 +154,9 @@ public class Hero extends Actor{
     }
     private void levelIf(){
     	if (expToNextLevel - experience <= 0){
-    		level += 1;
+    		level++;
     		experience = Math.abs(expToNextLevel - experience);
-    		expToNextLevel += 25;
+    		adjustStats();
     	}
     }
     
@@ -167,6 +172,8 @@ public class Hero extends Actor{
     }
     @Override
     public void die(){
+    	boostCount = 0;
+    	currentHealth = 0;
         alive = false;
     }
 	@Override
@@ -188,6 +195,18 @@ public class Hero extends Actor{
 	public int getActualHealth() {
         return currentHealth;
     }
+	
+	public int getAttack(){
+		return attack;
+	}
+	
+	public int getExpToNextLvl(){
+		return expToNextLevel;
+	}
+	
+	public int getMaxHealth(){
+		return maxHealth;
+	}
 	public int getActualExp() {
         return this.experience;
     }

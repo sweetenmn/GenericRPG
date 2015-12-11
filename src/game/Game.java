@@ -134,6 +134,7 @@ public class Game {
         } else if (state.equals(GameState.COMBAT)){
             combat.draw(canvas, camera);
             if (combatSuccess()){
+            	combat.renderMonsterDeath();
             	dropLoot();
             	state = GameState.WALKING;
             }

@@ -18,10 +18,13 @@ public class Monster extends Actor {
         this.attack = type.getAttack(level);
         this.luck = type.getLuck();
         this.expValue = type.getExpValue(level);
-        this.sprite = type.getAvatar();
-        this.combatSprite = type.getCombatAvatar();
         this.alive = true;
         this.name = type.name();
+    }
+    
+    public void addSprites(){
+    	sprite = type.getAvatar();
+    	combatSprite = type.getCombatAvatar();
     }
     
     private MonsterType randomType(){
@@ -40,15 +43,16 @@ public class Monster extends Actor {
 
 
     @Override
-    public Image getSprite(){return null;}
-
-    @Override
     public void die(){
     	
     	((Hero) attacker).addExperience(expValue);
+        alive = false;
+    }
+    
+    public void setDeathSprites(){
         this.sprite = new Image("assets/sprites/skull.png");
         this.combatSprite = new Image("assets/sprites/skull.png");
-        alive = false;
+    	
     }
 
 	@Override

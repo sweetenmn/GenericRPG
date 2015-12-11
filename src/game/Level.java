@@ -31,26 +31,6 @@ public class Level extends Drawable{
     private ArrayList<Monster> monsters;
     private ArrayList<Item> items = new ArrayList<Item>();
     private boolean[][] wallMap;
-
-    public Level(int width, int height, Hero hero){
-        super();
-        this.hero = hero;
-        this.height = height;
-        this.width = width;
-        this.monsters = new ArrayList<>();
-        wallMap = new boolean[width][height];
-        for(int i = 0; i < width; i++){
-            for(int j = 0; j < height; j++){
-                addFloor(i, j);
-            }
-        }
-    }
-
-    public Level(Hero hero, String map){
-        monsters = new ArrayList<>();
-        buildLevel(map);
-        this.hero = hero;
-    }
     
     public Level(Hero hero){
     	monsters = new ArrayList<>();
@@ -92,7 +72,6 @@ public class Level extends Drawable{
     public String randomLevel(){
     	Dice dice = new Dice(12);
     	int level = dice.roll();
-    	System.out.println("LEVEL: " + level);
     	return "src/assets/Levels/L" + level + ".txt";
     }
 
@@ -102,6 +81,7 @@ public class Level extends Drawable{
     }
     public void addMonster(int x, int y){
         Monster monster = new Monster(hero.getMapLevel());
+        monster.addSprites();
         monster.setPosition(x, y);
         contents.add(monster);
         monsters.add(monster);
@@ -154,16 +134,11 @@ public class Level extends Drawable{
     }
     
     public void checkAddToInventory(Position p){
-    	try{
-    		if (containsItem(p)){
-    			Item item = getItemAt(p);
-    			hero.addIfInventorySpace(item);
+    	if (containsItem(p)){
+    		Item item = getItemAt(p);
+    		if(hero.addIfInventorySpace(item)){
     			removeItem(item);
     		}
-    	} catch (IllegalStateException e) {
-    		Alert nospace = new Alert(AlertType.INFORMATION);
-    		nospace.setContentText("Inventory is full.");
-    		nospace.show();
     	}
     }
     
@@ -217,17 +192,21 @@ public class Level extends Drawable{
     	Position left = Direction.LEFT.getAdj(p);
     	Position up = Direction.UP.getAdj(p);
     	Position right = Direction.RIGHT.getAdj(p);
-    	if (isClear(down) && !containsItem(down)){
+    	if (isOpenForItem(down)){
     		return down;
-    	} else if (isClear(left) && !containsItem(left)){
+    	} else if (isOpenForItem(left)){
     		return left;
-    	} else if (isClear(up) && !containsItem(up)){
+    	} else if (isOpenForItem(up)){
     		return up;
-    	} else if (isClear(right) &&!containsItem(right)){
+    	} else if (isOpenForItem(right)){
     		return right;
     	} else {
     		return p;
     	}
+    }
+    
+    private boolean isOpenForItem(Position where){
+    	return isClear(where) && !containsItem(where) && !atExit(where);
     }
 
     private void drawGrid(Canvas canvas, Camera camera){

@@ -61,6 +61,8 @@ public class Controller{
     @FXML
     Text name, loadingName, savedText, inspectType, inspectAttack, inspectHealth;
     @FXML
+    Text inventorySpace;
+    @FXML
     Label combatHeroName;
     @FXML
     Label combatMonsterName;
@@ -348,8 +350,26 @@ public class Controller{
                 adventurePane.setVisible(false);
                 combatPane.setVisible(true);
                 runButton.setVisible(true);                
+                savedText.setVisible(false);
+                inspectPane.setVisible(false);
             }
         }
+    }
+    
+    @FXML
+    public void viewProfile(){
+    	Alert profile = new Alert(AlertType.INFORMATION);
+    	Hero hero = game.getHero();
+    	profile.setTitle("Hero Profile");
+    	profile.setHeaderText(hero.getName());
+    	profile.setGraphic(null);
+    
+    	profile.setContentText("Health: " + hero.getActualHealth() + " / " + hero.getMaxHealth()
+    			+ "\nAttack: " + hero.getAttack() + "\nExperience: " + hero.getActualExp() + " / "
+    			+ hero.getExpToNextLvl() 
+    			+"\nLevels Cleared: " + hero.getMapLevel());
+    	profile.show();
+    	
     }
     
     private void handleCombat(){
@@ -411,8 +431,11 @@ public class Controller{
     
     public void updateInventory(){
     	if (notAtMenu()){
-    		healthCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.HEALTH)));
-    		expCount.setText(Integer.toString(game.getHero().getNumPotions(ItemType.EXPERIENCE)));
+    		int numHealth = game.getHero().getNumPotions(ItemType.HEALTH);
+    		int numExp = game.getHero().getNumPotions(ItemType.EXPERIENCE);
+    		healthCount.setText(Integer.toString(numHealth));
+    		expCount.setText(Integer.toString(numExp));
+    		inventorySpace.setText(Integer.toString(numHealth + numExp) + "/20");
     	}
     }
     @FXML
@@ -516,6 +539,8 @@ public class Controller{
     		adventurePane.setVisible(false);
     		combatPane.setVisible(false);
     		inventory.setVisible(false);
+    		savedText.setVisible(false);
+    		inspectPane.setVisible(false);
     		game.render(canvas, camera);
     	}	
     }

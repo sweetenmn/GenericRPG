@@ -22,7 +22,6 @@ public class Combat extends Drawable{
         this.monster = monster;
         hero.setAttacker(monster);
         monster.setAttacker(hero);
-        System.out.println("MONSTER HEALTH " + monster.getHealth());
     }
 
 
@@ -63,6 +62,11 @@ public class Combat extends Drawable{
     public boolean isMonsterAlive() {
         return monster.isAlive();
     }
+    
+    public void renderMonsterDeath(){
+    	monster.setDeathSprites();
+
+    }
 
     public boolean isHeroAlive() {
         return hero.isAlive();
@@ -70,11 +74,8 @@ public class Combat extends Drawable{
 
     private class Projectile {
         Image sprite;
-        int position;
-        int range;
-        boolean leftToRight;
-
-        boolean finished;
+        int position, range;
+        boolean leftToRight, finished;
 
         public Projectile(boolean friendly) {
             finished = false;
