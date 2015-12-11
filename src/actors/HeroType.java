@@ -24,6 +24,11 @@ public enum HeroType {
 		public Image getPortrait(){
 			return new Image("assets/sprites/rogue_portrait.png");
 		}
+
+		@Override
+		public String getAbout() {
+			return "Rogues are balanced heroes\nand earn a little\nbonus XP.";
+		}
     },
     MAGE(25, 8, 10, 5){
 		@Override
@@ -40,6 +45,12 @@ public enum HeroType {
 		@Override
 		public Image getPortrait(){
 			return new Image("assets/sprites/mage_portrait.png");
+		}
+
+		@Override
+		public String getAbout() {
+			return "Mages are glass cannons:\nThey hit with a high\ncritical strike chance,"
+					+" but\n can't take much damage.\nThey earn bonus XP.";
 		}
     },
     KNIGHT(35, 10, 1, 0){
@@ -58,6 +69,11 @@ public enum HeroType {
 		public Image getPortrait(){
 			return new Image("assets/sprites/knight_portrait.png");
 		}
+		
+		@Override
+		public String getAbout(){
+			return "Knights have more health\nand a stronger base attack\nthan the other classes.";
+		}
     };
     private int maxHealth, attack, luck, intellect;
     
@@ -66,6 +82,7 @@ public enum HeroType {
     public abstract Image getSpriteDirection(Direction dir);
     public abstract Image getCombatAvatar();
     public abstract Image getPortrait();
+    public abstract String getAbout();
 
     public int getMaxHealth(){return maxHealth;}
     public int getAttack(){return attack;}

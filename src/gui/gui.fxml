@@ -118,7 +118,7 @@
                <children>
                   <HBox prefHeight="100.0" prefWidth="605.0">
                      <children>
-                        <Pane prefHeight="100.0" prefWidth="300.0">
+                        <Pane prefHeight="100.0" prefWidth="239.0">
                            <children>
                               <Label layoutX="94.0" layoutY="5.0" prefHeight="19.0" prefWidth="120.0" text="Choose Hero's class:">
                                  <font>
@@ -137,30 +137,35 @@
                               </ImageView>
                               <Text layoutX="88.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mage" />
                               <Text layoutX="132.0" layoutY="94.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Knight" />
-                              <Rectangle fx:id="mageSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="77.0" layoutX="79.0" layoutY="23.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
-                              <Rectangle fx:id="knightSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="77.0" layoutX="125.0" layoutY="23.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="52.0" />
+                              <Rectangle fx:id="mageSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="77.0" layoutX="78.0" layoutY="23.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
+                              <Rectangle fx:id="knightSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="77.0" layoutX="124.0" layoutY="23.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="52.0" />
                               <ImageView fitHeight="56.0" fitWidth="55.0" layoutX="175.0" layoutY="31.0" onMouseClicked="#selectRogue" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../assets/sprites/rogue_portrait.png" />
                                  </image>
                               </ImageView>
                               <Text layoutX="181.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rogue" />
-                              <Rectangle fx:id="rogueSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="77.0" layoutX="172.0" layoutY="23.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
+                              <Rectangle fx:id="rogueSelect" arcHeight="5.0" arcWidth="5.0" fill="TRANSPARENT" height="77.0" layoutX="174.0" layoutY="23.0" stroke="BLACK" strokeType="INSIDE" visible="false" width="50.0" />
                            </children>
                         </Pane>
-                        <Pane prefHeight="100.0" prefWidth="306.0">
+                        <VBox alignment="CENTER" prefHeight="100.0" prefWidth="155.0">
                            <children>
-                              <Label layoutX="99.0" layoutY="5.0" text="Enter Hero's name:">
+                              <Text fx:id="aboutClass" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" />
+                           </children>
+                        </VBox>
+                        <Pane prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label layoutX="38.0" layoutY="5.0" text="Enter Hero's name:">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="nameInput" layoutX="80.0" layoutY="25.0">
+                              <TextField fx:id="nameInput" layoutX="19.0" layoutY="25.0">
                                  <effect>
                                     <ColorAdjust brightness="-0.23" contrast="-0.3" />
                                  </effect>
                               </TextField>
-                              <Button fx:id="startButton" layoutX="128.0" layoutY="64.0" mnemonicParsing="false" onAction="#startGame" text="START">
+                              <Button fx:id="startButton" layoutX="67.0" layoutY="64.0" mnemonicParsing="false" onAction="#startGame" text="START">
                                  <effect>
                                     <ColorAdjust brightness="-0.35" contrast="0.07" />
                                  </effect>

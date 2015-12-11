@@ -18,9 +18,9 @@ public class HeroTest {
 		assertEquals(1, hero.getLevel());
 		hero.addExperience(100);
 		assertEquals(2, hero.getLevel());
-		assertEquals(0 + hero.getProfession().getIntel(), hero.getActualExp());
+		assertEquals(0 + hero.getType().getIntel(), hero.getActualExp());
 		hero.addExperience(10);
-		assertEquals(10 + hero.getProfession().getIntel() *2, hero.getActualExp());
+		assertEquals(10 + hero.getType().getIntel() *2, hero.getActualExp());
 		assertTrue(hero.getExpPercent() == 0.128);
 	}
 	
@@ -53,9 +53,6 @@ public class HeroTest {
 		
 	}
 	
-	public void combatTest(){
-		Hero knight = new Hero(HeroType.KNIGHT, "KnightTest");
-	}
 	
 	private int killToLevel(Hero hero, int level, int boost){
 		int count = 0;

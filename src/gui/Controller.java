@@ -59,9 +59,9 @@ public class Controller{
     @FXML
     Label expCount;
     @FXML
-    Text name, loadingName, savedText, inspectType, inspectAttack, inspectHealth;
+    Text name, loadingName, savedText, inspectType, inspectAttack, inspectHealth, inventorySpace;
     @FXML
-    Text inventorySpace;
+    Text aboutClass;
     @FXML
     Label combatHeroName;
     @FXML
@@ -197,6 +197,7 @@ public class Controller{
     		Hero hero = new Hero(profSelected, nameInput.getText());
     		hero.addSprites();
     		unselectAll();
+    		aboutClass.setText("");;
     		nameInput.clear();
     		showLevel(hero);
     		saveHero();
@@ -232,7 +233,7 @@ public class Controller{
     		Hero hero = characters.getHero(name);
     		loadingName.setVisible(true);
     		loadingName.setText(name + " | Level " + hero.getLevel());
-    		loadingView.setImage(hero.getProfession().getPortrait());
+    		loadingView.setImage(hero.getType().getPortrait());
     		
     	}
     }
@@ -329,7 +330,7 @@ public class Controller{
     	combatPane.setVisible(false);
 		adventurePane.setVisible(true);
 		inventory.setVisible(true);
-		portrait.setImage(game.getHero().getProfession().getPortrait());
+		portrait.setImage(game.getHero().getType().getPortrait());
     }
     
     @FXML
@@ -459,18 +460,22 @@ public class Controller{
     public void selectMage(){
     	unselectOthers(mageSelect);
     	profSelected = HeroType.MAGE;
+    	aboutClass.setText(profSelected.getAbout());
+    	
     }
     
     @FXML
     public void selectKnight(){
     	unselectOthers(knightSelect);
     	profSelected = HeroType.KNIGHT;
+    	aboutClass.setText(profSelected.getAbout());
     }
     
     @FXML
     public void selectRogue(){
     	unselectOthers(rogueSelect);
     	profSelected = HeroType.ROGUE;
+    	aboutClass.setText(profSelected.getAbout());
     }
     
     private ArrayList<Rectangle> selectBoxes(){

@@ -47,7 +47,7 @@ public class CharacterBank {
 		try {
 			writer = new FileWriter(DOCUMENT_NAME, true);
 			writer.write(DELIMITER + hero.getName());
-			writer.write(DELIMITER + hero.getProfession());
+			writer.write(DELIMITER + hero.getType());
 			writer.write(DELIMITER + hero.getLevel());
 			writer.write(DELIMITER + hero.getActualHealth());
 			writer.write(DELIMITER + hero.getActualExp());

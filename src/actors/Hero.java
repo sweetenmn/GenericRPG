@@ -210,7 +210,7 @@ public class Hero extends Actor{
 	public int getActualExp() {
         return this.experience;
     }
-	public HeroType getProfession() {
+	public HeroType getType() {
         return this.type;
     }
 	public double getExpPercent() {
