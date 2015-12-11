@@ -30,7 +30,7 @@ public enum HeroType {
 			return "Rogues are balanced heroes\nand earn a little\nbonus XP.";
 		}
     },
-    MAGE(25, 8, 10, 6){
+    MAGE(25, 7, 10, 5){
 		@Override
 		public Image getSpriteDirection(Direction dir){
 			String img = "assets/sprites/mage_" + getEnd(dir);

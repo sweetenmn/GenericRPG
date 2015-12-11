@@ -22,8 +22,8 @@ public class Hero extends Actor{
     private HeroType type;
     private ArrayList<Item> inventory = new ArrayList<Item>();
     private static final int EXP_BUFF = 25;
-    private static final int HEALTH_BUFF = 5;
-    private static final int ATK_BUFF = 3;
+    private static final int HEALTH_BUFF = 6;
+    private static final int ATK_BUFF = 2;
     private static final int INIT_EXP_REQUIRED = 100;
     private static final int EXP_BOOST = 4;
 

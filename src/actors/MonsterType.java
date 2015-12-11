@@ -49,7 +49,7 @@ public enum MonsterType{
     public int getAttack(int level){return attack + (level * 2);}
     public int getLuck(){return luck;}
     public int getExpValue(int level){return expValue;}
-    public int getMaxHealth(int level){return maxHealth + (level * 4);}
+    public int getMaxHealth(int level){return maxHealth + (level * 5);}
     
     private static ArrayList<Item> setLoot(int healthPotions, int expPotions){
     	Dice dice = new Dice(5);
