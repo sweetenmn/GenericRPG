@@ -11,7 +11,8 @@ public class HeroTest {
 	Monster monster;
 	ArrayList<Integer> numKills = new ArrayList<Integer>();
 	ArrayList<Integer> numBoostedKills = new ArrayList<Integer>();
-	
+	ArrayList<Integer> shotsToKill = new ArrayList<Integer>();
+	ArrayList<Integer> deathCount = new ArrayList<Integer>();	
 	@Test
 	public void basicTest() {
 		Hero hero = new Hero(HeroType.ROGUE, "Test");
@@ -26,6 +27,7 @@ public class HeroTest {
 	
 	@Test
 	public void killCountTest(){
+		numKills.clear();
 		System.out.println("Test to show the average number of monsters " 
 				+"it takes a hero to level up (without boost)");
 		//shows when monsters are scaled up to heroes w/ each of their levels
@@ -63,6 +65,62 @@ public class HeroTest {
 			
 		}
 		return count;
+	}
+	@Test
+	public void combatTest(){
+		testCombatFor(HeroType.ROGUE);
+		testCombatFor(HeroType.MAGE);
+		testCombatFor(HeroType.KNIGHT);
+		
+	}
+	
+	private void testCombatFor(HeroType type){
+		shotsToKill.clear();
+		for (int i=0; i<100; i++){
+			int count = 0;
+			Hero hero = new Hero(type, "Knight");
+			Monster monster = new Monster(0);
+			while (hero.isAlive() && monster.isAlive()){
+				hero.attack(monster);
+				if (monster.isAlive()){
+					monster.attack(hero);
+				}
+				count++;
+			}
+			shotsToKill.add(count);
+		}
+		//System.out.println(type.name() + ": " + shotsToKill);
+		int added = 0;
+		for (Integer i: shotsToKill){
+			added += i;
+		}
+		System.out.println("Average shots for " + type.name() +":" + (added/shotsToKill.size()));
+		shotsToKill.clear();
+		int deathCount = 0;
+		for (int i=0; i<100; i++){
+			int count1 = 0;
+			Hero hero = new Hero(type, "Name", 5, 6);
+			hero.loadFromSaved(hero.getMaxHealth(), 0, 0,0);
+			Monster monster = new Monster(6);
+			while (hero.isAlive() && monster.isAlive()){
+				hero.attack(monster);
+				if (monster.isAlive()){
+					monster.attack(hero);
+				}
+				if (!hero.isAlive()){
+					deathCount++;
+				}
+				count1++;
+			}
+			shotsToKill.add(count1);
+		
+		}
+		int added1 = 0;
+		for (Integer i: shotsToKill){
+			added1 += i;
+		}
+		System.out.println("Average shots @ L5 for " + type.name() +":" + (added1/shotsToKill.size()));
+		System.out.println("Death count: " + deathCount);
 	}
 	
 	

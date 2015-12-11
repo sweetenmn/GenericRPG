@@ -126,7 +126,7 @@ public class Hero extends Actor{
     	}
     	return 0;
     }
-    private boolean heal(){
+    boolean heal(){
     	if (currentHealth < maxHealth){
     		int value = ItemType.HEALTH.getValue(level);
     		if (maxHealth - currentHealth < value){
@@ -139,7 +139,7 @@ public class Hero extends Actor{
     	return false;
     	
     }
-    private boolean boost(){
+    boolean boost(){
     	boolean boosted = false;
     	if (!boostActive()){
     		boostCount = 4;

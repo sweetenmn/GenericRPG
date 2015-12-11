@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 
 
 public enum HeroType {
-    ROGUE(30, 9, 7, 3) {
+    ROGUE(30, 10, 7, 3) {
 
 
 
@@ -30,7 +30,7 @@ public enum HeroType {
 			return "Rogues are balanced heroes\nand earn a little\nbonus XP.";
 		}
     },
-    MAGE(25, 8, 10, 5){
+    MAGE(25, 8, 10, 6){
 		@Override
 		public Image getSpriteDirection(Direction dir){
 			String img = "assets/sprites/mage_" + getEnd(dir);
@@ -53,7 +53,7 @@ public enum HeroType {
 					+" but\n can't take much damage.\nThey earn bonus XP.";
 		}
     },
-    KNIGHT(35, 10, 1, 0){
+    KNIGHT(40, 11, 1, 0){
 		@Override
 		public Image getSpriteDirection(Direction dir){
 			String img = "assets/sprites/knight_" + getEnd(dir);

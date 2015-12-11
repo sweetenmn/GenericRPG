@@ -38,7 +38,7 @@ public abstract class Actor extends Drawable{
     }
 
     protected void takeDamage(int damage){
-        System.out.println(this.name + " took " + damage + " damage!");
+       // System.out.println(this.name + " took " + damage + " damage!");
         currentHealth -= damage;
         if (currentHealth <= 0) {
             this.die();
