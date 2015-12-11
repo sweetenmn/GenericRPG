@@ -441,14 +441,14 @@ public class Controller{
     }
     @FXML
     public void useExpPotion(){
-    	if (expCount.getText() != "0"){
+    	if (!expCount.getText().equals("0")){
     		game.useItem(ItemType.EXPERIENCE);
     		updateInventory();
     	}
     }
     @FXML
     public void useHealthPotion(){
-    	if (healthCount.getText() != "0"){
+    	if (!healthCount.getText().equals("0")){
     		game.useItem(ItemType.HEALTH);
     		updateInventory();
     	}

@@ -109,8 +109,10 @@ public class HeroTest {
 				}
 				if (!hero.isAlive()){
 					deathCount++;
+				} else {
+					
+					count1++;
 				}
-				count1++;
 			}
 			shotsToKill.add(count1);
 		
